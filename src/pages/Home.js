@@ -3,6 +3,7 @@ import { Row, Col, Layout, Menu } from "antd";
 import { Link } from "react-router-dom";
 
 import WebtoonDrop from "../components/Home/WebtoonDrop";
+import InpaintDrop from "../components/Home/InpaintDrop";
 import Preview from "../components/Home/Preview";
 import "../styles/Home.css";
 
@@ -29,7 +30,7 @@ function Home(props) {
             </Col>
             <Col span={2} />
             <Col span={11}>
-              <WebtoonDrop />
+              <InpaintDrop />
             </Col>
           </Row>
         </div>

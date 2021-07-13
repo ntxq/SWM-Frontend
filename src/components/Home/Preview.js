@@ -14,7 +14,7 @@ function Preview(props) {
       </Typography.Title>
       <Row>
         {webtoons.map(([url, name, inpaint], index) => (
-          <Col span={4}>
+          <Col span={4} key={name}>
             <PreviewCard
               url={url}
               name={name}

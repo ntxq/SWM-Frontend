@@ -30,5 +30,11 @@
 }
 
 .blank_upload {
-  margin-bottom: 5%;
+  width: auto !important;
+  margin-left: 5% !important;
+  margin-right: 5% !important;
+}
+
+.cover_space {
+  margin-top: 5%;
 }

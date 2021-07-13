@@ -14,10 +14,15 @@ function PreviewCard(props) {
   return (
     <Card
       hoverable
-      cover={<CropImage url={props.url} />}
+      cover={
+        <>
+          <CropImage url={props.url} />
+          <span className="cover_space" />
+          <BlankUpload index={props.index} inpaint={props.inpaint} />
+        </>
+      }
       className="preview_card"
     >
-      <BlankUpload index={props.index} inpaint={props.inpaint} />
       <Card.Meta
         title={
           <Row>

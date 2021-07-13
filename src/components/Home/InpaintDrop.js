@@ -1,14 +1,21 @@
 import React from "react";
-import { Upload } from "antd";
+import { Upload, message } from "antd";
 import { PictureOutlined } from "@ant-design/icons";
 import "antd/dist/antd.css";
 
-import { useDispatch } from "react-redux";
-import { upload } from "../../contexts/webtoonDropSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { singleInpaint } from "../../contexts/webtoonDropSlice";
 
 const { Dragger } = Upload;
 
-function WebtoonDrop(props) {
+function rejectDrop() {
+  message.info(
+    "원본 이미지와 동일한 이름을 가진 공백 이미지만 업로드 가능합니다."
+  );
+}
+
+function InpaintDrop(props) {
+  const webtoons = useSelector((state) => state.webtoon.images);
   const dispatch = useDispatch();
 
   const defaultConfig = {
@@ -17,8 +24,10 @@ function WebtoonDrop(props) {
     directory: true,
     showUploadList: false,
     async beforeUpload(file) {
-      const objectURL = URL.createObjectURL(file);
-      dispatch(upload([objectURL, file.name, ""]));
+      const index = webtoons.findIndex((item) => item[1] === file.name);
+      if (index !== -1)
+        dispatch(singleInpaint([index, URL.createObjectURL(file)]));
+      else rejectDrop();
       return false;
     },
   };
@@ -39,4 +48,4 @@ function WebtoonDrop(props) {
   );
 }
 
-export default WebtoonDrop;
+export default InpaintDrop;
