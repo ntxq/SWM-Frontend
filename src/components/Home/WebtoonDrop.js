@@ -15,11 +15,12 @@ function WebtoonDrop(props) {
     accept: "image/*",
     multiple: true,
     directory: true,
-    async beforeUpload(file, fileList) {
+    showUploadList: false,
+    async beforeUpload(file) {
       console.log(file);
       let objectURL = URL.createObjectURL(file);
       console.log(objectURL);
-      dispatch(upload(objectURL));
+      dispatch(upload([objectURL, file.name]));
       return false;
     },
   };

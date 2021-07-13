@@ -9,7 +9,7 @@ export const webtoonDropSlice = createSlice({
   initialState,
   reducers: {
     upload: (state, action) => {
-      state.images = state.images.concat(action.payload);
+      state.images = state.images.concat([action.payload]);
     },
   },
 });

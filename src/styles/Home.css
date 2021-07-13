@@ -1,3 +1,21 @@
 .upload {
-    padding: 1% 5% 1% 5%;
+  padding: 2% 0;
+}
+
+.content {
+  padding: 0 2%;
+}
+
+.footer {
+  text-align: center;
+}
+
+.preview_card {
+  flex: "auto";
+  margin: 2%;
+}
+
+.crop {
+  height: 25vh;
+  overflow: hidden;
 }
