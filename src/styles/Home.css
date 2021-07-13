@@ -19,3 +19,16 @@
   height: 25vh;
   overflow: hidden;
 }
+
+.preview_card .title {
+  width: 100%;
+  float: left;
+}
+
+.preview_card .delete {
+  float: right;
+}
+
+.blank_upload {
+  margin-bottom: 5%;
+}

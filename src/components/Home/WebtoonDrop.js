@@ -20,13 +20,13 @@ function WebtoonDrop(props) {
       console.log(file);
       let objectURL = URL.createObjectURL(file);
       console.log(objectURL);
-      dispatch(upload([objectURL, file.name]));
+      dispatch(upload([objectURL, file.name, '']));
       return false;
     },
   };
 
   return (
-    <Dragger {...defaultConfig} {...props}>
+    <Dragger {...defaultConfig}>
       <p className="ant-upload-drag-icon">
         <PictureOutlined />
       </p>
