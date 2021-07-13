@@ -38,3 +38,12 @@
 .cover_space {
   margin-top: 5%;
 }
+
+.submit_container {
+  text-align: center;
+  margin-top: 1%;
+}
+
+.submit {
+  width: 10%;
+}

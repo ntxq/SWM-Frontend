@@ -5,13 +5,14 @@ import { Link } from "react-router-dom";
 import WebtoonDrop from "../components/Home/WebtoonDrop";
 import InpaintDrop from "../components/Home/InpaintDrop";
 import Preview from "../components/Home/Preview";
+import CreateProject from "../components/Home/CreateProject";
 import "../styles/Home.css";
 
 const { Header, Content, Footer } = Layout;
 
 function Home(props) {
   return (
-    <Layout className="home">
+    <Layout>
       <Header>
         <Menu theme="dark" mode="horizontal" defaultSelectedKeys={["1"]}>
           <Menu.Item key={1}>
@@ -23,20 +24,17 @@ function Home(props) {
         </Menu>
       </Header>
       <Content className="content">
-        <div className="upload">
-          <Row>
-            <Col span={11}>
-              <WebtoonDrop />
-            </Col>
-            <Col span={2} />
-            <Col span={11}>
-              <InpaintDrop />
-            </Col>
-          </Row>
-        </div>
-        <div className="preview">
-          <Preview />
-        </div>
+        <Row className="upload">
+          <Col span={11}>
+            <WebtoonDrop />
+          </Col>
+          <Col span={2} />
+          <Col span={11}>
+            <InpaintDrop />
+          </Col>
+        </Row>
+        <Preview />
+        <CreateProject />
       </Content>
       <Footer className="footer">전지적 독자시점 ©2021</Footer>
     </Layout>

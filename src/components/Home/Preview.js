@@ -9,9 +9,11 @@ function Preview(props) {
 
   return (
     <>
-      <Typography.Title level={3}>
-        총 {webtoons.length}개의 번역할 웹툰
-      </Typography.Title>
+      {webtoons.length > 0 && (
+        <Typography.Title level={3}>
+          총 {webtoons.length}개의 번역할 웹툰
+        </Typography.Title>
+      )}
       <Row>
         {webtoons.map(([url, name, inpaint], index) => (
           <Col span={4} key={name}>
