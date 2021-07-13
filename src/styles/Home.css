@@ -1,0 +1,49 @@
+.upload {
+  padding: 2% 0;
+}
+
+.content {
+  padding: 0 2%;
+}
+
+.footer {
+  text-align: center;
+}
+
+.preview_card {
+  flex: "auto";
+  margin: 2%;
+}
+
+.crop {
+  height: 25vh;
+  overflow: hidden;
+}
+
+.preview_card .title {
+  width: 100%;
+  float: left;
+}
+
+.preview_card .delete {
+  float: right;
+}
+
+.blank_upload {
+  width: auto !important;
+  margin-left: 5% !important;
+  margin-right: 5% !important;
+}
+
+.cover_space {
+  margin-top: 5%;
+}
+
+.submit_container {
+  text-align: center;
+  margin-top: 1%;
+}
+
+.submit {
+  width: 10%;
+}
