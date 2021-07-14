@@ -1,6 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import { Layout, Menu, Tabs, Typography } from "antd";
+import { Layout, Tabs, Typography } from "antd";
 import { PictureFilled, BookFilled, DownloadOutlined } from "@ant-design/icons";
 import { useSelector } from "react-redux";
 

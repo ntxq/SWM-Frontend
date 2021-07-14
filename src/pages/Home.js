@@ -1,6 +1,5 @@
 import React from "react";
-import { Row, Col, Layout, Menu } from "antd";
-import { Link } from "react-router-dom";
+import { Row, Col, Layout } from "antd";
 
 import BasicMenu from "../components/Common/BasicMenu";
 
