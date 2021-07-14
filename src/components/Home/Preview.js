@@ -5,7 +5,7 @@ import { Typography, Row, Col } from "antd";
 import PreviewCard from "./PreviewCard";
 
 function Preview(props) {
-  const webtoons = useSelector((state) => state.webtoon.images);
+  const webtoons = useSelector((state) => state.webtoons.images);
 
   return (
     <>
