@@ -2,6 +2,8 @@ import React from "react";
 import { Row, Col, Layout, Menu } from "antd";
 import { Link } from "react-router-dom";
 
+import BasicMenu from "../components/Common/BasicMenu";
+
 import WebtoonDrop from "../components/Home/WebtoonDrop";
 import InpaintDrop from "../components/Home/InpaintDrop";
 import Preview from "../components/Home/Preview";
@@ -14,14 +16,7 @@ function Home(props) {
   return (
     <Layout>
       <Header>
-        <Menu theme="dark" mode="horizontal" defaultSelectedKeys={["1"]}>
-          <Menu.Item key={1}>
-            <Link to="/">Home</Link>
-          </Menu.Item>
-          <Menu.Item key={2}>
-            <Link to="/dashboard">Dashboard</Link>
-          </Menu.Item>
-        </Menu>
+        <BasicMenu default={"1"} />
       </Header>
       <Content className="content">
         <Row className="upload">

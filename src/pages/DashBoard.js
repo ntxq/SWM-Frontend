@@ -4,6 +4,8 @@ import { Layout, Menu, Tabs, Typography } from "antd";
 import { PictureFilled, BookFilled, DownloadOutlined } from "@ant-design/icons";
 import { useSelector } from "react-redux";
 
+import BasicMenu from "../components/Common/BasicMenu";
+
 import Webtoons from "../components/DashBoard/Webtoons";
 import "../styles/Dashboard.css";
 
@@ -15,14 +17,7 @@ function DashBoard(props) {
   return (
     <Layout>
       <Header>
-        <Menu theme="dark" mode="horizontal" defaultSelectedKeys={["2"]}>
-          <Menu.Item key={1}>
-            <Link to="/">Home</Link>
-          </Menu.Item>
-          <Menu.Item key={2}>
-            <Link to="/dashboard">Dashboard</Link>
-          </Menu.Item>
-        </Menu>
+        <BasicMenu default={"2"} />
       </Header>
       <Content className="content">
         <Typography.Title>
@@ -38,7 +33,10 @@ function DashBoard(props) {
             }
             key="1"
           >
-            <Webtoons images={webtoons.images} language={webtoons.form.language}/>
+            <Webtoons
+              images={webtoons.images}
+              language={webtoons.form.language}
+            />
           </Tabs.TabPane>
           <Tabs.TabPane
             tab={
