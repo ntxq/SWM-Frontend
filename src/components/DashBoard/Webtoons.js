@@ -1,16 +1,23 @@
-import { Col, Row, Radio } from "antd";
 import React from "react";
+import { Col, Row, Radio } from "antd";
+import { Link } from "react-router-dom";
 
-import WebtoonCard from "./WebtoonCard";
+import WebtoonCard from "./webtoon-card";
 
-function Webtoons(props) {
+function Webtoons(properties) {
   return (
     <>
-      <Radio.Group options={props.language} optionType="button" buttonStyle="solid" />
+      <Radio.Group
+        options={properties.language}
+        optionType="button"
+        buttonStyle="solid"
+      />
       <Row>
-        {props.images.map(([url, name]) => (
+        {properties.images.map(([url, name], index) => (
           <Col span={6}>
-            <WebtoonCard url={url} name={name} key={name} />
+            <Link to={`/editor/${index}`}>
+              <WebtoonCard url={url} name={name} key={name} />
+            </Link>
           </Col>
         ))}
       </Row>

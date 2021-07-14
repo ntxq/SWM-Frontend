@@ -1,44 +1,35 @@
 import React from "react";
-import { Layout } from "antd";
-// import ImageEditor from "@toast-ui/react-image-editor";
+import { Layout, Steps } from "antd";
+import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 
-import BasicMenu from "../components/Common/BasicMenu";
+import BasicMenu from "../components/Common/basic-menu";
 
-// import "tui-image-editor/dist/tui-image-editor.css";
+import WebtoonEditor from "../components/Editor/webtoon-editor";
 import "../styles/Editor.css";
 
-const { Header, Content, Footer } = Layout;
+const { Header, Sider, Content, Footer } = Layout;
 
-function Editor(props) {
+function Editor(properties) {
+  const { file } = useParams();
+  const webtoon = useSelector((state) => state.webtoons.images[file]);
+
   return (
     <Layout>
       <Header>
         <BasicMenu default="3" />
       </Header>
-      <Content className="content">
-        {/* <ImageEditor
-          includeUI={{
-            loadImage: {
-              path: "000프롤로그.png",
-              name: "SampleImage",
-            },
-            menu: ["shape", "filter"],
-            initMenu: "filter",
-            uiSize: {
-              width: "1000px",
-              height: "700px",
-            },
-            menuBarPosition: "bottom",
-          }}
-          cssMaxHeight={500}
-          cssMaxWidth={700}
-          selectionStyle={{
-            cornerSize: 20,
-            rotatingPointOffset: 70,
-          }}
-          usageStatistics={true}
-        /> */}
-      </Content>
+      <Layout>
+        <Sider></Sider>
+        <Content className="content">
+          <Steps current={0} className="editor_progress">
+            <Steps.Step title="Segmentation" />
+            <Steps.Step title="Recognition" />
+            <Steps.Step title="Finish" />
+          </Steps>
+          <WebtoonEditor webtoon={webtoon} />
+        </Content>
+      </Layout>
       <Footer className="footer">전지적 독자시점 ©2021</Footer>
     </Layout>
   );

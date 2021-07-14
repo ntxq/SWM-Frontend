@@ -1,17 +1,17 @@
 import React from "react";
 import { Row, Col, Layout } from "antd";
 
-import BasicMenu from "../components/Common/BasicMenu";
+import BasicMenu from "../components/Common/basic-menu";
 
-import WebtoonDrop from "../components/Home/WebtoonDrop";
-import InpaintDrop from "../components/Home/InpaintDrop";
-import Preview from "../components/Home/Preview";
-import CreateProject from "../components/Home/CreateProject";
+import WebtoonDrop from "../components/Home/webtoon-drop";
+import InpaintDrop from "../components/Home/inpaint-drop";
+import Preview from "../components/Home/preview";
+import CreateProject from "../components/Home/create-project";
 import "../styles/Home.css";
 
 const { Header, Content, Footer } = Layout;
 
-function Home(props) {
+function Home(properties) {
   return (
     <Layout>
       <Header>

@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import webtoonDropSlice from "./webtoonDropSlice";
+import webtoonDropSlice from "./webtoon-drop-slice";
 
 export const store = configureStore({
   reducer: {
