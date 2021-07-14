@@ -1,9 +1,13 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import { Form, Card, Input, Radio, Select, Button } from "antd";
 import { useHistory } from "react-router-dom";
 
+import { setForm } from "../../contexts/webtoonDropSlice";
+
 function CreateProject(props) {
   const history = useHistory();
+  const dispatch = useDispatch();
 
   return (
     <Form
@@ -13,6 +17,7 @@ function CreateProject(props) {
         console.log(values);
         history.push("/dashboard");
       }}
+      onValuesChange={(changed, all) => dispatch(setForm(all))}
     >
       <Card>
         <Form.Item name="new" initialValue="new">
@@ -43,8 +48,8 @@ function CreateProject(props) {
             allowClear
             placeholder="Select langauges to translate"
           >
-            <Select.Option key={0}>Korean</Select.Option>
-            <Select.Option key={1}>English</Select.Option>
+            <Select.Option key={"Korean"}>Korean</Select.Option>
+            <Select.Option key={"English"}>English</Select.Option>
           </Select>
         </Form.Item>
       </Card>

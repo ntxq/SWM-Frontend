@@ -15,7 +15,7 @@ function rejectDrop() {
 }
 
 function InpaintDrop(props) {
-  const webtoons = useSelector((state) => state.webtoon.images);
+  const webtoons = useSelector((state) => state.webtoons.images);
   const dispatch = useDispatch();
 
   const defaultConfig = {

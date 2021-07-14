@@ -1,6 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
+  form: {
+    new: "new",
+    title: "Title",
+    language: ["Korean", "English"],
+  },
   images: [],
 };
 
@@ -19,9 +24,13 @@ export const webtoonDropSlice = createSlice({
         (item, index) => index !== action.payload
       );
     },
+    setForm: (state, action) => {
+      state.form = action.payload;
+    },
   },
 });
 
-export const { upload, singleInpaint, singleDelete } = webtoonDropSlice.actions;
+export const { upload, singleInpaint, singleDelete, setForm } =
+  webtoonDropSlice.actions;
 
 export default webtoonDropSlice.reducer;
