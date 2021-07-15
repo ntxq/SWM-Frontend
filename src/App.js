@@ -5,6 +5,8 @@ import Home from "./pages/home";
 import DashBoard from "./pages/dashboard";
 import Editor from "./pages/editor";
 
+import "antd/dist/antd.css";
+
 function App() {
   return (
     <Router>

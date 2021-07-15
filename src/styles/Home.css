@@ -12,7 +12,7 @@
 
 .preview_card {
   flex: "auto";
-  margin: 2%;
+  margin: 2% !important;
 }
 
 .crop {

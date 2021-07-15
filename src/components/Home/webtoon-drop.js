@@ -1,7 +1,6 @@
 import React from "react";
 import { Upload } from "antd";
 import { PictureOutlined } from "@ant-design/icons";
-import "antd/dist/antd.css";
 
 import { useDispatch } from "react-redux";
 import { upload } from "../../contexts/webtoon-drop-slice";

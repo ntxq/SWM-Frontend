@@ -19,7 +19,7 @@ function DashBoard(properties) {
         <BasicMenu default={"2"} />
       </Header>
       <Content className="content">
-        <Typography.Title>
+        <Typography.Title className="project_title">
           {webtoons.form.title} ({webtoons.images.length})
         </Typography.Title>
         <Tabs defaultActiveKey="1" size="large">

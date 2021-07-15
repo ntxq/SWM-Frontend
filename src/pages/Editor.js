@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import BasicMenu from "../components/Common/basic-menu";
 
 import Segmentation from "../components/Editor/segmentation";
+import Recognition from "../components/Editor/recognition";
 import "../styles/Editor.css";
 
 const { Header, Sider, Content, Footer } = Layout;
@@ -29,7 +30,7 @@ function Editor(properties) {
               <Segmentation webtoon={webtoon} />
             </Route>
             <Route path={`${url}/recognition`}>
-              Recognition
+              <Recognition webtoon={webtoon} />
             </Route>
           </Switch>
         </Content>

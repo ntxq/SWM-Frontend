@@ -11,6 +11,7 @@ function Webtoons(properties) {
         options={properties.language}
         optionType="button"
         buttonStyle="solid"
+        defaultValue={properties.language[0]}
         className="language_choice"
       />
       <Row>
