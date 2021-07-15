@@ -14,9 +14,9 @@ function Webtoons(properties) {
       />
       <Row>
         {properties.images.map(([url, name], index) => (
-          <Col span={6}>
-            <Link to={`/editor/${index}`}>
-              <WebtoonCard url={url} name={name} key={name} />
+          <Col span={6} key={name}>
+            <Link to={`/editor/${index}/segmentation`}>
+              <WebtoonCard url={url} name={name} />
             </Link>
           </Col>
         ))}

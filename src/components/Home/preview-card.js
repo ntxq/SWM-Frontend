@@ -36,8 +36,10 @@ function PreviewCard(properties) {
                 className="delete"
                 icon={<DeleteOutlined />}
                 onClick={() => {
-                  URL.revokeObjectURL(properties.url)
-                  dispatch(singleDelete(properties.index))
+                  URL.revokeObjectURL(properties.url);
+                  if (properties.inpaint)
+                    URL.revokeObjectURL(properties.inpaint);
+                  dispatch(singleDelete(properties.index));
                 }}
               />
             </Col>

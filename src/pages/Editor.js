@@ -1,16 +1,18 @@
 import React from "react";
-import { Layout, Steps } from "antd";
-import { useParams } from "react-router-dom";
+import { Layout } from "antd";
+import { Route, Switch, useParams, useRouteMatch } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import BasicMenu from "../components/Common/basic-menu";
 
-import WebtoonEditor from "../components/Editor/webtoon-editor";
+import Segmentation from "../components/Editor/segmentation";
 import "../styles/Editor.css";
 
 const { Header, Sider, Content, Footer } = Layout;
 
 function Editor(properties) {
+  const { url } = useRouteMatch();
+
   const { file } = useParams();
   const webtoon = useSelector((state) => state.webtoons.images[file]);
 
@@ -22,12 +24,14 @@ function Editor(properties) {
       <Layout>
         <Sider></Sider>
         <Content className="content">
-          <Steps current={0} className="editor_progress">
-            <Steps.Step title="Segmentation" />
-            <Steps.Step title="Recognition" />
-            <Steps.Step title="Finish" />
-          </Steps>
-          <WebtoonEditor webtoon={webtoon} />
+          <Switch>
+            <Route path={`${url}/segmentation`}>
+              <Segmentation webtoon={webtoon} />
+            </Route>
+            <Route path={`${url}/recognition`}>
+              Recognition
+            </Route>
+          </Switch>
         </Content>
       </Layout>
       <Footer className="footer">전지적 독자시점 ©2021</Footer>

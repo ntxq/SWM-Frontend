@@ -19,7 +19,7 @@ function CreateProject(properties) {
       }}
       onValuesChange={(changed, all) => dispatch(setForm(all))}
     >
-      <Card>
+      <Card className="form_card">
         <Form.Item name="new" initialValue="new">
           <Radio.Group>
             <Radio value="new">Start a new project</Radio>
