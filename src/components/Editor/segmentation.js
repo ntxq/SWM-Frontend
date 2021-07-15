@@ -16,12 +16,20 @@ function Segmentation(properties) {
     if (rootReference.current) {
       lsfReference.current = new LabelStudio(rootReference.current, {
         config: `
-          <View>
+        <View style="display: flex;">
+          <View style="flex: 50%">
             <BrushLabels name="tag" toName="img">
               <Label value="Text" background="red" />
             </BrushLabels>
-            <Image name="img" value="${properties.webtoon[0]}" zoom="true" zoomControl="true" />
+            <Image name="img" value="${properties.webtoon[0]}" />
           </View>
+          <View style="flex: 50%; margin-left: 1em">
+            <BrushLabels name="tag2" toName="inpaint">
+              <Label value="Inpaint" background="blue" />
+            </BrushLabels>
+            <Image name="inpaint" value="${properties.webtoon[0]}" />
+          </View>
+        </View>
               `,
         interfaces: ["controls", "panel", "side-column", "submit"],
         task: {

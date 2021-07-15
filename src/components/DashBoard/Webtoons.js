@@ -11,6 +11,7 @@ function Webtoons(properties) {
         options={properties.language}
         optionType="button"
         buttonStyle="solid"
+        className="language_choice"
       />
       <Row>
         {properties.images.map(([url, name], index) => (

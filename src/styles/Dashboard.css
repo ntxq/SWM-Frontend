@@ -2,3 +2,7 @@
   height: 40vh;
   overflow: hidden;
 }
+
+.language_choice {
+  margin-bottom: 3vh !important;
+}
