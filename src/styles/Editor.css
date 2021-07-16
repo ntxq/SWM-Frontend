@@ -1,4 +1,18 @@
 .editor_progress {
-    margin-top: 1vh !important;
-    margin-bottom: 2vh !important;
+  margin-top: 1vh !important;
+  margin-bottom: 2vh !important;
+}
+
+.unselectable {
+  user-drag: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
+.bbox {
+    color: blue !important;
+    position: absolute !important;
 }

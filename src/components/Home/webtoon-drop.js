@@ -13,7 +13,6 @@ function WebtoonDrop(properties) {
   const defaultConfig = {
     accept: "image/*",
     multiple: true,
-    directory: true,
     showUploadList: false,
     async beforeUpload(file) {
       const objectURL = URL.createObjectURL(file);

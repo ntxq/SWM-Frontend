@@ -20,7 +20,6 @@ function InpaintDrop(properties) {
   const defaultConfig = {
     accept: "image/*",
     multiple: true,
-    directory: true,
     showUploadList: false,
     async beforeUpload(file) {
       const index = webtoons.findIndex((item) => item[1] === file.name);
