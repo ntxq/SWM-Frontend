@@ -1,17 +1,25 @@
 import React from "react";
-import { Typography } from "antd";
+import { Rnd } from "react-rnd";
+
+import { useDispatch } from "react-redux";
+import { updateLocation } from "../../contexts/recognition-slice";
 
 function Bbox(properties) {
+  const dispatch = useDispatch();
+
   return (
-    <Typography.Text
-      className="bbox"
-      style={{
-        top: properties.box[1],
-        left: properties.box[0],
+    <Rnd
+      position={{
+        x: properties.box[0],
+        y: properties.box[1],
       }}
+      onDragStop={(event, data) =>
+        dispatch(updateLocation([properties.index, [data.x, data.y]]))
+      }
+      className="bbox"
     >
-      Ant Design
-    </Typography.Text>
+      THIS
+    </Rnd>
   );
 }
 

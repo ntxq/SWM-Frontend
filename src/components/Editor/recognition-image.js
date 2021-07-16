@@ -5,21 +5,22 @@ import { useDispatch } from "react-redux";
 import { createBbox } from "../../contexts/recognition-slice";
 
 function RecognitionImage(properties) {
+  const [bbox, setBbox] = useState([undefined, undefined]);
   const dispatch = useDispatch();
-
-  const [bbox, setBbox] = useState([
-    undefined,
-    undefined,
-    undefined,
-    undefined,
-  ]);
 
   const newBbox = useCallback(
     (x, y, step) => {
-      if (step === 0) setBbox((bbox) => [x, y, bbox[2], bbox[3]]);
+      if (step === 0) setBbox([x, y, 0, 0]);
       else {
-        setBbox((bbox) => [bbox[0], bbox[1], x, y]);
-        dispatch(createBbox(bbox));
+        dispatch(
+          createBbox([
+            (bbox[0] + x) / 2,
+            (bbox[1] + y) / 2,
+            Math.abs(x - bbox[0]),
+            Math.abs(y - bbox[1]),
+          ])
+        );
+        setBbox([undefined, undefined]);
       }
     },
     [setBbox, dispatch, bbox]

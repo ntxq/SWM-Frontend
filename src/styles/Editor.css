@@ -13,6 +13,5 @@
 }
 
 .bbox {
-    color: blue !important;
-    position: absolute !important;
+    color: blue;
 }

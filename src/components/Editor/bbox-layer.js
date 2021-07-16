@@ -10,7 +10,7 @@ function BboxLayer(properties) {
   return (
     <>
       {bboxList.map((box, index) => (
-        <Bbox box={box} key={index} />
+        <Bbox box={box} index={index} key={index} />
       ))}
     </>
   );
