@@ -3,6 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   bboxList: [],
   translationList: [],
+  activeBox: undefined,
+  bboxText: [],
 };
 
 export const recognitionSlice = createSlice({
@@ -13,12 +15,28 @@ export const recognitionSlice = createSlice({
       if (action.payload[0]) {
         state.bboxList = [...state.bboxList, action.payload];
         state.translationList = [...state.translationList, action.payload];
+        state.bboxText = [...state.bboxText, ["ORIGINAL", "TRANSLATED"]];
       }
     },
 
-    deleteAll: (state) => {
-      state.bboxList = [];
-      state.translationList = [];
+    deleteBox: (state, action) => {
+      if (action.payload === undefined) {
+        state.bboxList = [];
+        state.translationList = [];
+        state.bboxText = [];
+        state.activeBox = undefined;
+      } else {
+        state.bboxList = state.bboxList.filter(
+          (value, index) => index !== action.payload
+        );
+        state.translationList = state.translationList.filter(
+          (value, index) => index !== action.payload
+        );
+        state.bboxText = state.bboxText.filter(
+          (value, index) => index !== action.payload
+        );
+        state.activeBox = undefined;
+      }
     },
 
     updateLocation: (state, action) => {
@@ -44,10 +62,28 @@ export const recognitionSlice = createSlice({
         state.translationList[index][3] = action.payload[2][1];
       }
     },
+
+    selectBox: (state, action) => {
+      state.activeBox = action.payload;
+    },
+
+    updateText: (state, action) => {
+      if (action.payload.original) {
+        state.bboxText[action.payload.index][0] = action.payload.text;
+      } else {
+        state.bboxText[action.payload.index][1] = action.payload.text;
+      }
+    },
   },
 });
 
-export const { createBbox, deleteAll, updateLocation, updateSize } =
-  recognitionSlice.actions;
+export const {
+  createBbox,
+  deleteBox,
+  updateLocation,
+  updateSize,
+  selectBox,
+  updateText,
+} = recognitionSlice.actions;
 
 export default recognitionSlice.reducer;

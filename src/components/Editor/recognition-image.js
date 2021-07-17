@@ -10,12 +10,12 @@ function RecognitionImage(properties) {
 
   const newBbox = useCallback(
     (x, y, step) => {
-      if (step === 0) setBbox([x, y, 0, 0]);
+      if (step === 0) setBbox([x, y]);
       else {
         dispatch(
           createBbox([
-            (bbox[0] + x) / 2,
-            (bbox[1] + y) / 2,
+            Math.min(bbox[0], x),
+            Math.min(bbox[1], y),
             Math.abs(x - bbox[0]),
             Math.abs(y - bbox[1]),
           ])

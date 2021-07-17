@@ -3,7 +3,11 @@ import { Rnd } from "react-rnd";
 import { Typography } from "antd";
 
 import { useDispatch } from "react-redux";
-import { updateLocation, updateSize } from "../../contexts/recognition-slice";
+import {
+  updateLocation,
+  updateSize,
+  selectBox,
+} from "../../contexts/recognition-slice";
 
 function Bbox(properties) {
   const dispatch = useDispatch();
@@ -36,9 +40,10 @@ function Bbox(properties) {
           ])
         )
       }
+      onClick={(event) => dispatch(selectBox(properties.index))}
       className="bbox"
     >
-      <Typography.Text className="bbox_text">HERE</Typography.Text>
+      <Typography.Text className="bbox_text">{properties.text}</Typography.Text>
     </Rnd>
   );
 }
