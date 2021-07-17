@@ -15,7 +15,10 @@ export const recognitionSlice = createSlice({
       if (action.payload[0]) {
         state.bboxList = [...state.bboxList, action.payload];
         state.translationList = [...state.translationList, action.payload];
-        state.bboxText = [...state.bboxText, ["ORIGINAL", "TRANSLATED"]];
+        state.bboxText = [
+          ...state.bboxText,
+          ["ORIGINAL", "TRANSLATED", "#000000", 15],
+        ];
       }
     },
 
@@ -74,6 +77,12 @@ export const recognitionSlice = createSlice({
         state.bboxText[action.payload.index][1] = action.payload.text;
       }
     },
+
+    updateStyle: (state, action) => {
+      if (action.payload.color)
+        state.bboxText[action.payload.index][2] = action.payload.color;
+      else state.bboxText[action.payload.index][3] = action.payload.size;
+    },
   },
 });
 
@@ -84,6 +93,7 @@ export const {
   updateSize,
   selectBox,
   updateText,
+  updateStyle,
 } = recognitionSlice.actions;
 
 export default recognitionSlice.reducer;

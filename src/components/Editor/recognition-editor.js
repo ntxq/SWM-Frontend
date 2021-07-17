@@ -1,9 +1,23 @@
 import React from "react";
-import { Button, Card, Col, Input, Row, Space, Typography } from "antd";
+import {
+  Button,
+  Card,
+  Col,
+  Input,
+  Row,
+  Space,
+  Typography,
+  InputNumber,
+} from "antd";
+import { SketchPicker } from "react-color";
 import { DeleteOutlined } from "@ant-design/icons";
 
 import { useDispatch, useSelector } from "react-redux";
-import { deleteBox, updateText } from "../../contexts/recognition-slice";
+import {
+  deleteBox,
+  updateText,
+  updateStyle,
+} from "../../contexts/recognition-slice";
 
 function RecognitionEditor(properties) {
   const recognition = useSelector((state) => state.recognition);
@@ -61,6 +75,41 @@ function RecognitionEditor(properties) {
                 original: false,
                 index: recognition.activeBox,
                 text: event.target.value,
+              })
+            )
+          }
+        />
+        <Space>
+          <Typography.Text>Font Size:</Typography.Text>
+          <InputNumber
+            value={
+              recognition.activeBox !== undefined
+                ? recognition.bboxText[recognition.activeBox][3]
+                : 0
+            }
+            onChange={(value) =>
+              recognition.activeBox !== undefined &&
+              dispatch(
+                updateStyle({
+                  index: recognition.activeBox,
+                  size: value,
+                })
+              )
+            }
+          />
+        </Space>
+        <SketchPicker
+          color={
+            recognition.activeBox !== undefined
+              ? recognition.bboxText[recognition.activeBox][3]
+              : ""
+          }
+          onChange={(color) =>
+            recognition.activeBox !== undefined &&
+            dispatch(
+              updateStyle({
+                index: recognition.activeBox,
+                color: color.hex,
               })
             )
           }

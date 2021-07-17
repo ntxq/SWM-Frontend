@@ -21,6 +21,8 @@ function BboxLayer(properties) {
           index={index}
           original={properties.original}
           text={textList[index][properties.original ? 0 : 1]}
+          color={textList[index][2]}
+          size={textList[index][3]}
           key={index}
         />
       ))}

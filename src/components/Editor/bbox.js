@@ -43,7 +43,15 @@ function Bbox(properties) {
       onClick={(event) => dispatch(selectBox(properties.index))}
       className="bbox"
     >
-      <Typography.Text className="bbox_text">{properties.text}</Typography.Text>
+      <Typography.Text
+        style={{
+          color: properties.color,
+          fontSize: properties.size,
+        }}
+        className="bbox_text"
+      >
+        {properties.text}
+      </Typography.Text>
     </Rnd>
   );
 }
