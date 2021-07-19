@@ -2,9 +2,9 @@ import React from "react";
 import { Menu } from "antd";
 import { Link } from "react-router-dom";
 
-function BasicMenu(props) {
+function BasicMenu(properties) {
   return (
-    <Menu theme="dark" mode="horizontal" defaultSelectedKeys={props.default}>
+    <Menu theme="dark" mode="horizontal" defaultSelectedKeys={properties.default}>
       <Menu.Item key={1}>
         <Link to="/">Home</Link>
       </Menu.Item>

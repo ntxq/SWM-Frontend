@@ -3,12 +3,12 @@ import { Card, Button, Typography, Row, Col } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
 
 import { useDispatch } from "react-redux";
-import { singleDelete } from "../../contexts/webtoonDropSlice";
+import { singleDelete } from "../../contexts/webtoon-drop-slice";
 
-import CropImage from "./CropImage";
-import BlankUpload from "./BlankUpload";
+import CropImage from "./crop-image";
+import BlankUpload from "./blank-upload";
 
-function PreviewCard(props) {
+function PreviewCard(properties) {
   const dispatch = useDispatch();
 
   return (
@@ -16,9 +16,9 @@ function PreviewCard(props) {
       hoverable
       cover={
         <>
-          <CropImage url={props.url} />
+          <CropImage url={properties.url} />
           <span className="cover_space" />
-          <BlankUpload index={props.index} inpaint={props.inpaint} />
+          <BlankUpload index={properties.index} inpaint={properties.inpaint} />
         </>
       }
       className="preview_card"
@@ -28,14 +28,19 @@ function PreviewCard(props) {
           <Row>
             <Col span={20}>
               <Typography.Text className="title" ellipsis={true}>
-                {props.name}
+                {properties.name}
               </Typography.Text>
             </Col>
             <Col span={4}>
               <Button
                 className="delete"
                 icon={<DeleteOutlined />}
-                onClick={() => dispatch(singleDelete(props.index))}
+                onClick={() => {
+                  URL.revokeObjectURL(properties.url);
+                  if (properties.inpaint)
+                    URL.revokeObjectURL(properties.inpaint);
+                  dispatch(singleDelete(properties.index));
+                }}
               />
             </Col>
           </Row>

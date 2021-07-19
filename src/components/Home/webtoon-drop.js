@@ -1,20 +1,18 @@
 import React from "react";
 import { Upload } from "antd";
 import { PictureOutlined } from "@ant-design/icons";
-import "antd/dist/antd.css";
 
 import { useDispatch } from "react-redux";
-import { upload } from "../../contexts/webtoonDropSlice";
+import { upload } from "../../contexts/webtoon-drop-slice";
 
 const { Dragger } = Upload;
 
-function WebtoonDrop(props) {
+function WebtoonDrop(properties) {
   const dispatch = useDispatch();
 
   const defaultConfig = {
     accept: "image/*",
     multiple: true,
-    directory: true,
     showUploadList: false,
     async beforeUpload(file) {
       const objectURL = URL.createObjectURL(file);

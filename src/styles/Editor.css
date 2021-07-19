@@ -1,0 +1,29 @@
+.editor_progress {
+  margin-top: 1vh !important;
+  margin-bottom: 2vh !important;
+}
+
+.unselectable {
+  user-drag: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
+.bbox {
+  color: black;
+  border: 3px solid #ffa940;
+
+  position: relative;
+}
+
+.bbox_text {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}

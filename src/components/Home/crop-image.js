@@ -1,10 +1,10 @@
 import React from "react";
 import { Image } from "antd";
 
-function CropImage(props) {
+function CropImage(properties) {
   return (
     <div className="crop">
-      <Image src={props.url} className="preview_image" />
+      <Image src={properties.url} className="preview_image" />
     </div>
   );
 }

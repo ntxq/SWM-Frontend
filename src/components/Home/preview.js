@@ -2,9 +2,9 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { Typography, Row, Col } from "antd";
 
-import PreviewCard from "./PreviewCard";
+import PreviewCard from "./preview-card";
 
-function Preview(props) {
+function Preview(properties) {
   const webtoons = useSelector((state) => state.webtoons.images);
 
   return (

@@ -1,19 +1,19 @@
 import React from "react";
 import { Card, Typography } from "antd";
 
-import CropWebtoon from "./CropWebtoon";
+import CropWebtoon from "./crop-webtoon";
 
-function WebtoonCard(props) {
+function WebtoonCard(properties) {
   return (
     <Card
       hoverable
-      cover={<CropWebtoon url={props.url} />}
+      cover={<CropWebtoon url={properties.url} />}
       className="preview_card"
     >
       <Card.Meta
         title={
           <Typography.Text className="title" ellipsis={true}>
-            {props.name}
+            {properties.name}
           </Typography.Text>
         }
       />

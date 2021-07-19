@@ -12,7 +12,7 @@
 
 .preview_card {
   flex: "auto";
-  margin: 2%;
+  margin: 2% !important;
 }
 
 .crop {
@@ -46,4 +46,8 @@
 
 .submit {
   width: 10%;
+}
+
+.form_card {
+  margin-top: 3% !important;
 }

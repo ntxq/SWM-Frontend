@@ -1,10 +1,10 @@
 import React from "react";
 import { Image } from "antd";
 
-function CropWebtoon(props) {
+function CropWebtoon(properties) {
   return (
     <div className="crop">
-      <Image src={props.url} className="preview_image" />
+      <Image src={properties.url} preview={false} />
     </div>
   );
 }

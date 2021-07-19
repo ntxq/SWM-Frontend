@@ -3,9 +3,9 @@ import { useDispatch } from "react-redux";
 import { Form, Card, Input, Radio, Select, Button } from "antd";
 import { useHistory } from "react-router-dom";
 
-import { setForm } from "../../contexts/webtoonDropSlice";
+import { setForm } from "../../contexts/webtoon-drop-slice";
 
-function CreateProject(props) {
+function CreateProject(properties) {
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -19,7 +19,7 @@ function CreateProject(props) {
       }}
       onValuesChange={(changed, all) => dispatch(setForm(all))}
     >
-      <Card>
+      <Card className="form_card">
         <Form.Item name="new" initialValue="new">
           <Radio.Group>
             <Radio value="new">Start a new project</Radio>

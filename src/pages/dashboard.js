@@ -1,17 +1,16 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import { Layout, Menu, Tabs, Typography } from "antd";
+import { Layout, Tabs, Typography } from "antd";
 import { PictureFilled, BookFilled, DownloadOutlined } from "@ant-design/icons";
 import { useSelector } from "react-redux";
 
-import BasicMenu from "../components/Common/BasicMenu";
+import BasicMenu from "../components/Common/basic-menu";
 
-import Webtoons from "../components/DashBoard/Webtoons";
+import Webtoons from "../components/Dashboard/webtoons";
 import "../styles/Dashboard.css";
 
 const { Header, Content, Footer } = Layout;
 
-function DashBoard(props) {
+function DashBoard(properties) {
   const webtoons = useSelector((state) => state.webtoons);
 
   return (
@@ -20,7 +19,7 @@ function DashBoard(props) {
         <BasicMenu default={"2"} />
       </Header>
       <Content className="content">
-        <Typography.Title>
+        <Typography.Title className="project_title">
           {webtoons.form.title} ({webtoons.images.length})
         </Typography.Title>
         <Tabs defaultActiveKey="1" size="large">

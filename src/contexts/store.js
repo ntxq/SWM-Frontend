@@ -1,8 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
-import webtoonDropSlice from "./webtoonDropSlice";
+import webtoonDropReducer from "./webtoon-drop-slice";
+import recognitionReducer from "./recognition-slice";
 
 export const store = configureStore({
   reducer: {
-    webtoons: webtoonDropSlice,
+    webtoons: webtoonDropReducer,
+    recognition: recognitionReducer,
   },
 });

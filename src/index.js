@@ -4,7 +4,7 @@ import { store } from "./contexts/store";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 
-import App from "./App";
+import App from "./app";
 import "./styles/index.css";
 
 ReactDOM.render(
@@ -15,5 +15,5 @@ ReactDOM.render(
       </BrowserRouter>
     </Provider>
   </React.StrictMode>,
-  document.getElementById("root")
+  document.querySelector("#root")
 );
