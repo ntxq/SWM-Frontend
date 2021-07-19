@@ -5,6 +5,12 @@ const initialState = {
   translationList: [],
   activeBox: undefined,
   bboxText: [],
+  imgProperty: {
+    clientHeight: undefined,
+    clientWidth: undefined,
+    naturalHeight: undefined,
+    naturalWidth: undefined,
+  },
 };
 
 export const recognitionSlice = createSlice({
@@ -83,6 +89,10 @@ export const recognitionSlice = createSlice({
         state.bboxText[action.payload.index][2] = action.payload.color;
       else state.bboxText[action.payload.index][3] = action.payload.size;
     },
+
+    setImageProperty: (state, action) => {
+      state.imgProperty = action.payload;
+    },
   },
 });
 
@@ -94,6 +104,7 @@ export const {
   selectBox,
   updateText,
   updateStyle,
+  setImageProperty,
 } = recognitionSlice.actions;
 
 export default recognitionSlice.reducer;

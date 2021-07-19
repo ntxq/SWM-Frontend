@@ -11,6 +11,7 @@ import {
 } from "antd";
 import { SketchPicker } from "react-color";
 import { DeleteOutlined } from "@ant-design/icons";
+import { useHistory } from "react-router";
 
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -22,6 +23,7 @@ import {
 function RecognitionEditor(properties) {
   const recognition = useSelector((state) => state.recognition);
   const dispatch = useDispatch();
+  const history = useHistory();
 
   return (
     <Card>
@@ -114,6 +116,15 @@ function RecognitionEditor(properties) {
             )
           }
         />
+        <Button
+          type="primary"
+          onClick={() => {
+            console.log(recognition);
+            history.push("/dashboard");
+          }}
+        >
+          Submit
+        </Button>
       </Space>
     </Card>
   );
