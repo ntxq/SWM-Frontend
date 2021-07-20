@@ -89,23 +89,27 @@ export const recognitionSlice = createSlice({
     },
 
     setImageProperty: (state, action) => {
-      function resizeBboxList(bboxList) {
-        const heightRatio =
-          action.payload.clientHeight / state.imgProperty.clientHeight;
-        const widthRatio =
-          action.payload.clientWidth / state.imgProperty.clientWidth;
+      const heightRatio =
+        action.payload.clientHeight / state.imgProperty.clientHeight;
+      const widthRatio =
+        action.payload.clientWidth / state.imgProperty.clientWidth;
 
+      function resizeBboxList(bboxList) {
         return bboxList.map((bbox) =>
           bbox.map((value, index) =>
             index % 2
-              ? Math.floor(value * widthRatio)
-              : Math.floor(value * heightRatio)
+              ? Math.round(value * widthRatio)
+              : Math.round(value * heightRatio)
           )
         );
       }
 
+      state.bboxText = state.bboxText.map((textStyle) => ({
+        ...textStyle,
+        fontSize: Math.round(textStyle.fontSize * widthRatio),
+      }));
       state.bboxList = resizeBboxList(state.bboxList);
-      state.translationList = resizeBboxList(state.bboxList);
+      state.translationList = resizeBboxList(state.translationList);
       state.imgProperty = action.payload;
     },
   },
