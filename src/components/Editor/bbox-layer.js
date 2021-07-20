@@ -20,6 +20,7 @@ function BboxLayer(properties) {
           box={box}
           index={index}
           original={properties.original}
+          content={textList[index]}
           text={
             properties.original
               ? textList[index].original
@@ -27,6 +28,7 @@ function BboxLayer(properties) {
           }
           color={textList[index].fontColor}
           size={textList[index].fontSize}
+          font={textList[index].fontFamily}
           active={activeBox === index}
           key={index}
         />

@@ -1,6 +1,7 @@
 import React from "react";
 import { InputNumber, Space, Typography } from "antd";
 import { CompactPicker } from "react-color";
+import FontPicker from "font-picker-react";
 
 import { useDispatch } from "react-redux";
 import { updateText } from "../../contexts/recognition-slice";
@@ -25,7 +26,20 @@ function StyleEditor(properties) {
           }
         />
         <Space direction="vertical">
-          <Typography>Font</Typography>
+          <FontPicker
+            apiKey="AIzaSyA3CAm6MkBaH8hrrD9SFGxfDxyPqxo4geI"
+            activeFontFamily={properties.fontFamily}
+            onChange={(nextFont) =>
+              properties.activeBox !== undefined &&
+              dispatch(
+                updateText({
+                  index: properties.activeBox,
+                  text: { fontFamily: nextFont.family },
+                })
+              )
+            }
+            scripts={["latin", "korean"]}
+          />
           <Space>
             <Typography.Text>Font Size:</Typography.Text>
             <InputNumber

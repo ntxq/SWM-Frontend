@@ -28,6 +28,7 @@ export const recognitionSlice = createSlice({
             translated: "TRANSLATED",
             fontColor: "#000000",
             fontSize: 15,
+            fontFamily: "Open Sans",
           },
         ];
       }

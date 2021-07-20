@@ -42,6 +42,11 @@ function RecognitionEditor(properties) {
           recognition.activeBox !== undefined &&
           recognition.bboxText[recognition.activeBox].fontColor
         }
+        fontFamily={
+          recognition.activeBox !== undefined
+            ? recognition.bboxText[recognition.activeBox].fontFamily
+            : "Open Sans"
+        }
       />
     </Card>
   );
