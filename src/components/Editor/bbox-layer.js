@@ -29,6 +29,8 @@ function BboxLayer(properties) {
           color={textList[index].fontColor}
           size={textList[index].fontSize}
           font={textList[index].fontFamily}
+          weight={textList[index].fontWeight}
+          italic={textList[index].fontStyle}
           active={activeBox === index}
           key={index}
         />

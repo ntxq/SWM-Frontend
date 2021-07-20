@@ -53,6 +53,8 @@ function Bbox(properties) {
           color: properties.color,
           fontSize: properties.size,
           fontFamily: properties.font,
+          fontWeight: properties.weight,
+          fontStyle: properties.italic,
         }}
         className="bbox_text"
       >

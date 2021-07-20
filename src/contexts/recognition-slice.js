@@ -29,6 +29,8 @@ export const recognitionSlice = createSlice({
             fontColor: "#000000",
             fontSize: 15,
             fontFamily: "Open Sans",
+            fontWeight: "normal",
+            fontStyle: "normal",
           },
         ];
       }

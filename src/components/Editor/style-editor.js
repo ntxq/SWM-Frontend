@@ -1,5 +1,6 @@
 import React from "react";
-import { InputNumber, Space, Typography } from "antd";
+import { Button, InputNumber, Space, Typography } from "antd";
+import { BoldOutlined, ItalicOutlined } from "@ant-design/icons";
 import { CompactPicker } from "react-color";
 import FontPicker from "font-picker-react";
 
@@ -40,23 +41,55 @@ function StyleEditor(properties) {
             }
             scripts={["latin", "korean"]}
           />
-          <Space>
-            <Typography.Text>Font Size:</Typography.Text>
-            <InputNumber
-              value={properties.fontSize}
-              onChange={(value) =>
+          <div>
+            <Space>
+              <Typography.Text>Font Size:</Typography.Text>
+              <InputNumber
+                value={properties.fontSize}
+                onChange={(value) =>
+                  properties.activeBox !== undefined &&
+                  dispatch(
+                    updateText({
+                      index: properties.activeBox,
+                      text: { fontSize: value },
+                    })
+                  )
+                }
+              />
+            </Space>
+            <Button
+              icon={<BoldOutlined />}
+              type="text"
+              onClick={() =>
                 properties.activeBox !== undefined &&
                 dispatch(
                   updateText({
                     index: properties.activeBox,
-                    text: { fontSize: value },
+                    text: {
+                      fontWeight:
+                        properties.fontWeight === "normal" ? "bold" : "normal",
+                    },
                   })
                 )
               }
             />
-          </Space>
-          <Typography>Bold</Typography>
-          <Typography>Italic</Typography>
+            <Button
+              icon={<ItalicOutlined />}
+              type="text"
+              onClick={() =>
+                properties.activeBox !== undefined &&
+                dispatch(
+                  updateText({
+                    index: properties.activeBox,
+                    text: {
+                      fontStyle:
+                        properties.fontStyle === "normal" ? "italic" : "normal",
+                    },
+                  })
+                )
+              }
+            />
+          </div>
         </Space>
       </Space>
     </Space>

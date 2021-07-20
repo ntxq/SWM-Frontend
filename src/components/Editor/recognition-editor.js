@@ -47,6 +47,16 @@ function RecognitionEditor(properties) {
             ? recognition.bboxText[recognition.activeBox].fontFamily
             : "Open Sans"
         }
+        fontWeight={
+          recognition.activeBox !== undefined
+            ? recognition.bboxText[recognition.activeBox].fontWeight
+            : "Open Sans"
+        }
+        fontStyle={
+          recognition.activeBox !== undefined
+            ? recognition.bboxText[recognition.activeBox].fontStyle
+            : "Open Sans"
+        }
       />
     </Card>
   );
