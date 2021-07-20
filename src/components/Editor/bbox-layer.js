@@ -10,8 +10,8 @@ function BboxLayer(properties) {
       ? state.recognition.bboxList
       : state.recognition.translationList
   );
-
   const textList = useSelector((state) => state.recognition.bboxText);
+  const activeBox = useSelector((state) => state.recognition.activeBox);
 
   return (
     <>
@@ -27,6 +27,7 @@ function BboxLayer(properties) {
           }
           color={textList[index].fontColor}
           size={textList[index].fontSize}
+          active={activeBox === index}
           key={index}
         />
       ))}

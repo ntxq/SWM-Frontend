@@ -44,6 +44,8 @@ function Bbox(properties) {
         )
       }
       onClick={(event) => dispatch(selectBox(properties.index))}
+      bounds="parent"
+      style={{ borderColor: properties.active ? "#f5222d" : "#ffa940" }}
       className="bbox"
     >
       <Typography.Text
