@@ -13,6 +13,7 @@ function RecognitionEditor(properties) {
     <Card
       title="Recognition Editor"
       extra={<EditorButtons activeBox={recognition.activeBox} />}
+      className="editor_panel"
     >
       <TextInput
         title={"Original Text"}

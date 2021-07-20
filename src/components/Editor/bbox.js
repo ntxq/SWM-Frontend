@@ -58,7 +58,7 @@ function Bbox(properties) {
         }}
         className="bbox_text"
       >
-        {properties.text}
+        {properties.original || properties.text}
       </Typography.Text>
     </Rnd>
   );

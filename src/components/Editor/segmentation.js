@@ -48,6 +48,7 @@ function Segmentation(properties) {
           const currentPath = path.split("/");
           currentPath[currentPath.length - 1] = "recognition";
           history.push(currentPath.join("/"));
+          window.scrollTo(0, 0);
         },
       });
     }

@@ -4,12 +4,13 @@ import { Route, Switch, useParams, useRouteMatch } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import BasicMenu from "../components/Common/basic-menu";
+import PreviewSider from "../components/Editor/preview-sider";
 
 import Segmentation from "../components/Editor/segmentation";
 import Recognition from "../components/Editor/recognition";
 import "../styles/Editor.css";
 
-const { Header, Sider, Content, Footer } = Layout;
+const { Header, Content, Footer } = Layout;
 
 function Editor(properties) {
   const { url } = useRouteMatch();
@@ -19,12 +20,12 @@ function Editor(properties) {
 
   return (
     <Layout>
-      <Header>
+      <Header className="editor_header">
         <BasicMenu default="3" />
       </Header>
       <Layout>
-        <Sider></Sider>
-        <Content className="content">
+        <PreviewSider />
+        <Content className="content_editor">
           <Switch>
             <Route path={`${url}/segmentation`}>
               <Segmentation webtoon={webtoon} />

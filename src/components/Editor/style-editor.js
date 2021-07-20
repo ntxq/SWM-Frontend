@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, InputNumber, Space, Typography } from "antd";
+import { Button, InputNumber, Space, Tooltip, Typography } from "antd";
 import { BoldOutlined, ItalicOutlined } from "@ant-design/icons";
 import { CompactPicker } from "react-color";
 import FontPicker from "font-picker-react";
@@ -41,7 +41,7 @@ function StyleEditor(properties) {
             }
             scripts={["latin", "korean"]}
           />
-          <div>
+          <Space>
             <Space>
               <Typography.Text>Font Size:</Typography.Text>
               <InputNumber
@@ -57,39 +57,47 @@ function StyleEditor(properties) {
                 }
               />
             </Space>
-            <Button
-              icon={<BoldOutlined />}
-              type="text"
-              onClick={() =>
-                properties.activeBox !== undefined &&
-                dispatch(
-                  updateText({
-                    index: properties.activeBox,
-                    text: {
-                      fontWeight:
-                        properties.fontWeight === "normal" ? "bold" : "normal",
-                    },
-                  })
-                )
-              }
-            />
-            <Button
-              icon={<ItalicOutlined />}
-              type="text"
-              onClick={() =>
-                properties.activeBox !== undefined &&
-                dispatch(
-                  updateText({
-                    index: properties.activeBox,
-                    text: {
-                      fontStyle:
-                        properties.fontStyle === "normal" ? "italic" : "normal",
-                    },
-                  })
-                )
-              }
-            />
-          </div>
+            <Tooltip title="Bold">
+              <Button
+                icon={<BoldOutlined />}
+                type="text"
+                onClick={() =>
+                  properties.activeBox !== undefined &&
+                  dispatch(
+                    updateText({
+                      index: properties.activeBox,
+                      text: {
+                        fontWeight:
+                          properties.fontWeight === "normal"
+                            ? "bold"
+                            : "normal",
+                      },
+                    })
+                  )
+                }
+              />
+            </Tooltip>
+            <Tooltip title="italic">
+              <Button
+                icon={<ItalicOutlined />}
+                type="text"
+                onClick={() =>
+                  properties.activeBox !== undefined &&
+                  dispatch(
+                    updateText({
+                      index: properties.activeBox,
+                      text: {
+                        fontStyle:
+                          properties.fontStyle === "normal"
+                            ? "italic"
+                            : "normal",
+                      },
+                    })
+                  )
+                }
+              />
+            </Tooltip>
+          </Space>
         </Space>
       </Space>
     </Space>

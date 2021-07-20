@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Space } from "antd";
+import { Button, Space, Tooltip } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
 
 import { useDispatch } from "react-redux";
@@ -10,17 +10,21 @@ function EditorButtons(properties) {
 
   return (
     <Space>
-      <Button
-        type="primary"
-        icon={<DeleteOutlined />}
-        onClick={() => dispatch(deleteBox(properties.activeBox))}
-      />
-      <Button
-        type="primary"
-        icon={<DeleteOutlined />}
-        danger
-        onClick={() => dispatch(deleteBox())}
-      />
+      <Tooltip title="Delete the selected box">
+        <Button
+          type="primary"
+          icon={<DeleteOutlined />}
+          onClick={() => dispatch(deleteBox(properties.activeBox))}
+        />
+      </Tooltip>
+      <Tooltip title="Delete all box">
+        <Button
+          type="primary"
+          icon={<DeleteOutlined />}
+          danger
+          onClick={() => dispatch(deleteBox())}
+        />
+      </Tooltip>
       <Button type="primary">Submit All</Button>
     </Space>
   );
