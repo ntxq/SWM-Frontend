@@ -36,7 +36,10 @@ function Bbox(properties) {
           updateSize([
             properties.original,
             properties.index,
-            [reference.style.width, reference.style.height],
+            [
+              Number(reference.style.width.slice(0, -2)),
+              Number(reference.style.height.slice(0, -2)),
+            ],
           ])
         )
       }

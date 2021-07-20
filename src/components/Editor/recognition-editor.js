@@ -14,11 +14,7 @@ import { DeleteOutlined } from "@ant-design/icons";
 import { useHistory } from "react-router";
 
 import { useDispatch, useSelector } from "react-redux";
-import {
-  deleteBox,
-  updateText,
-  updateStyle,
-} from "../../contexts/recognition-slice";
+import { deleteBox, updateText } from "../../contexts/recognition-slice";
 
 function RecognitionEditor(properties) {
   const recognition = useSelector((state) => state.recognition);
@@ -52,15 +48,14 @@ function RecognitionEditor(properties) {
         <Input
           value={
             recognition.activeBox !== undefined
-              ? recognition.bboxText[recognition.activeBox][0]
+              ? recognition.bboxText[recognition.activeBox].original
               : ""
           }
           onChange={(event) =>
             dispatch(
               updateText({
-                original: true,
                 index: recognition.activeBox,
-                text: event.target.value,
+                text: { original: event.target.value },
               })
             )
           }
@@ -68,15 +63,14 @@ function RecognitionEditor(properties) {
         <Input
           value={
             recognition.activeBox !== undefined
-              ? recognition.bboxText[recognition.activeBox][1]
+              ? recognition.bboxText[recognition.activeBox].translated
               : ""
           }
           onChange={(event) =>
             dispatch(
               updateText({
-                original: false,
                 index: recognition.activeBox,
-                text: event.target.value,
+                text: { translated: event.target.value },
               })
             )
           }
@@ -86,15 +80,15 @@ function RecognitionEditor(properties) {
           <InputNumber
             value={
               recognition.activeBox !== undefined
-                ? recognition.bboxText[recognition.activeBox][3]
+                ? recognition.bboxText[recognition.activeBox].fontSize
                 : 0
             }
             onChange={(value) =>
               recognition.activeBox !== undefined &&
               dispatch(
-                updateStyle({
+                updateText({
                   index: recognition.activeBox,
-                  size: value,
+                  text: { fontSize: value },
                 })
               )
             }
@@ -103,15 +97,15 @@ function RecognitionEditor(properties) {
         <SketchPicker
           color={
             recognition.activeBox !== undefined
-              ? recognition.bboxText[recognition.activeBox][3]
+              ? recognition.bboxText[recognition.activeBox].fontColor
               : ""
           }
           onChange={(color) =>
             recognition.activeBox !== undefined &&
             dispatch(
-              updateStyle({
+              updateText({
                 index: recognition.activeBox,
-                color: color.hex,
+                text: { fontColor: color.hex },
               })
             )
           }

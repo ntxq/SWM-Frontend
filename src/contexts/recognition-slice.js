@@ -23,7 +23,12 @@ export const recognitionSlice = createSlice({
         state.translationList = [...state.translationList, action.payload];
         state.bboxText = [
           ...state.bboxText,
-          ["ORIGINAL", "TRANSLATED", "#000000", 15],
+          {
+            original: "ORIGINAL",
+            translated: "TRANSLATED",
+            fontColor: "#000000",
+            fontSize: 15,
+          },
         ];
       }
     },
@@ -77,20 +82,30 @@ export const recognitionSlice = createSlice({
     },
 
     updateText: (state, action) => {
-      if (action.payload.original) {
-        state.bboxText[action.payload.index][0] = action.payload.text;
-      } else {
-        state.bboxText[action.payload.index][1] = action.payload.text;
-      }
-    },
-
-    updateStyle: (state, action) => {
-      if (action.payload.color)
-        state.bboxText[action.payload.index][2] = action.payload.color;
-      else state.bboxText[action.payload.index][3] = action.payload.size;
+      state.bboxText[action.payload.index] = {
+        ...state.bboxText[action.payload.index],
+        ...action.payload.text,
+      };
     },
 
     setImageProperty: (state, action) => {
+      function resizeBboxList(bboxList) {
+        const heightRatio =
+          action.payload.clientHeight / state.imgProperty.clientHeight;
+        const widthRatio =
+          action.payload.clientWidth / state.imgProperty.clientWidth;
+
+        return bboxList.map((bbox) =>
+          bbox.map((value, index) =>
+            index % 2
+              ? Math.floor(value * widthRatio)
+              : Math.floor(value * heightRatio)
+          )
+        );
+      }
+
+      state.bboxList = resizeBboxList(state.bboxList);
+      state.translationList = resizeBboxList(state.bboxList);
       state.imgProperty = action.payload;
     },
   },
@@ -103,7 +118,6 @@ export const {
   updateSize,
   selectBox,
   updateText,
-  updateStyle,
   setImageProperty,
 } = recognitionSlice.actions;
 

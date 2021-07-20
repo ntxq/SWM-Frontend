@@ -20,9 +20,13 @@ function BboxLayer(properties) {
           box={box}
           index={index}
           original={properties.original}
-          text={textList[index][properties.original ? 0 : 1]}
-          color={textList[index][2]}
-          size={textList[index][3]}
+          text={
+            properties.original
+              ? textList[index].original
+              : textList[index].translated
+          }
+          color={textList[index].fontColor}
+          size={textList[index].fontSize}
           key={index}
         />
       ))}
