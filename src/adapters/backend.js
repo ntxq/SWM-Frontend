@@ -9,14 +9,10 @@ export async function uploadOriginals(imageSlice) {
   const data = new FormData();
 
   for (const image of imageSlice) {
-    console.log(image);
     await fetch(image.original)
       .then((result) => result.blob())
       .then((blob) => new File([blob], image.filename, { type: blob.type }))
-      .then((file) => {
-        console.log(file);
-        data.append("source", file);
-      });
+      .then((file) => data.append("source", file));
   }
 
   const response = await backendInstance

@@ -27,10 +27,16 @@ export const webtoonDropSlice = createSlice({
     setForm: (state, action) => {
       state.form = action.payload;
     },
+    mapIds: (state, action) => {
+      state.images = state.images.map((image) => {
+        image.id = action.payload[image.filename];
+        return image;
+      });
+    },
   },
 });
 
-export const { uploadOriginal, uploadInapint, singleDelete, setForm } =
+export const { uploadOriginal, uploadInapint, singleDelete, setForm, mapIds } =
   webtoonDropSlice.actions;
 
 export default webtoonDropSlice.reducer;
