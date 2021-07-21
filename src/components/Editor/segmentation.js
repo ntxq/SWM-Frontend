@@ -36,9 +36,9 @@ function Segmentation(properties) {
               `,
         interfaces: ["controls", "panel", "side-column", "submit", "update"],
         task: {
+          id: 1,
           annotations: [],
           predictions: [],
-          id: 1,
         },
         onLabelStudioLoad: function (ls) {
           const c = ls.annotationStore.addAnnotation({
