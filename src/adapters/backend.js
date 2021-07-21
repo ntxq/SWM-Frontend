@@ -15,9 +15,35 @@ export async function uploadOriginals(imageSlice) {
       .then((file) => data.append("source", file));
   }
 
-  const response = await backendInstance
+  // for (const pair of data.entries()) console.log(pair);
+
+  const result = await backendInstance
     .post("/upload/segmentation/source", data)
+    .then((response) => response.data.req_ids)
     .catch((error) => console.log(error));
 
-  return response.data.req_ids;
+  return result;
+}
+
+export async function uploadBlank(imageSlice) {
+  const data = new FormData();
+
+  for (const image of imageSlice) {
+    if (image.inpaint && image.id) {
+      data.append("map_ids", image.id);
+      await fetch(image.inpaint)
+        .then((result) => result.blob())
+        .then((blob) => new File([blob], image.filename, { type: blob.type }))
+        .then((file) => data.append("blank", file));
+    }
+  }
+
+  // for (const pair of data.entries()) console.log(pair);
+
+  const result = await backendInstance
+    .post("/upload/segmentation/blank", data)
+    .then((response) => response.data.req_ids)
+    .catch((error) => console.log(error));
+
+  return result;
 }

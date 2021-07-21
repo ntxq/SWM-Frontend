@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 
 import { useDispatch } from "react-redux";
 import { setForm } from "../../contexts/webtoon-drop-slice";
-import useUploadOriginal from "./use-upload-original";
+import useUploadOriginal from "./use-upload";
 
 function CreateProject(properties) {
   const history = useHistory();

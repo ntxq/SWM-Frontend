@@ -8,6 +8,7 @@ function WebtoonCard(properties) {
     <Card
       hoverable
       cover={<CropWebtoon url={properties.url} />}
+      onClick={() => console.log(properties.name)}
       className="preview_card"
     >
       <Card.Meta
