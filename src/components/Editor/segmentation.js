@@ -1,13 +1,16 @@
 import React, { useEffect, useRef } from "react";
 import { useHistory, useRouteMatch } from "react-router-dom";
-import { Steps } from "antd";
+import { Button, Steps } from "antd";
 
 import LabelStudio from "label-studio";
 import "label-studio/build/static/css/main.css";
 
+import useMask from "./use-mask";
+
 function Segmentation(properties) {
   const history = useHistory();
   const { path } = useRouteMatch();
+  const upload = useMask(properties.webtoon.id);
 
   const rootReference = useRef(null);
   const lsfReference = useRef(null);
@@ -31,7 +34,7 @@ function Segmentation(properties) {
           </View>
         </View>
               `,
-        interfaces: ["controls", "panel", "side-column", "submit"],
+        interfaces: ["controls", "panel", "side-column", "submit", "update"],
         task: {
           annotations: [],
           predictions: [],
@@ -43,16 +46,15 @@ function Segmentation(properties) {
           });
           ls.annotationStore.selectAnnotation(c.id);
         },
-        onSubmitAnnotation: function (ls, annotation) {
-          console.log(annotation.serializeAnnotation());
-          const currentPath = path.split("/");
-          currentPath[currentPath.length - 1] = "recognition";
-          history.push(currentPath.join("/"));
-          window.scrollTo(0, 0);
+        onSubmitAnnotation: async function (ls, annotation) {
+          await upload(annotation.serializeAnnotation());
+        },
+        onUpdateAnnotation: async function (ls, annotation) {
+          await upload(annotation.serializeAnnotation());
         },
       });
     }
-  }, [properties.webtoon, history, path]);
+  }, [properties.webtoon, history, path, upload]);
 
   return (
     <>
@@ -61,7 +63,19 @@ function Segmentation(properties) {
         <Steps.Step title="Recognition" />
         <Steps.Step title="Finish" />
       </Steps>
+
       <div className="label-studio-root" ref={rootReference} />
+      <Button
+        type="primary"
+        onClick={() => {
+          const currentPath = path.split("/");
+          currentPath[currentPath.length - 1] = "recognition";
+          history.push(currentPath.join("/"));
+          window.scrollTo(0, 0);
+        }}
+      >
+        Next
+      </Button>
     </>
   );
 }

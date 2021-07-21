@@ -2,7 +2,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { mapIds } from "../../contexts/webtoon-drop-slice";
 import { uploadOriginals, uploadBlank } from "../../adapters/backend";
 
-function useUpload(properties) {
+function useUpload() {
   const imgSlice = useSelector((state) => state.webtoons.images);
   const dispatch = useDispatch();
 

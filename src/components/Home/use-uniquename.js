@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 
-function useUniquename(properties) {
+function useUniquename() {
   const uploaded = useSelector((state) => state.webtoons.images);
 
   return function (originalFile) {

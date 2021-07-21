@@ -1,14 +1,17 @@
 import React from "react";
 import { Card, Typography } from "antd";
+import useSegmentation from "./use-segmentation";
 
 import CropWebtoon from "./crop-webtoon";
 
 function WebtoonCard(properties) {
+  const getSegmentation = useSegmentation(properties.id);
+
   return (
     <Card
       hoverable
       cover={<CropWebtoon url={properties.url} />}
-      onClick={() => console.log(properties.name)}
+      onClick={() => getSegmentation()}
       className="preview_card"
     >
       <Card.Meta

@@ -23,6 +23,7 @@ function PreviewSider(properties) {
           }
           hoverable
           onClick={() => history.push(`/editor/${index}/segmentation`)}
+          key={image.filename}
           className="side_card"
         >
           <Card.Meta

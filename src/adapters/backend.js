@@ -47,3 +47,30 @@ export async function uploadBlank(imageSlice) {
 
   return result;
 }
+
+export async function getSegmentationAll(request_id) {
+  const data = {
+    req_id: request_id,
+  };
+
+  const result = await backendInstance
+    .get("/upload/segmentation/result", data)
+    .then((response) => response.data)
+    .catch((error) => console.log(error));
+
+  return result;
+}
+
+export async function uploadMask(request_id, mask) {
+  const data = {
+    req_id: request_id,
+    mask,
+  };
+
+  const result = await backendInstance
+    .get("/upload/segmentation/mask", data)
+    .then((response) => response.data)
+    .catch((error) => console.log(error));
+
+  return result;
+}

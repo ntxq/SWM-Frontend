@@ -18,7 +18,11 @@ function Webtoons(properties) {
         {properties.images.map((image, index) => (
           <Col span={6} key={image.filename}>
             <Link to={`/editor/${index}/segmentation`}>
-              <WebtoonCard url={image.original} name={image.filename} />
+              <WebtoonCard
+                url={image.original}
+                name={image.filename}
+                id={image.id}
+              />
             </Link>
           </Col>
         ))}
