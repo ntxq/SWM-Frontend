@@ -8,9 +8,9 @@ function useUniquename(properties) {
 
     let count = 1;
     let uniqueName = originalName;
-    
+
     // eslint-disable-next-line no-loop-func
-    while (uploaded.some((file) => file[1] === uniqueName))
+    while (uploaded.some((file) => file.filename === uniqueName))
       uniqueName = originalName + "(" + String(++count) + ")";
 
     return new File([originalFile], uniqueName, {

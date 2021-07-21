@@ -21,13 +21,13 @@ function Segmentation(properties) {
             <BrushLabels name="tag" toName="img">
               <Label value="Text" background="red" />
             </BrushLabels>
-            <Image name="img" value="${properties.webtoon[0]}" zoomControl="true" />
+            <Image name="img" value="${properties.webtoon.original}" zoomControl="true" />
           </View>
           <View style="flex: 50%; margin-left: 1em">
             <BrushLabels name="tag2" toName="inpaint">
               <Label value="Inpaint" background="blue" />
             </BrushLabels>
-            <Image name="inpaint" value="${properties.webtoon[2]}" zoomControl="true" />
+            <Image name="inpaint" value="${properties.webtoon.inapint}" zoomControl="true" />
           </View>
         </View>
               `,

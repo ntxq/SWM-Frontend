@@ -15,11 +15,11 @@ function Recognition(properties) {
       </Steps>
       <Row>
         <Col span={8}>
-          <RecognitionImage src={properties.webtoon[0]} />
+          <RecognitionImage src={properties.webtoon.original} />
           <BboxLayer original={true} />
         </Col>
         <Col span={8}>
-          <RecognitionImage src={properties.webtoon[2]} />
+          <RecognitionImage src={properties.webtoon.inpaint} />
           <BboxLayer original={false} />
         </Col>
         <Col span={8}>

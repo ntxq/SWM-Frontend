@@ -14,7 +14,6 @@ const { Header, Content, Footer } = Layout;
 
 function Editor(properties) {
   const { url } = useRouteMatch();
-
   const { file } = useParams();
   const webtoon = useSelector((state) => state.webtoons.images[file]);
 

@@ -3,7 +3,7 @@ import { Upload } from "antd";
 import { PictureOutlined } from "@ant-design/icons";
 
 import { useDispatch } from "react-redux";
-import { upload } from "../../contexts/webtoon-drop-slice";
+import { uploadOriginal } from "../../contexts/webtoon-drop-slice";
 
 import useUniquename from "./use-uniquename";
 
@@ -20,7 +20,14 @@ function WebtoonDrop(properties) {
     async beforeUpload(file) {
       const uniqueFile = uniqueName(file);
       const objectURL = URL.createObjectURL(uniqueFile);
-      dispatch(upload([objectURL, uniqueFile.name, ""]));
+      dispatch(
+        uploadOriginal({
+          original: objectURL,
+          inpaint: "",
+          filename: uniqueFile.name,
+          id: "",
+        })
+      );
       return false;
     },
   };

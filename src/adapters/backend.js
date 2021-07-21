@@ -9,9 +9,10 @@ export async function uploadOriginals(imageSlice) {
   const data = new FormData();
 
   for (const image of imageSlice) {
-    await fetch(image[0])
+    console.log(image);
+    await fetch(image.original)
       .then((result) => result.blob())
-      .then((blob) => new File([blob], image[1], { type: blob.type }))
+      .then((blob) => new File([blob], image.filename, { type: blob.type }))
       .then((file) => {
         console.log(file);
         data.append("source", file);
@@ -20,7 +21,6 @@ export async function uploadOriginals(imageSlice) {
 
   const response = await backendInstance
     .post("/upload/segmentation/source", data)
-    .then((response) => console.log(response))
     .catch((error) => console.log(error));
 
   return response.data.req_ids;

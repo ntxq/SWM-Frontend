@@ -15,10 +15,10 @@ function Webtoons(properties) {
         className="language_choice"
       />
       <Row>
-        {properties.images.map(([url, name], index) => (
-          <Col span={6} key={name}>
+        {properties.images.map((image, index) => (
+          <Col span={6} key={image.filename}>
             <Link to={`/editor/${index}/segmentation`}>
-              <WebtoonCard url={url} name={name} />
+              <WebtoonCard url={image.original} name={image.filename} />
             </Link>
           </Col>
         ))}

@@ -15,8 +15,9 @@ function CreateProject(properties) {
     <Form
       name="project"
       requiredMark={false}
-      onFinish={(values) => {
-        uploadOriginals(uploadList);
+      onFinish={async (values) => {
+        const request_ids = await uploadOriginals(uploadList);
+        console.log(request_ids);
         history.push("/dashboard");
       }}
       onValuesChange={(changed, all) => dispatch(setForm(all))}

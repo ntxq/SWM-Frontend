@@ -14,7 +14,7 @@ function PreviewSider(properties) {
           cover={
             <div className="side_crop">
               <Image
-                src={image[0]}
+                src={image.original}
                 key={index}
                 preview={false}
                 className="side_image"
@@ -28,7 +28,7 @@ function PreviewSider(properties) {
           <Card.Meta
             title={
               <Typography.Text className="title" ellipsis={true}>
-                {image[1]}
+                {image.filename}
               </Typography.Text>
             }
           />
