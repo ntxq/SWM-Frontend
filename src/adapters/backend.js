@@ -35,6 +35,8 @@ export async function uploadBlank(imageSlice) {
         .then((result) => result.blob())
         .then((blob) => new File([blob], image.filename, { type: blob.type }))
         .then((file) => data.append("blank", file));
+    } else if (image.id) {
+      data.append("empty_id", image.id);
     }
   }
 
@@ -68,7 +70,7 @@ export async function uploadMask(request_id, mask) {
   };
 
   const result = await backendInstance
-    .get("/upload/segmentation/mask", data)
+    .post("/upload/segmentation/mask", data)
     .then((response) => response.data)
     .catch((error) => console.log(error));
 
