@@ -16,6 +16,7 @@ function Editor(properties) {
   const { url } = useRouteMatch();
   const { file } = useParams();
   const webtoon = useSelector((state) => state.webtoons.images[file]);
+  const mask = useSelector((state) => state.webtoons.mask);
 
   return (
     <Layout>
@@ -27,7 +28,7 @@ function Editor(properties) {
         <Content className="content_editor">
           <Switch>
             <Route path={`${url}/segmentation`}>
-              <Segmentation webtoon={webtoon} />
+              <Segmentation webtoon={webtoon} mask={mask} index={file} />
             </Route>
             <Route path={`${url}/recognition`}>
               <Recognition webtoon={webtoon} />

@@ -2,15 +2,19 @@ import React, { useEffect, useRef } from "react";
 import { useHistory, useRouteMatch } from "react-router-dom";
 import { Button, Steps } from "antd";
 
+import { useDispatch } from "react-redux";
+import { updateMask } from "../../contexts/webtoon-drop-slice";
+
 import LabelStudio from "label-studio";
 import "label-studio/build/static/css/main.css";
 
-import useMask from "./use-mask";
+import useMaskUpload from "./use-mask-upload";
 
 function Segmentation(properties) {
   const history = useHistory();
   const { path } = useRouteMatch();
-  const upload = useMask(properties.webtoon.id);
+  const dispatch = useDispatch();
+  const upload = useMaskUpload(properties.index);
 
   const rootReference = useRef(null);
   const lsfReference = useRef(null);
@@ -37,7 +41,11 @@ function Segmentation(properties) {
         interfaces: ["controls", "panel", "side-column", "submit", "update"],
         task: {
           id: 1,
-          annotations: [],
+          annotations: [
+            {
+              result: [...properties.webtoon.mask],
+            },
+          ],
           predictions: [],
         },
         onLabelStudioLoad: function (ls) {
@@ -47,14 +55,26 @@ function Segmentation(properties) {
           ls.annotationStore.selectAnnotation(c.id);
         },
         onSubmitAnnotation: async function (ls, annotation) {
+          dispatch(
+            updateMask({
+              index: properties.index,
+              mask: annotation.serializeAnnotation(),
+            })
+          );
           await upload(annotation.serializeAnnotation());
         },
         onUpdateAnnotation: async function (ls, annotation) {
+          dispatch(
+            updateMask({
+              index: properties.index,
+              mask: annotation.serializeAnnotation(),
+            })
+          );
           await upload(annotation.serializeAnnotation());
         },
       });
     }
-  }, [properties.webtoon, history, path, upload]);
+  }, [properties.webtoon, properties.index, history, path, upload, dispatch]);
 
   return (
     <>

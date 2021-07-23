@@ -97,7 +97,9 @@ export async function getSegmentationMask(request_id) {
 export async function uploadMask(request_id, mask) {
   const data = {
     req_id: request_id,
-    mask,
+    mask: JSON.stringify({
+      result: mask,
+    }),
   };
 
   const result = await backendInstance

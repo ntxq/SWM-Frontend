@@ -24,6 +24,7 @@ function WebtoonDrop(properties) {
         uploadOriginal({
           original: objectURL,
           inpaint: "",
+          mask: [],
           filename: uniqueFile.name,
           id: "",
         })

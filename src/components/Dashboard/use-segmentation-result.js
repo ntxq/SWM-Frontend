@@ -5,7 +5,7 @@ import {
   getSegmentationInpaint,
   getSegmentationMask,
 } from "../../adapters/backend";
-import { uploadInpaint, uploadMask } from "../../contexts/webtoon-drop-slice";
+import { uploadInpaint, updateMask } from "../../contexts/webtoon-drop-slice";
 
 function useSegmentationResult(index) {
   const image = useSelector((state) => state.webtoons.images[index]);
@@ -30,7 +30,7 @@ function useSegmentationResult(index) {
           );
 
           const aiMask = await getSegmentationMask(image.id);
-          dispatch(uploadMask(aiMask));
+          dispatch(updateMask(aiMask));
         }
       }, 1000);
     }
