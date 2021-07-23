@@ -3,7 +3,7 @@ import { Upload, message } from "antd";
 import { PictureOutlined } from "@ant-design/icons";
 
 import { useDispatch, useSelector } from "react-redux";
-import { uploadInapint } from "../../contexts/webtoon-drop-slice";
+import { uploadInpaint } from "../../contexts/webtoon-drop-slice";
 
 const { Dragger } = Upload;
 
@@ -25,7 +25,7 @@ function InpaintDrop(properties) {
       const index = images.findIndex((image) => image.filename === file.name);
       if (index !== -1)
         dispatch(
-          uploadInapint({
+          uploadInpaint({
             index,
             inpaint: URL.createObjectURL(file),
           })

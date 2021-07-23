@@ -27,18 +27,23 @@ export async function uploadOriginals(imageSlice) {
 
 export async function uploadBlank(imageSlice) {
   const data = new FormData();
+  const idList = [];
+  const emptyList = [];
 
   for (const image of imageSlice) {
     if (image.inpaint && image.id) {
-      data.append("map_ids", image.id);
+      idList.push(image.id);
       await fetch(image.inpaint)
         .then((result) => result.blob())
         .then((blob) => new File([blob], image.filename, { type: blob.type }))
         .then((file) => data.append("blank", file));
     } else if (image.id) {
-      data.append("empty_id", image.id);
+      emptyList.push(image.id);
     }
   }
+
+  data.append("map_ids", JSON.stringify(idList));
+  data.append("empty_id", JSON.stringify(emptyList));
 
   // for (const pair of data.entries()) console.log(pair);
 
@@ -50,14 +55,40 @@ export async function uploadBlank(imageSlice) {
   return result;
 }
 
-export async function getSegmentationAll(request_id) {
+export async function getSegmentationResult(request_id) {
   const data = {
     req_id: request_id,
   };
 
   const result = await backendInstance
     .get("/upload/segmentation/result", data)
-    .then((response) => response.data)
+    .then((response) => response.data.complete)
+    .catch((error) => console.log(error));
+
+  return result;
+}
+
+export async function getSegmentationInpaint(request_id) {
+  const data = {
+    req_id: request_id,
+  };
+
+  const result = await backendInstance
+    .get("/upload/segmentation/result/inpaint", data)
+    .then((response) => response.data.inpaint)
+    .catch((error) => console.log(error));
+
+  return result;
+}
+
+export async function getSegmentationMask(request_id) {
+  const data = {
+    req_id: request_id,
+  };
+
+  const result = await backendInstance
+    .get("/upload/segmentation/result/inpaint", data)
+    .then((response) => response.data.mask)
     .catch((error) => console.log(error));
 
   return result;

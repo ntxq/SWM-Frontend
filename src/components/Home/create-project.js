@@ -4,19 +4,19 @@ import { useHistory } from "react-router-dom";
 
 import { useDispatch } from "react-redux";
 import { setForm } from "../../contexts/webtoon-drop-slice";
-import useUploadOriginal from "./use-upload";
+import useUpload from "./use-upload";
 
 function CreateProject(properties) {
   const history = useHistory();
   const dispatch = useDispatch();
-  const upload = useUploadOriginal();
+  const upload = useUpload();
 
   return (
     <Form
       name="project"
       requiredMark={false}
-      onFinish={async (values) => {
-        upload();
+      onFinish={async () => {
+        await upload();
         history.push("/dashboard");
       }}
       onValuesChange={(changed, all) => dispatch(setForm(all))}

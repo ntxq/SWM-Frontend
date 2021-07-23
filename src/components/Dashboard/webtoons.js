@@ -22,6 +22,7 @@ function Webtoons(properties) {
                 url={image.original}
                 name={image.filename}
                 id={image.id}
+                index={index}
               />
             </Link>
           </Col>

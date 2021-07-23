@@ -5,7 +5,7 @@ function useMask(reqest_id) {
     const result = await uploadMask(reqest_id, mask);
     console.log(result);
 
-    //todo: get updated inapint image and dispatch to store
+    //todo: get updated inpaint image and dispatch to store
   };
 }
 
