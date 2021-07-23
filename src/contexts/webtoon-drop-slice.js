@@ -32,7 +32,8 @@ export const webtoonDropSlice = createSlice({
     },
     mapIds: (state, action) => {
       state.images = state.images.map((image) => {
-        image.id = action.payload[image.filename];
+        if (action.payload.hasOwnProperty(image.filename))
+          image.id = action.payload[image.filename];
         return image;
       });
     },
