@@ -1,13 +1,32 @@
-import { useSelector } from "react-redux";
-import { uploadMask } from "../../adapters/backend";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  getSegmentationInpaint,
+  getSegmentationResult,
+  uploadMask,
+} from "../../adapters/backend";
+import { uploadInpaint } from "../../contexts/webtoon-drop-slice";
 
 function useMaskUpload(index) {
   const image = useSelector((state) => state.webtoons.images[index]);
+  const dispatch = useDispatch();
 
   return async function (mask) {
     const result = await uploadMask(image.id, mask);
     if (result) {
-      
+      const intervalID = setInterval(async () => {
+        const result = await getSegmentationResult(image.id);
+        if (result) {
+          clearInterval(intervalID);
+
+          const inpaint = await getSegmentationInpaint(image.id);
+          dispatch(
+            uploadInpaint({
+              index,
+              inpaint: URL.createObjectURL(inpaint),
+            })
+          );
+        }
+      }, 2000);
     }
   };
 }
