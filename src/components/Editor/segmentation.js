@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { useHistory, useRouteMatch } from "react-router-dom";
 import { Button, Steps } from "antd";
+import spinner from "./spinner.gif";
 
 import { useDispatch } from "react-redux";
 import { updateMask } from "../../contexts/webtoon-drop-slice";
@@ -28,13 +29,25 @@ function Segmentation(properties) {
             <BrushLabels name="tag" toName="img">
               <Label value="Text" background="red" />
             </BrushLabels>
-            <Image name="img" value="${properties.webtoon.original}" zoomControl="true" />
+            <Image name="img" value="${
+              properties.webtoon.original
+            }" zoomControl="true" />
           </View>
           <View style="flex: 50%; margin-left: 1em">
             <BrushLabels name="tag2" toName="inpaint">
               <Label value="Inpaint" background="blue" />
             </BrushLabels>
-            <Image name="inpaint" value="${properties.webtoon.inpaint}" zoomControl="true" />
+
+            ${
+              properties.webtoon.inpaint
+                ? ""
+                : "<Style> .inpaint { margin-left: 10vw; }</Style>"
+            }
+            <View whenTagName="inpaint" className="inpaint">
+              <Image name="inpaint" value="${
+                properties.webtoon.inpaint || spinner
+              }" zoomControl="true" />
+            </View>
           </View>
         </View>
               `,

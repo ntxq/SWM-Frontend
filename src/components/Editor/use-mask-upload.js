@@ -7,6 +7,7 @@ function useMaskUpload(index) {
   return async function (mask) {
     const result = await uploadMask(image.id, mask);
     if (result) {
+      
     }
   };
 }

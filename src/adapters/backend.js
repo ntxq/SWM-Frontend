@@ -109,3 +109,16 @@ export async function uploadMask(request_id, mask) {
 
   return result;
 }
+
+export async function selectOCR(request_id) {
+  const data = {
+    req_id: request_id,
+  };
+
+  const result = await backendInstance
+    .get("/upload/OCR/select", data)
+    .then((response) => response.data.success)
+    .catch((error) => console.log(error));
+
+  return result;
+}

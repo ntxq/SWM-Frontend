@@ -11,7 +11,7 @@ function WebtoonCard(properties) {
     <Card
       hoverable
       cover={<CropWebtoon url={properties.url} />}
-      onClick={getSegmentation}
+      onClick={async () => await getSegmentation()}
       className="preview_card"
     >
       <Card.Meta

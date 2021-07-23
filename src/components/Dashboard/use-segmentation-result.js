@@ -32,7 +32,7 @@ function useSegmentationResult(index) {
           const aiMask = await getSegmentationMask(image.id);
           dispatch(updateMask(aiMask));
         }
-      }, 1000);
+      }, 2000);
     }
   };
 }

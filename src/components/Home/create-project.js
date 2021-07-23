@@ -16,8 +16,8 @@ function CreateProject(properties) {
       name="project"
       requiredMark={false}
       onFinish={async () => {
-        await upload();
         history.push("/dashboard");
+        await upload();
       }}
       onValuesChange={(changed, all) => dispatch(setForm(all))}
     >
