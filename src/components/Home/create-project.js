@@ -1,20 +1,22 @@
 import React from "react";
-import { useDispatch } from "react-redux";
 import { Form, Card, Input, Radio, Select, Button } from "antd";
 import { useHistory } from "react-router-dom";
 
+import { useDispatch } from "react-redux";
 import { setForm } from "../../contexts/webtoon-drop-slice";
+import useUpload from "./use-upload";
 
 function CreateProject(properties) {
   const history = useHistory();
   const dispatch = useDispatch();
+  const upload = useUpload();
 
   return (
     <Form
       name="project"
       requiredMark={false}
-      onFinish={(values) => {
-        console.log(values);
+      onFinish={async () => {
+        await upload();
         history.push("/dashboard");
       }}
       onValuesChange={(changed, all) => dispatch(setForm(all))}

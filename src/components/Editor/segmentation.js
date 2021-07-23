@@ -1,13 +1,20 @@
 import React, { useEffect, useRef } from "react";
 import { useHistory, useRouteMatch } from "react-router-dom";
-import { Steps } from "antd";
+import { Button, Steps } from "antd";
+
+import { useDispatch } from "react-redux";
+import { updateMask } from "../../contexts/webtoon-drop-slice";
 
 import LabelStudio from "label-studio";
 import "label-studio/build/static/css/main.css";
 
+import useMaskUpload from "./use-mask-upload";
+
 function Segmentation(properties) {
   const history = useHistory();
   const { path } = useRouteMatch();
+  const dispatch = useDispatch();
+  const upload = useMaskUpload(properties.index);
 
   const rootReference = useRef(null);
   const lsfReference = useRef(null);
@@ -21,21 +28,25 @@ function Segmentation(properties) {
             <BrushLabels name="tag" toName="img">
               <Label value="Text" background="red" />
             </BrushLabels>
-            <Image name="img" value="${properties.webtoon[0]}" zoomControl="true" />
+            <Image name="img" value="${properties.webtoon.original}" zoomControl="true" />
           </View>
           <View style="flex: 50%; margin-left: 1em">
             <BrushLabels name="tag2" toName="inpaint">
               <Label value="Inpaint" background="blue" />
             </BrushLabels>
-            <Image name="inpaint" value="${properties.webtoon[2]}" zoomControl="true" />
+            <Image name="inpaint" value="${properties.webtoon.inpaint}" zoomControl="true" />
           </View>
         </View>
               `,
-        interfaces: ["controls", "panel", "side-column", "submit"],
+        interfaces: ["controls", "panel", "side-column", "submit", "update"],
         task: {
-          annotations: [],
-          predictions: [],
           id: 1,
+          annotations: [
+            {
+              result: [...properties.webtoon.mask],
+            },
+          ],
+          predictions: [],
         },
         onLabelStudioLoad: function (ls) {
           const c = ls.annotationStore.addAnnotation({
@@ -43,15 +54,27 @@ function Segmentation(properties) {
           });
           ls.annotationStore.selectAnnotation(c.id);
         },
-        onSubmitAnnotation: function (ls, annotation) {
-          console.log(annotation.serializeAnnotation());
-          const currentPath = path.split("/");
-          currentPath[currentPath.length - 1] = "recognition";
-          history.push(currentPath.join("/"));
+        onSubmitAnnotation: async function (ls, annotation) {
+          dispatch(
+            updateMask({
+              index: properties.index,
+              mask: annotation.serializeAnnotation(),
+            })
+          );
+          await upload(annotation.serializeAnnotation());
+        },
+        onUpdateAnnotation: async function (ls, annotation) {
+          dispatch(
+            updateMask({
+              index: properties.index,
+              mask: annotation.serializeAnnotation(),
+            })
+          );
+          await upload(annotation.serializeAnnotation());
         },
       });
     }
-  }, [properties.webtoon, history, path]);
+  }, [properties.webtoon, properties.index, history, path, upload, dispatch]);
 
   return (
     <>
@@ -60,7 +83,19 @@ function Segmentation(properties) {
         <Steps.Step title="Recognition" />
         <Steps.Step title="Finish" />
       </Steps>
+
       <div className="label-studio-root" ref={rootReference} />
+      <Button
+        type="primary"
+        onClick={() => {
+          const currentPath = path.split("/");
+          currentPath[currentPath.length - 1] = "recognition";
+          history.push(currentPath.join("/"));
+          window.scrollTo(0, 0);
+        }}
+      >
+        Next
+      </Button>
     </>
   );
 }

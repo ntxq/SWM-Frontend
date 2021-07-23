@@ -3,20 +3,32 @@ import { Upload } from "antd";
 import { PictureOutlined } from "@ant-design/icons";
 
 import { useDispatch } from "react-redux";
-import { upload } from "../../contexts/webtoon-drop-slice";
+import { uploadOriginal } from "../../contexts/webtoon-drop-slice";
+
+import useUniquename from "./use-uniquename";
 
 const { Dragger } = Upload;
 
 function WebtoonDrop(properties) {
   const dispatch = useDispatch();
+  const uniqueName = useUniquename();
 
   const defaultConfig = {
     accept: "image/*",
     multiple: true,
     showUploadList: false,
     async beforeUpload(file) {
-      const objectURL = URL.createObjectURL(file);
-      dispatch(upload([objectURL, file.name, ""]));
+      const uniqueFile = uniqueName(file);
+      const objectURL = URL.createObjectURL(uniqueFile);
+      dispatch(
+        uploadOriginal({
+          original: objectURL,
+          inpaint: "",
+          mask: [],
+          filename: uniqueFile.name,
+          id: "",
+        })
+      );
       return false;
     },
   };

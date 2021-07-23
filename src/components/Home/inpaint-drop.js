@@ -3,7 +3,7 @@ import { Upload, message } from "antd";
 import { PictureOutlined } from "@ant-design/icons";
 
 import { useDispatch, useSelector } from "react-redux";
-import { singleInpaint } from "../../contexts/webtoon-drop-slice";
+import { uploadInpaint } from "../../contexts/webtoon-drop-slice";
 
 const { Dragger } = Upload;
 
@@ -14,7 +14,7 @@ function rejectDrop() {
 }
 
 function InpaintDrop(properties) {
-  const webtoons = useSelector((state) => state.webtoons.images);
+  const images = useSelector((state) => state.webtoons.images);
   const dispatch = useDispatch();
 
   const defaultConfig = {
@@ -22,9 +22,14 @@ function InpaintDrop(properties) {
     multiple: true,
     showUploadList: false,
     async beforeUpload(file) {
-      const index = webtoons.findIndex((item) => item[1] === file.name);
+      const index = images.findIndex((image) => image.filename === file.name);
       if (index !== -1)
-        dispatch(singleInpaint([index, URL.createObjectURL(file)]));
+        dispatch(
+          uploadInpaint({
+            index,
+            inpaint: URL.createObjectURL(file),
+          })
+        );
       else rejectDrop();
       return false;
     },

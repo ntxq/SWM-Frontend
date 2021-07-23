@@ -13,11 +13,14 @@ export const webtoonDropSlice = createSlice({
   name: "webtoonDrop",
   initialState,
   reducers: {
-    upload: (state, action) => {
+    uploadOriginal: (state, action) => {
       state.images = [...state.images, action.payload];
     },
-    singleInpaint: (state, action) => {
-      state.images[action.payload[0]][2] = action.payload[1];
+    uploadInpaint: (state, action) => {
+      state.images[action.payload.index].inpaint = action.payload.inpaint;
+    },
+    updateMask: (state, action) => {
+      state.images[action.payload.index].mask = action.payload.mask;
     },
     singleDelete: (state, action) => {
       state.images = state.images.filter(
@@ -27,10 +30,22 @@ export const webtoonDropSlice = createSlice({
     setForm: (state, action) => {
       state.form = action.payload;
     },
+    mapIds: (state, action) => {
+      state.images = state.images.map((image) => {
+        image.id = action.payload[image.filename];
+        return image;
+      });
+    },
   },
 });
 
-export const { upload, singleInpaint, singleDelete, setForm } =
-  webtoonDropSlice.actions;
+export const {
+  uploadOriginal,
+  uploadInpaint,
+  updateMask,
+  singleDelete,
+  setForm,
+  mapIds,
+} = webtoonDropSlice.actions;
 
 export default webtoonDropSlice.reducer;

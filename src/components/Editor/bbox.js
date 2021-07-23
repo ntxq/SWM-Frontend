@@ -36,21 +36,29 @@ function Bbox(properties) {
           updateSize([
             properties.original,
             properties.index,
-            [reference.style.width, reference.style.height],
+            [
+              Number(reference.style.width.slice(0, -2)),
+              Number(reference.style.height.slice(0, -2)),
+            ],
           ])
         )
       }
       onClick={(event) => dispatch(selectBox(properties.index))}
+      bounds="parent"
+      style={{ borderColor: properties.active ? "red" : "#ffa940" }}
       className="bbox"
     >
       <Typography.Text
         style={{
           color: properties.color,
           fontSize: properties.size,
+          fontFamily: properties.font,
+          fontWeight: properties.weight,
+          fontStyle: properties.italic,
         }}
         className="bbox_text"
       >
-        {properties.text}
+        {properties.original || properties.text}
       </Typography.Text>
     </Rnd>
   );

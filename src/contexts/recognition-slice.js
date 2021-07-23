@@ -23,7 +23,15 @@ export const recognitionSlice = createSlice({
         state.translationList = [...state.translationList, action.payload];
         state.bboxText = [
           ...state.bboxText,
-          ["ORIGINAL", "TRANSLATED", "#000000", 15],
+          {
+            original: "ORIGINAL",
+            translated: "TRANSLATED",
+            fontColor: "#000000",
+            fontSize: 15,
+            fontFamily: "Open Sans",
+            fontWeight: "normal",
+            fontStyle: "normal",
+          },
         ];
       }
     },
@@ -77,20 +85,34 @@ export const recognitionSlice = createSlice({
     },
 
     updateText: (state, action) => {
-      if (action.payload.original) {
-        state.bboxText[action.payload.index][0] = action.payload.text;
-      } else {
-        state.bboxText[action.payload.index][1] = action.payload.text;
-      }
-    },
-
-    updateStyle: (state, action) => {
-      if (action.payload.color)
-        state.bboxText[action.payload.index][2] = action.payload.color;
-      else state.bboxText[action.payload.index][3] = action.payload.size;
+      state.bboxText[action.payload.index] = {
+        ...state.bboxText[action.payload.index],
+        ...action.payload.text,
+      };
     },
 
     setImageProperty: (state, action) => {
+      const heightRatio =
+        action.payload.clientHeight / state.imgProperty.clientHeight;
+      const widthRatio =
+        action.payload.clientWidth / state.imgProperty.clientWidth;
+
+      function resizeBboxList(bboxList) {
+        return bboxList.map((bbox) =>
+          bbox.map((value, index) =>
+            index % 2
+              ? Math.round(value * widthRatio)
+              : Math.round(value * heightRatio)
+          )
+        );
+      }
+
+      state.bboxText = state.bboxText.map((textStyle) => ({
+        ...textStyle,
+        fontSize: Math.round(textStyle.fontSize * widthRatio),
+      }));
+      state.bboxList = resizeBboxList(state.bboxList);
+      state.translationList = resizeBboxList(state.translationList);
       state.imgProperty = action.payload;
     },
   },
@@ -103,7 +125,6 @@ export const {
   updateSize,
   selectBox,
   updateText,
-  updateStyle,
   setImageProperty,
 } = recognitionSlice.actions;
 

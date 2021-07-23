@@ -15,13 +15,13 @@ function Preview(properties) {
         </Typography.Title>
       )}
       <Row>
-        {webtoons.map(([url, name, inpaint], index) => (
-          <Col span={4} key={name}>
+        {webtoons.map((image, index) => (
+          <Col span={4} key={image.filename}>
             <PreviewCard
-              url={url}
-              name={name}
+              url={image.original}
+              name={image.filename}
               index={index}
-              inpaint={inpaint}
+              inpaint={image.inpaint}
             />
           </Col>
         ))}

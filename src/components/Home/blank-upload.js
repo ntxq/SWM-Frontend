@@ -2,7 +2,7 @@ import React from "react";
 import { Upload } from "antd";
 
 import { useDispatch } from "react-redux";
-import { singleInpaint } from "../../contexts/webtoon-drop-slice";
+import { uploadInpaint } from "../../contexts/webtoon-drop-slice";
 
 import CropImage from "./crop-image";
 
@@ -16,7 +16,12 @@ function BlankUpload(properties) {
     maxCount: 1,
     showUploadList: false,
     async beforeUpload(file) {
-      dispatch(singleInpaint([properties.index, URL.createObjectURL(file)]));
+      dispatch(
+        uploadInpaint({
+          index: properties.index,
+          inpaint: URL.createObjectURL(file),
+        })
+      );
     },
   };
 

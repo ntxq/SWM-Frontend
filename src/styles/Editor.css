@@ -13,10 +13,7 @@
 }
 
 .bbox {
-  color: black;
-  border: 3px solid #ffa940;
-
-  position: relative;
+  border: 3px solid;
 }
 
 .bbox_text {
@@ -26,4 +23,39 @@
   left: 50%;
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
+}
+
+.editor_panel {
+  position: fixed !important;
+}
+
+.editor_header {
+  z-index: 1;
+}
+
+.preview_sider {
+  overflow-y: scroll;
+  position: fixed !important;
+  padding-top: 30px;
+
+  height: 100vh !important;
+  top: 0 !important;
+}
+
+.side_crop {
+  height: 30vh;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.side_card {
+  margin: 50px 20px !important;
+}
+
+.content_editor {
+  margin-left: 320px !important;
+}
+
+.title {
+  width: 100%;
 }
