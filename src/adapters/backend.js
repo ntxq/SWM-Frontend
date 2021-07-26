@@ -122,3 +122,57 @@ export async function selectOCR(request_id) {
 
   return result;
 }
+
+export async function getOCRResult(request_id) {
+  const data = {
+    req_id: request_id,
+  };
+
+  const result = await backendInstance
+    .get("/upload/OCR/result", data)
+    .then((response) => response.data.success)
+    .catch((error) => console.log(error));
+
+  return result;
+}
+
+export async function getOCRResultBbox(request_id) {
+  const data = {
+    req_id: request_id,
+  };
+
+  const result = await backendInstance
+    .get("/upload/OCR/result/edit", data)
+    .then((response) => response.data.bboxList)
+    .catch((error) => console.log(error));
+
+  return result;
+}
+
+export async function uploadEdit(request_id, bboxList) {
+  const data = {
+    req_id: request_id,
+    bboxList,
+  };
+
+  const result = await backendInstance
+    .post("/upload/OCR/edit", data)
+    .then((response) => response.data.success)
+    .catch((error) => console.log(error));
+
+  return result;
+}
+
+export async function uploadStyles(request_id, styleList) {
+  const data = {
+    req_id: request_id,
+    bboxList: styleList,
+  };
+
+  const result = await backendInstance
+    .get("/upload/OCR/styles", data)
+    .then((response) => response.data.success)
+    .catch((error) => console.log(error));
+
+  return result;
+}
