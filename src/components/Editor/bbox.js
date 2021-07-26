@@ -3,11 +3,7 @@ import { Rnd } from "react-rnd";
 import { Typography } from "antd";
 
 import { useDispatch } from "react-redux";
-import {
-  updateLocation,
-  updateSize,
-  selectBox,
-} from "../../contexts/recognition-slice";
+import { updateBbox, selectBox } from "../../contexts/recognition-slice";
 
 function Bbox(properties) {
   const dispatch = useDispatch();
@@ -15,32 +11,43 @@ function Bbox(properties) {
   return (
     <Rnd
       position={{
-        x: properties.box[0],
-        y: properties.box[1],
+        x: properties.dimension[0],
+        y: properties.dimension[1],
       }}
       size={{
-        width: properties.box[2],
-        height: properties.box[3],
+        width: properties.dimension[2],
+        height: properties.dimension[3],
       }}
       onDragStop={(event, data) =>
         dispatch(
-          updateLocation([
-            properties.original,
-            properties.index,
-            [data.x, data.y],
-          ])
+          updateBbox({
+            index: properties.index,
+            updatedBbox: properties.original
+              ? {
+                  originalX: data.x,
+                  originalY: data.y,
+                }
+              : {
+                  translatedX: data.x,
+                  translatedY: data.y,
+                },
+          })
         )
       }
       onResizeStop={(event, direction, reference, delta, position) =>
         dispatch(
-          updateSize([
-            properties.original,
-            properties.index,
-            [
-              Number(reference.style.width.slice(0, -2)),
-              Number(reference.style.height.slice(0, -2)),
-            ],
-          ])
+          updateBbox({
+            index: properties.index,
+            updatedBbox: properties.original
+              ? {
+                  originalWidth: Number(reference.style.width.slice(0, -2)),
+                  originalHeight: Number(reference.style.height.slice(0, -2)),
+                }
+              : {
+                  translatedWidth: Number(reference.style.width.slice(0, -2)),
+                  translatedHeight: Number(reference.style.height.slice(0, -2)),
+                },
+          })
         )
       }
       onClick={(event) => dispatch(selectBox(properties.index))}

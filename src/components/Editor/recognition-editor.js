@@ -20,7 +20,7 @@ function RecognitionEditor(properties) {
         activeBox={recognition.activeBox}
         text={
           recognition.activeBox !== undefined &&
-          recognition.bboxText[recognition.activeBox].original
+          recognition.bboxList[recognition.activeBox].originalText
         }
         original={true}
       />
@@ -29,7 +29,7 @@ function RecognitionEditor(properties) {
         activeBox={recognition.activeBox}
         text={
           recognition.activeBox !== undefined &&
-          recognition.bboxText[recognition.activeBox].translated
+          recognition.bboxList[recognition.activeBox].translatedText
         }
         original={false}
       />
@@ -37,26 +37,26 @@ function RecognitionEditor(properties) {
         activeBox={recognition.activeBox}
         fontSize={
           recognition.activeBox !== undefined &&
-          recognition.bboxText[recognition.activeBox].fontSize
+          recognition.bboxList[recognition.activeBox].fontSize
         }
         fontColor={
           recognition.activeBox !== undefined &&
-          recognition.bboxText[recognition.activeBox].fontColor
+          recognition.bboxList[recognition.activeBox].fontColor
         }
         fontFamily={
           recognition.activeBox !== undefined
-            ? recognition.bboxText[recognition.activeBox].fontFamily
+            ? recognition.bboxList[recognition.activeBox].fontFamily
             : "Open Sans"
         }
         fontWeight={
           recognition.activeBox !== undefined
-            ? recognition.bboxText[recognition.activeBox].fontWeight
-            : "Open Sans"
+            ? recognition.bboxList[recognition.activeBox].fontWeight
+            : "normal"
         }
         fontStyle={
           recognition.activeBox !== undefined
-            ? recognition.bboxText[recognition.activeBox].fontStyle
-            : "Open Sans"
+            ? recognition.bboxList[recognition.activeBox].fontStyle
+            : "normal"
         }
       />
     </Card>

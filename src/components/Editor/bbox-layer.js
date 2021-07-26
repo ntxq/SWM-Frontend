@@ -5,32 +5,36 @@ import { useSelector } from "react-redux";
 import Bbox from "./bbox";
 
 function BboxLayer(properties) {
-  const bboxList = useSelector((state) =>
-    properties.original
-      ? state.recognition.bboxList
-      : state.recognition.translationList
-  );
-  const textList = useSelector((state) => state.recognition.bboxText);
+  const bboxList = useSelector((state) => state.recognition.bboxList);
   const activeBox = useSelector((state) => state.recognition.activeBox);
 
   return (
     <>
       {bboxList.map((box, index) => (
         <Bbox
-          box={box}
           index={index}
-          original={properties.original}
-          content={textList[index]}
-          text={
+          dimension={
             properties.original
-              ? textList[index].original
-              : textList[index].translated
+              ? [
+                  box.originalX,
+                  box.originalY,
+                  box.originalWidth,
+                  box.originalHeight,
+                ]
+              : [
+                  box.translatedX,
+                  box.translatedY,
+                  box.translatedWidth,
+                  box.translatedHeight,
+                ]
           }
-          color={textList[index].fontColor}
-          size={textList[index].fontSize}
-          font={textList[index].fontFamily}
-          weight={textList[index].fontWeight}
-          italic={textList[index].fontStyle}
+          original={properties.original}
+          text={properties.original ? box.originalText : box.translatedText}
+          color={box.fontColor}
+          size={box.fontSize}
+          font={box.fontFamily}
+          weight={box.fontWeight}
+          italic={box.fontStyle}
           active={activeBox === index}
           key={index}
         />

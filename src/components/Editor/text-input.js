@@ -2,7 +2,7 @@ import React from "react";
 import { Typography, Input, Divider } from "antd";
 
 import { useDispatch } from "react-redux";
-import { updateText } from "../../contexts/recognition-slice";
+import { updateBbox } from "../../contexts/recognition-slice";
 
 function TextInput(properties) {
   const dispatch = useDispatch();
@@ -15,14 +15,14 @@ function TextInput(properties) {
         onChange={(event) =>
           properties.activeBox !== undefined &&
           dispatch(
-            updateText({
+            updateBbox({
               index: properties.activeBox,
-              text: properties.original
+              updatedBbox: properties.original
                 ? {
-                    original: event.target.value,
+                    originalText: event.target.value,
                   }
                 : {
-                    translated: event.target.value,
+                    translatedText: event.target.value,
                   },
             })
           )

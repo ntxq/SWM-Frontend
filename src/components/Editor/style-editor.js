@@ -5,7 +5,7 @@ import { CompactPicker } from "react-color";
 import FontPicker from "font-picker-react";
 
 import { useDispatch } from "react-redux";
-import { updateText } from "../../contexts/recognition-slice";
+import { updateBbox } from "../../contexts/recognition-slice";
 
 function StyleEditor(properties) {
   const dispatch = useDispatch();
@@ -19,9 +19,9 @@ function StyleEditor(properties) {
           onChange={(color) =>
             properties.activeBox !== undefined &&
             dispatch(
-              updateText({
+              updateBbox({
                 index: properties.activeBox,
-                text: { fontColor: color.hex },
+                updatedBbox: { fontColor: color.hex },
               })
             )
           }
@@ -33,9 +33,9 @@ function StyleEditor(properties) {
             onChange={(nextFont) =>
               properties.activeBox !== undefined &&
               dispatch(
-                updateText({
+                updateBbox({
                   index: properties.activeBox,
-                  text: { fontFamily: nextFont.family },
+                  updatedBbox: { fontFamily: nextFont.family },
                 })
               )
             }
@@ -49,9 +49,9 @@ function StyleEditor(properties) {
                 onChange={(value) =>
                   properties.activeBox !== undefined &&
                   dispatch(
-                    updateText({
+                    updateBbox({
                       index: properties.activeBox,
-                      text: { fontSize: value },
+                      updatedBbox: { fontSize: value },
                     })
                   )
                 }
@@ -64,9 +64,9 @@ function StyleEditor(properties) {
                 onClick={() =>
                   properties.activeBox !== undefined &&
                   dispatch(
-                    updateText({
+                    updateBbox({
                       index: properties.activeBox,
-                      text: {
+                      updatedBbox: {
                         fontWeight:
                           properties.fontWeight === "normal"
                             ? "bold"
@@ -84,9 +84,9 @@ function StyleEditor(properties) {
                 onClick={() =>
                   properties.activeBox !== undefined &&
                   dispatch(
-                    updateText({
+                    updateBbox({
                       index: properties.activeBox,
-                      text: {
+                      updatedBbox: {
                         fontStyle:
                           properties.fontStyle === "normal"
                             ? "italic"
