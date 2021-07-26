@@ -53,9 +53,15 @@
 }
 
 .content_editor {
-  margin-left: 320px !important;
+  margin-left: 320px;
+  margin-right: 1%;
 }
 
 .title {
   width: 100%;
+}
+
+.ant-modal-content {
+  background: rgba(0, 0, 0, 0) !important;
+  box-shadow: none !important;
 }

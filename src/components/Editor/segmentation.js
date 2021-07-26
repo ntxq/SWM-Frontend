@@ -1,7 +1,6 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useHistory, useRouteMatch } from "react-router-dom";
-import { Button, Steps } from "antd";
-import spinner from "./spinner.gif";
+import { Button, Steps, Modal, Spin } from "antd";
 
 import { useDispatch } from "react-redux";
 import { updateMask } from "../../contexts/webtoon-drop-slice";
@@ -19,6 +18,12 @@ function Segmentation(properties) {
 
   const rootReference = useRef(null);
   const lsfReference = useRef(null);
+  const [isModalVisible, setIsModalVisible] = useState(true);
+
+  useEffect(() => {
+    if (properties.webtoon.inpaint) setIsModalVisible(false);
+    else setIsModalVisible(true);
+  }, [properties.webtoon.inpaint]);
 
   useEffect(() => {
     if (rootReference.current) {
@@ -33,21 +38,14 @@ function Segmentation(properties) {
               properties.webtoon.original
             }" zoomControl="true" />
           </View>
+
           <View style="flex: 50%; margin-left: 1em">
             <BrushLabels name="tag2" toName="inpaint">
               <Label value="Inpaint" background="blue" />
             </BrushLabels>
-
-            ${
-              properties.webtoon.inpaint
-                ? ""
-                : "<Style> .inpaint { margin-left: 10vw; }</Style>"
-            }
-            <View whenTagName="inpaint" className="inpaint">
-              <Image name="inpaint" value="${
-                properties.webtoon.inpaint || spinner
-              }" zoomControl="true" />
-            </View>
+            <Image name="inpaint" value="${
+              properties.webtoon.inpaint || properties.webtoon.original
+            }" zoomControl="true" />
           </View>
         </View>
               `,
@@ -87,10 +85,31 @@ function Segmentation(properties) {
         },
       });
     }
-  }, [properties.webtoon, properties.index, history, path, upload, dispatch]);
+  }, [properties.webtoon, properties.index, upload, dispatch]);
 
   return (
     <>
+      <Modal
+        visible={isModalVisible}
+        centered
+        closable={false}
+        destroyOnClose={true}
+        // eslint-disable-next-line unicorn/no-null
+        footer={null}
+        maskClosable={false}
+        style={{
+          background: "rgba(100, 0, 0, 0)",
+        }}
+        bodyStyle={{
+          background: "rgba(0, 0, 0, 0)",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Spin size="large"/>
+      </Modal>
+
       <Steps current={0} className="editor_progress">
         <Steps.Step title="Segmentation" />
         <Steps.Step title="Recognition" />
