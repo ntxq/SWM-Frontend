@@ -2,7 +2,7 @@ import axios from "axios";
 import FormData from "form-data";
 
 const backendInstance = axios.create({
-  baseURL: "http://13.124.109.41:3000",
+  baseURL: "http://3.36.117.231:3000",
 });
 
 export async function uploadOriginals(imageSlice) {
