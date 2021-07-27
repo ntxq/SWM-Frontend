@@ -6,10 +6,13 @@ function useUpload() {
   const imgSlice = useSelector((state) => state.webtoons.images);
   const dispatch = useDispatch();
 
-  return async function () {
-    const request_ids = await uploadOriginals(imgSlice);
-    dispatch(mapIds(request_ids));
-    await uploadBlank(imgSlice);
+  return function () {
+    uploadOriginals(imgSlice)
+      .then((request_ids) => {
+        uploadBlank(imgSlice, request_ids);
+        return request_ids;
+      })
+      .then((request_ids) => dispatch(mapIds(request_ids)));
   };
 }
 

@@ -15,8 +15,6 @@ export async function uploadOriginals(imageSlice) {
       .then((file) => data.append("source", file));
   }
 
-  // for (const pair of data.entries()) console.log(pair);
-
   const result = await backendInstance
     .post("/upload/segmentation/source", data)
     .then((response) => response.data.req_ids)
@@ -25,27 +23,25 @@ export async function uploadOriginals(imageSlice) {
   return result;
 }
 
-export async function uploadBlank(imageSlice) {
+export async function uploadBlank(imageSlice, request_ids) {
   const data = new FormData();
   const idList = [];
   const emptyList = [];
 
   for (const image of imageSlice) {
-    if (image.inpaint && image.id) {
-      idList.push(image.id);
+    if (image.inpaint && request_ids.hasOwnProperty(image.filename)) {
+      idList.push(request_ids[image.filename]);
       await fetch(image.inpaint)
         .then((result) => result.blob())
         .then((blob) => new File([blob], image.filename, { type: blob.type }))
         .then((file) => data.append("blank", file));
-    } else if (image.id) {
-      emptyList.push(image.id);
+    } else if (request_ids.hasOwnProperty(image.filename)) {
+      emptyList.push(request_ids[image.filename]);
     }
   }
 
   data.append("map_ids", JSON.stringify(idList));
   data.append("empty_id", JSON.stringify(emptyList));
-
-  // for (const pair of data.entries()) console.log(pair);
 
   const result = await backendInstance
     .post("/upload/segmentation/blank", data)
