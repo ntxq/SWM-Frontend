@@ -33,6 +33,7 @@ function Segmentation(properties) {
           <View style="flex: 50%">
             <BrushLabels name="tag" toName="img">
               <Label value="Text" background="red" />
+              <Label value="AI" background="blue" />
             </BrushLabels>
             <Image name="img" value="${
               properties.webtoon.original
@@ -41,7 +42,7 @@ function Segmentation(properties) {
 
           <View style="flex: 50%; margin-left: 1em">
             <BrushLabels name="tag2" toName="inpaint">
-              <Label value="Inpaint" background="blue" />
+              <Label value="Inpaint" background="green" />
             </BrushLabels>
             <Image name="inpaint" value="${
               properties.webtoon.inpaint || properties.webtoon.original
@@ -107,7 +108,7 @@ function Segmentation(properties) {
           alignItems: "center",
         }}
       >
-        <Spin size="large"/>
+        <Spin size="large" />
       </Modal>
 
       <Steps current={0} className="editor_progress">

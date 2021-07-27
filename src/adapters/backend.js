@@ -1,8 +1,10 @@
 import axios from "axios";
 import FormData from "form-data";
 
+const url = "http://3.36.117.231:3000";
+
 const backendInstance = axios.create({
-  baseURL: "http://3.36.117.231:3000",
+  baseURL: url,
 });
 
 export async function uploadOriginals(imageSlice) {
@@ -53,7 +55,9 @@ export async function uploadBlank(imageSlice, request_ids) {
 
 export async function getSegmentationResult(request_id) {
   const data = {
-    req_id: request_id,
+    params: {
+      req_id: request_id,
+    },
   };
 
   const result = await backendInstance
@@ -65,13 +69,10 @@ export async function getSegmentationResult(request_id) {
 }
 
 export async function getSegmentationInpaint(request_id) {
-  const data = {
-    req_id: request_id,
-  };
-
-  const result = await backendInstance
-    .get("/upload/segmentation/result/inpaint", data)
-    .then((response) => response.data.inpaint)
+  const result = await fetch(
+    url + `/upload/segmentation/result/inpaint?req_id=${request_id}`
+  )
+    .then((response) => response.blob())
     .catch((error) => console.log(error));
 
   return result;
@@ -79,11 +80,13 @@ export async function getSegmentationInpaint(request_id) {
 
 export async function getSegmentationMask(request_id) {
   const data = {
-    req_id: request_id,
+    params: {
+      req_id: request_id,
+    },
   };
 
   const result = await backendInstance
-    .get("/upload/segmentation/result/inpaint", data)
+    .get("/upload/segmentation/result/mask", data)
     .then((response) => response.data.mask)
     .catch((error) => console.log(error));
 
@@ -108,7 +111,9 @@ export async function uploadMask(request_id, mask) {
 
 export async function selectOCR(request_id) {
   const data = {
-    req_id: request_id,
+    params: {
+      req_id: request_id,
+    },
   };
 
   const result = await backendInstance
@@ -121,7 +126,9 @@ export async function selectOCR(request_id) {
 
 export async function getOCRResult(request_id) {
   const data = {
-    req_id: request_id,
+    params: {
+      req_id: request_id,
+    },
   };
 
   const result = await backendInstance
@@ -134,7 +141,9 @@ export async function getOCRResult(request_id) {
 
 export async function getOCRResultBbox(request_id) {
   const data = {
-    req_id: request_id,
+    params: {
+      req_id: request_id,
+    },
   };
 
   const result = await backendInstance
@@ -161,8 +170,10 @@ export async function uploadEdit(request_id, bboxList) {
 
 export async function uploadStyles(request_id, styleList) {
   const data = {
-    req_id: request_id,
-    bboxList: styleList,
+    params: {
+      req_id: request_id,
+      bboxList: styleList,
+    },
   };
 
   const result = await backendInstance

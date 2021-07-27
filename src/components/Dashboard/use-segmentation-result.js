@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   getSegmentationResult,
@@ -9,16 +8,14 @@ import { uploadInpaint, updateMask } from "../../contexts/webtoon-drop-slice";
 
 function useSegmentationResult(index) {
   const image = useSelector((state) => state.webtoons.images[index]);
-  const [SegmentationResult, setSegmentationResult] = useState(false);
   const dispatch = useDispatch();
 
   return async function () {
     if (image.inpaint === "") {
       const intervalID = setInterval(async () => {
         const result = await getSegmentationResult(image.id);
-        setSegmentationResult(result);
 
-        if (SegmentationResult) {
+        if (result) {
           clearInterval(intervalID);
 
           const aiInpaint = await getSegmentationInpaint(image.id);
@@ -30,7 +27,24 @@ function useSegmentationResult(index) {
           );
 
           const aiMask = await getSegmentationMask(image.id);
-          dispatch(updateMask(aiMask));
+          dispatch(
+            updateMask({
+              index,
+              mask: [
+                {
+                  id: "AI",
+                  from_name: "tag",
+                  to_name: "img",
+                  type: "brushlabels",
+                  value: {
+                    format: "rle",
+                    rle: aiMask,
+                    brushlabels: ["AI"],
+                  },
+                },
+              ],
+            })
+          );
         }
       }, 2000);
     }
