@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Form, Card, Input, Radio, Select, Button } from "antd";
 import { useHistory } from "react-router-dom";
 
@@ -11,13 +11,15 @@ function CreateProject(properties) {
   const dispatch = useDispatch();
   const upload = useUpload();
 
+  const [loading, setLoading] = useState(false);
+
   return (
     <Form
       name="project"
       requiredMark={false}
       onFinish={async () => {
-        history.push("/dashboard");
-        await upload();
+        setLoading(true);
+        await upload(history);
       }}
       onValuesChange={(changed, all) => dispatch(setForm(all))}
     >
@@ -62,6 +64,7 @@ function CreateProject(properties) {
             size="large"
             htmlType="submit"
             className="submit"
+            loading={loading}
           >
             Start translation
           </Button>

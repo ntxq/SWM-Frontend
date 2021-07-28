@@ -67,6 +67,7 @@ function Segmentation(properties) {
           ls.annotationStore.selectAnnotation(c.id);
         },
         onSubmitAnnotation: async function (ls, annotation) {
+          setIsModalVisible(true);
           dispatch(
             updateWebtoon({
               index: properties.index,
@@ -78,6 +79,7 @@ function Segmentation(properties) {
           await upload(annotation.serializeAnnotation());
         },
         onUpdateAnnotation: async function (ls, annotation) {
+          setIsModalVisible(true);
           dispatch(
             updateWebtoon({
               index: properties.index,
