@@ -4,7 +4,7 @@ import {
   getSegmentationInpaint,
   getSegmentationMask,
 } from "../../adapters/backend";
-import { uploadInpaint, updateMask } from "../../contexts/webtoon-drop-slice";
+import { updateWebtoon } from "../../contexts/webtoon-drop-slice";
 
 function useSegmentationResult(index) {
   const image = useSelector((state) => state.webtoons.images[index]);
@@ -20,29 +20,33 @@ function useSegmentationResult(index) {
 
           const aiInpaint = await getSegmentationInpaint(image.id);
           dispatch(
-            uploadInpaint({
+            updateWebtoon({
               index,
-              inpaint: URL.createObjectURL(aiInpaint),
+              webtoon: {
+                inpaint: URL.createObjectURL(aiInpaint),
+              },
             })
           );
 
           const aiMask = await getSegmentationMask(image.id);
           dispatch(
-            updateMask({
+            updateWebtoon({
               index,
-              mask: [
-                {
-                  id: "AI",
-                  from_name: "tag",
-                  to_name: "img",
-                  type: "brushlabels",
-                  value: {
-                    format: "rle",
-                    rle: aiMask,
-                    brushlabels: ["AI"],
+              webtoon: {
+                mask: [
+                  {
+                    id: "AI",
+                    from_name: "tag",
+                    to_name: "img",
+                    type: "brushlabels",
+                    value: {
+                      format: "rle",
+                      rle: aiMask,
+                      brushlabels: ["AI"],
+                    },
                   },
-                },
-              ],
+                ],
+              },
             })
           );
         }

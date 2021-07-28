@@ -3,7 +3,7 @@ import { useHistory, useRouteMatch } from "react-router-dom";
 import { Button, Steps, Modal, Spin } from "antd";
 
 import { useDispatch } from "react-redux";
-import { updateMask } from "../../contexts/webtoon-drop-slice";
+import { updateWebtoon } from "../../contexts/webtoon-drop-slice";
 
 import LabelStudio from "label-studio";
 import "label-studio/build/static/css/main.css";
@@ -68,18 +68,22 @@ function Segmentation(properties) {
         },
         onSubmitAnnotation: async function (ls, annotation) {
           dispatch(
-            updateMask({
+            updateWebtoon({
               index: properties.index,
-              mask: annotation.serializeAnnotation(),
+              webtoon: {
+                mask: annotation.serializeAnnotation(),
+              },
             })
           );
           await upload(annotation.serializeAnnotation());
         },
         onUpdateAnnotation: async function (ls, annotation) {
           dispatch(
-            updateMask({
+            updateWebtoon({
               index: properties.index,
-              mask: annotation.serializeAnnotation(),
+              webtoon: {
+                mask: annotation.serializeAnnotation(),
+              },
             })
           );
           await upload(annotation.serializeAnnotation());

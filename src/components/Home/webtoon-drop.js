@@ -1,9 +1,9 @@
 import React from "react";
 import { Upload } from "antd";
-import { PictureOutlined } from "@ant-design/icons";
+import { BsChatDots } from "react-icons/bs";
 
 import { useDispatch } from "react-redux";
-import { uploadOriginal } from "../../contexts/webtoon-drop-slice";
+import { uploadWebtoon } from "../../contexts/webtoon-drop-slice";
 
 import useUniquename from "./use-uniquename";
 
@@ -21,13 +21,9 @@ function WebtoonDrop(properties) {
       const uniqueFile = uniqueName(file);
       const objectURL = URL.createObjectURL(uniqueFile);
       dispatch(
-        uploadOriginal({
+        uploadWebtoon({
           original: objectURL,
-          inpaint: "",
-          translated: "",
-          mask: [],
           filename: uniqueFile.name,
-          id: "",
         })
       );
       return false;
@@ -37,14 +33,10 @@ function WebtoonDrop(properties) {
   return (
     <Dragger {...defaultConfig}>
       <p className="ant-upload-drag-icon">
-        <PictureOutlined />
+        <BsChatDots color="#40a9ff" size="3em" />
       </p>
       <p className="ant-upload-text">
-        Click or drag file to this area to upload
-      </p>
-      <p className="ant-upload-hint">
-        Support for a single or bulk upload. Strictly prohibit from uploading
-        company data or other band files
+        Upload original webtoon images to translate (Required)
       </p>
     </Dragger>
   );

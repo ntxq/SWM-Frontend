@@ -1,9 +1,9 @@
 import React from "react";
 import { Upload, message } from "antd";
-import { PictureOutlined } from "@ant-design/icons";
+import { BsChat } from "react-icons/bs";
 
 import { useDispatch, useSelector } from "react-redux";
-import { uploadInpaint } from "../../contexts/webtoon-drop-slice";
+import { updateWebtoon } from "../../contexts/webtoon-drop-slice";
 
 const { Dragger } = Upload;
 
@@ -25,9 +25,11 @@ function InpaintDrop(properties) {
       const index = images.findIndex((image) => image.filename === file.name);
       if (index !== -1)
         dispatch(
-          uploadInpaint({
+          updateWebtoon({
             index,
-            inpaint: URL.createObjectURL(file),
+            webtoon: {
+              inpaint: URL.createObjectURL(file),
+            },
           })
         );
       else rejectDrop();
@@ -38,14 +40,10 @@ function InpaintDrop(properties) {
   return (
     <Dragger {...defaultConfig}>
       <p className="ant-upload-drag-icon">
-        <PictureOutlined />
+        <BsChat color="#40a9ff" size="3em" />
       </p>
       <p className="ant-upload-text">
-        Click or drag file to this area to upload
-      </p>
-      <p className="ant-upload-hint">
-        Support for a single or bulk upload. Strictly prohibit from uploading
-        company data or other band files
+        Upload text-erased webtoon images (Optional)
       </p>
     </Dragger>
   );

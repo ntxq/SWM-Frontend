@@ -1,7 +1,7 @@
 import axios from "axios";
 import FormData from "form-data";
 
-const url = "http://3.36.117.231:3000";
+const url = "https://b995d98d-0a94-4ce8-9859-8fa3569df45d.mock.pstmn.io";
 
 const backendInstance = axios.create({
   baseURL: url,

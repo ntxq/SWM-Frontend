@@ -4,7 +4,7 @@ import {
   getSegmentationResult,
   uploadMask,
 } from "../../adapters/backend";
-import { uploadInpaint } from "../../contexts/webtoon-drop-slice";
+import { updateWebtoon } from "../../contexts/webtoon-drop-slice";
 
 function useMaskUpload(index) {
   const image = useSelector((state) => state.webtoons.images[index]);
@@ -20,9 +20,11 @@ function useMaskUpload(index) {
 
           const inpaint = await getSegmentationInpaint(image.id);
           dispatch(
-            uploadInpaint({
+            updateWebtoon({
               index,
-              inpaint: URL.createObjectURL(inpaint),
+              webtoon: {
+                inpaint: URL.createObjectURL(inpaint),
+              },
             })
           );
         }
