@@ -3,7 +3,7 @@ import { Rnd } from "react-rnd";
 import { Typography } from "antd";
 
 import { useDispatch } from "react-redux";
-import { updateBbox, selectBox } from "../../contexts/recognition-slice";
+import { updateBbox, selectBox } from "../../../contexts/recognition-slice";
 
 function Bbox(properties) {
   const dispatch = useDispatch();

@@ -3,7 +3,7 @@ import { Button, Space, Tooltip } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
 
 import { useDispatch } from "react-redux";
-import { deleteBox } from "../../contexts/recognition-slice";
+import { deleteBox } from "../../../contexts/recognition-slice";
 
 function EditorButtons(properties) {
   const dispatch = useDispatch();

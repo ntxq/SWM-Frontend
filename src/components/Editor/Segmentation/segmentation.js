@@ -1,24 +1,29 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useHistory, useRouteMatch } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { Button, Steps, Modal, Spin } from "antd";
 
 import { useDispatch } from "react-redux";
-import { updateWebtoon } from "../../contexts/webtoon-drop-slice";
+import { updateWebtoon } from "../../../contexts/webtoon-drop-slice";
 
 import LabelStudio from "label-studio";
 import "label-studio/build/static/css/main.css";
 
+import useSegmentationResult from "./use-segmentation-result";
 import useMaskUpload from "./use-mask-upload";
 
 function Segmentation(properties) {
   const history = useHistory();
-  const { path } = useRouteMatch();
   const dispatch = useDispatch();
-  const upload = useMaskUpload(properties.index);
+  const getResult = useSegmentationResult(properties.index);
+  const postUpload = useMaskUpload(properties.index);
 
   const rootReference = useRef(null);
   const lsfReference = useRef(null);
   const [isModalVisible, setIsModalVisible] = useState(true);
+
+  useEffect(() => {
+    getResult();
+  }, [getResult]);
 
   useEffect(() => {
     if (properties.webtoon.inpaint) setIsModalVisible(false);
@@ -76,7 +81,7 @@ function Segmentation(properties) {
               },
             })
           );
-          await upload(annotation.serializeAnnotation());
+          await postUpload(annotation.serializeAnnotation());
         },
         onUpdateAnnotation: async function (ls, annotation) {
           setIsModalVisible(true);
@@ -88,11 +93,11 @@ function Segmentation(properties) {
               },
             })
           );
-          await upload(annotation.serializeAnnotation());
+          await postUpload(annotation.serializeAnnotation());
         },
       });
     }
-  }, [properties.webtoon, properties.index, upload, dispatch]);
+  }, [properties.webtoon, properties.index, postUpload, dispatch]);
 
   return (
     <>
@@ -127,9 +132,7 @@ function Segmentation(properties) {
       <Button
         type="primary"
         onClick={() => {
-          const currentPath = path.split("/");
-          currentPath[currentPath.length - 1] = "recognition";
-          history.push(currentPath.join("/"));
+          history.push(`/editor/${properties.index}/recognition`);
           window.scrollTo(0, 0);
         }}
       >

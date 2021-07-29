@@ -31,7 +31,7 @@ function BlankUpload(properties) {
         <CropImage url={properties.inpaint} />
       ) : (
         <Dragger {...defaultConfig} className="blank_upload">
-          <p>Please upload a blank webtoon</p>
+          <p>Please upload a blank webtoon (Optional)</p>
         </Dragger>
       )}
     </>

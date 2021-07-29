@@ -1,13 +1,11 @@
 import React, { useState } from "react";
 import { Form, Card, Input, Radio, Select, Button } from "antd";
-import { useHistory } from "react-router-dom";
 
 import { useDispatch } from "react-redux";
 import { setForm } from "../../contexts/webtoon-drop-slice";
 import useUpload from "./use-upload";
 
 function CreateProject(properties) {
-  const history = useHistory();
   const dispatch = useDispatch();
   const upload = useUpload();
 
@@ -19,7 +17,7 @@ function CreateProject(properties) {
       requiredMark={false}
       onFinish={async () => {
         setLoading(true);
-        await upload(history);
+        await upload();
       }}
       onValuesChange={(changed, all) => dispatch(setForm(all))}
     >

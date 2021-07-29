@@ -2,7 +2,7 @@ import React from "react";
 import { Typography, Input, Divider } from "antd";
 
 import { useDispatch } from "react-redux";
-import { updateBbox } from "../../contexts/recognition-slice";
+import { updateBbox } from "../../../contexts/recognition-slice";
 
 function TextInput(properties) {
   const dispatch = useDispatch();

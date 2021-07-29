@@ -5,7 +5,7 @@ import { CompactPicker } from "react-color";
 import FontPicker from "font-picker-react";
 
 import { useDispatch } from "react-redux";
-import { updateBbox } from "../../contexts/recognition-slice";
+import { updateBbox } from "../../../contexts/recognition-slice";
 
 function StyleEditor(properties) {
   const dispatch = useDispatch();

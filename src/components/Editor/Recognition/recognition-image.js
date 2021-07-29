@@ -2,7 +2,7 @@ import React, { useCallback, useState, useLayoutEffect } from "react";
 import { Image } from "antd";
 
 import { useDispatch } from "react-redux";
-import { createBbox, setImageProperty } from "../../contexts/recognition-slice";
+import { createBbox, setImageProperty } from "../../../contexts/recognition-slice";
 
 function RecognitionImage(properties) {
   const [startPoint, setStartPoint] = useState([undefined, undefined]);

@@ -6,8 +6,8 @@ import { useSelector } from "react-redux";
 import BasicMenu from "../components/Common/basic-menu";
 import PreviewSider from "../components/Editor/preview-sider";
 
-import Segmentation from "../components/Editor/segmentation";
-import Recognition from "../components/Editor/recognition";
+import Segmentation from "../components/Editor/Segmentation/segmentation";
+import Recognition from "../components/Editor/Recognition/recognition";
 import "../styles/Editor.css";
 
 const { Header, Content, Footer } = Layout;

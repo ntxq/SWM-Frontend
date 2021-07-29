@@ -3,8 +3,8 @@ import {
   getSegmentationInpaint,
   getSegmentationResult,
   uploadMask,
-} from "../../adapters/backend";
-import { updateWebtoon } from "../../contexts/webtoon-drop-slice";
+} from "../../../adapters/backend";
+import { updateWebtoon } from "../../../contexts/webtoon-drop-slice";
 
 function useMaskUpload(index) {
   const image = useSelector((state) => state.webtoons.images[index]);

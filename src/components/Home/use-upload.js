@@ -1,12 +1,14 @@
 import { useSelector, useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { mapIds } from "../../contexts/webtoon-drop-slice";
 import { uploadOriginals, uploadBlank } from "../../adapters/backend";
 
 function useUpload() {
   const imgSlice = useSelector((state) => state.webtoons.images);
   const dispatch = useDispatch();
+  const history = useHistory();
 
-  return function (history) {
+  return function () {
     uploadOriginals(imgSlice)
       .then((request_ids) => {
         uploadBlank(imgSlice, request_ids);
