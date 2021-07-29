@@ -15,9 +15,9 @@ function CreateProject(properties) {
     <Form
       name="project"
       requiredMark={false}
-      onFinish={async () => {
+      onFinish={ () => {
         setLoading(true);
-        await upload();
+        upload();
       }}
       onValuesChange={(changed, all) => dispatch(setForm(all))}
     >

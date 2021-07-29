@@ -9,36 +9,37 @@ import { updateBbox } from "../../../contexts/recognition-slice";
 function useSegmentationResult(index) {
   const dispatch = useDispatch();
 
-  return function () {
-    selectOCR(index).then(() => {
-      const intervalID = setInterval(() => {
-        getOCRResult(index).then((complete) => {
-          if (complete) {
-            clearInterval(intervalID);
-            getOCRResultBbox(index).then((bboxList) =>
-              dispatch(
-                updateBbox({
-                  id: bboxList.id,
+  return async function () {
+    const ocrSuccess = await selectOCR(index);
 
-                  originalX: bboxList.x,
-                  originalY: bboxList.y,
-                  originalWidth: bboxList.width,
-                  originalHeight: bboxList.height,
+    if (ocrSuccess) {
+      const intervalID = setInterval(async () => {
+        const processFinished = await getOCRResult(index);
 
-                  translatedX: bboxList.x,
-                  translatedY: bboxList.y,
-                  translatedWidth: bboxList.width,
-                  translatedHeight: bboxList.height,
+        if (processFinished) {
+          clearInterval(intervalID);
+          const bboxList = await getOCRResultBbox(index);
+          dispatch(
+            updateBbox({
+              id: bboxList.id,
 
-                  originalText: bboxList.original,
-                  translatedText: bboxList.translated,
-                })
-              )
-            );
-          }
-        });
+              originalX: bboxList.x,
+              originalY: bboxList.y,
+              originalWidth: bboxList.width,
+              originalHeight: bboxList.height,
+
+              translatedX: bboxList.x,
+              translatedY: bboxList.y,
+              translatedWidth: bboxList.width,
+              translatedHeight: bboxList.height,
+
+              originalText: bboxList.original,
+              translatedText: bboxList.translated,
+            })
+          );
+        }
       }, 2000);
-    });
+    }
   };
 }
 

@@ -11,11 +11,11 @@ function useMaskUpload(index) {
   const dispatch = useDispatch();
 
   return async function (mask) {
-    const result = await uploadMask(image.id, mask);
-    if (result) {
+    const maskSuccess = await uploadMask(image.id, mask);
+    if (maskSuccess) {
       const intervalID = setInterval(async () => {
-        const result = await getSegmentationResult(image.id);
-        if (result) {
+        const processFinished = await getSegmentationResult(image.id);
+        if (processFinished) {
           clearInterval(intervalID);
 
           const inpaint = await getSegmentationInpaint(image.id);

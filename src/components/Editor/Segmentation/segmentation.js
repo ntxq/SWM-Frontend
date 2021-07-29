@@ -71,7 +71,7 @@ function Segmentation(properties) {
           });
           ls.annotationStore.selectAnnotation(c.id);
         },
-        onSubmitAnnotation: async function (ls, annotation) {
+        onSubmitAnnotation: function (ls, annotation) {
           setIsModalVisible(true);
           dispatch(
             updateWebtoon({
@@ -81,9 +81,9 @@ function Segmentation(properties) {
               },
             })
           );
-          await postUpload(annotation.serializeAnnotation());
+          postUpload(annotation.serializeAnnotation());
         },
-        onUpdateAnnotation: async function (ls, annotation) {
+        onUpdateAnnotation: function (ls, annotation) {
           setIsModalVisible(true);
           dispatch(
             updateWebtoon({
@@ -93,7 +93,7 @@ function Segmentation(properties) {
               },
             })
           );
-          await postUpload(annotation.serializeAnnotation());
+          postUpload(annotation.serializeAnnotation());
         },
       });
     }

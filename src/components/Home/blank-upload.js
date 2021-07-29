@@ -15,7 +15,7 @@ function BlankUpload(properties) {
     accept: "image/*",
     maxCount: 1,
     showUploadList: false,
-    async beforeUpload(file) {
+    beforeUpload(file) {
       dispatch(
         updateWebtoon({
           index: properties.index,

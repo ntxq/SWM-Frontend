@@ -13,9 +13,9 @@ function useSegmentationResult(index) {
   return async function () {
     if (image.inpaint === "") {
       const intervalID = setInterval(async () => {
-        const result = await getSegmentationResult(image.id);
+        const processFinished = await getSegmentationResult(image.id);
 
-        if (result) {
+        if (processFinished) {
           clearInterval(intervalID);
 
           const aiInpaint = await getSegmentationInpaint(image.id);

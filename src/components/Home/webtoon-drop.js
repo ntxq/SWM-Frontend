@@ -17,7 +17,7 @@ function WebtoonDrop(properties) {
     accept: "image/*",
     multiple: true,
     showUploadList: false,
-    async beforeUpload(file) {
+    beforeUpload(file) {
       const uniqueFile = uniqueName(file);
       const objectURL = URL.createObjectURL(uniqueFile);
       dispatch(
