@@ -21,6 +21,7 @@ function Bbox(properties) {
       onDragStop={(event, data) =>
         dispatch(
           updateBbox({
+            id: properties.id,
             index: properties.index,
             updatedBbox: properties.original
               ? {

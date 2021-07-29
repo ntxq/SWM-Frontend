@@ -20,6 +20,7 @@ function StyleEditor(properties) {
             properties.activeBox !== undefined &&
             dispatch(
               updateBbox({
+                id: properties.index,
                 index: properties.activeBox,
                 updatedBbox: { fontColor: color.hex },
               })
@@ -34,6 +35,7 @@ function StyleEditor(properties) {
               properties.activeBox !== undefined &&
               dispatch(
                 updateBbox({
+                  id: properties.index,
                   index: properties.activeBox,
                   updatedBbox: { fontFamily: nextFont.family },
                 })
@@ -50,6 +52,7 @@ function StyleEditor(properties) {
                   properties.activeBox !== undefined &&
                   dispatch(
                     updateBbox({
+                      id: properties.index,
                       index: properties.activeBox,
                       updatedBbox: { fontSize: value },
                     })
@@ -65,6 +68,7 @@ function StyleEditor(properties) {
                   properties.activeBox !== undefined &&
                   dispatch(
                     updateBbox({
+                      id: properties.index,
                       index: properties.activeBox,
                       updatedBbox: {
                         fontWeight:
@@ -85,6 +89,7 @@ function StyleEditor(properties) {
                   properties.activeBox !== undefined &&
                   dispatch(
                     updateBbox({
+                      id: properties.index,
                       index: properties.activeBox,
                       updatedBbox: {
                         fontStyle:

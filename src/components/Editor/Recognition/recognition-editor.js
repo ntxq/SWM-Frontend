@@ -12,50 +12,65 @@ function RecognitionEditor(properties) {
   return (
     <Card
       title="Recognition Editor"
-      extra={<EditorButtons activeBox={recognition.activeBox} />}
+      extra={
+        <EditorButtons
+          activeBox={recognition.activeBox}
+          index={properties.index}
+        />
+      }
       className="editor_panel"
     >
       <TextInput
+        index={properties.index}
         title={"Original Text"}
         activeBox={recognition.activeBox}
         text={
           recognition.activeBox !== undefined &&
-          recognition.bboxList[recognition.activeBox].originalText
+          recognition.bboxList[properties.index] &&
+          recognition.bboxList[properties.index][recognition.activeBox].originalText
         }
         original={true}
       />
       <TextInput
+        index={properties.index}
         title={"Translated Text"}
         activeBox={recognition.activeBox}
         text={
           recognition.activeBox !== undefined &&
-          recognition.bboxList[recognition.activeBox].translatedText
+          recognition.bboxList[properties.index] &&
+          recognition.bboxList[properties.index][recognition.activeBox].translatedText
         }
         original={false}
       />
       <StyleEditor
+        index={properties.index}
         activeBox={recognition.activeBox}
         fontSize={
           recognition.activeBox !== undefined &&
-          recognition.bboxList[recognition.activeBox].fontSize
+          recognition.bboxList[properties.index] &&
+          recognition.bboxList[properties.index][recognition.activeBox].fontSize
         }
         fontColor={
           recognition.activeBox !== undefined &&
-          recognition.bboxList[recognition.activeBox].fontColor
+          recognition.bboxList[properties.index] &&
+          recognition.bboxList[properties.index][recognition.activeBox].fontColor
         }
         fontFamily={
-          recognition.activeBox !== undefined
-            ? recognition.bboxList[recognition.activeBox].fontFamily
+          recognition.activeBox !== undefined &&
+          recognition.bboxList[properties.index]
+            ? recognition.bboxList[properties.index][recognition.activeBox].fontFamily
             : "Open Sans"
         }
         fontWeight={
-          recognition.activeBox !== undefined
-            ? recognition.bboxList[recognition.activeBox].fontWeight
+          recognition.activeBox !== undefined &&
+          recognition.bboxList[properties.index]
+            ? recognition.bboxList[properties.index][recognition.activeBox].fontWeight
             : "normal"
         }
         fontStyle={
-          recognition.activeBox !== undefined
-            ? recognition.bboxList[recognition.activeBox].fontStyle
+          recognition.activeBox !== undefined &&
+          recognition.bboxList[properties.index]
+            ? recognition.bboxList[properties.index][recognition.activeBox].fontStyle
             : "normal"
         }
       />

@@ -16,6 +16,7 @@ function TextInput(properties) {
           properties.activeBox !== undefined &&
           dispatch(
             updateBbox({
+              id: properties.index,
               index: properties.activeBox,
               updatedBbox: properties.original
                 ? {

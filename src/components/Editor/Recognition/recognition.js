@@ -5,10 +5,10 @@ import RecognitionImage from "./recognition-image";
 import BboxLayer from "./bbox-layer";
 import RecognitionEditor from "./recognition-editor";
 
-import useSegmentationResult from "./use-segmentation-result";
+import useREcognitionResult from "./use-recognition-result";
 
 function Recognition(properties) {
-  const getResult = useSegmentationResult(properties.webtoon.id);
+  const getResult = useREcognitionResult(properties.webtoon.id);
 
   useEffect(() => {
     getResult();
@@ -23,15 +23,21 @@ function Recognition(properties) {
       </Steps>
       <Row>
         <Col span={8}>
-          <RecognitionImage src={properties.webtoon.original} />
-          <BboxLayer original={true} />
+          <RecognitionImage
+            src={properties.webtoon.original}
+            index={properties.webtoon.id}
+          />
+          <BboxLayer original={true} index={properties.webtoon.id} />
         </Col>
         <Col span={8}>
-          <RecognitionImage src={properties.webtoon.inpaint} />
-          <BboxLayer original={false} />
+          <RecognitionImage
+            src={properties.webtoon.inpaint}
+            index={properties.webtoon.id}
+          />
+          <BboxLayer original={false} index={properties.webtoon.id} />
         </Col>
         <Col span={8}>
-          <RecognitionEditor />
+          <RecognitionEditor index={properties.webtoon.id} />
         </Col>
       </Row>
     </>

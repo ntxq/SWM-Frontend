@@ -10,8 +10,9 @@ function BboxLayer(properties) {
 
   return (
     <>
-      {bboxList.map((box, index) => (
+      {bboxList[properties.index] && bboxList[properties.index].map((box, index) => (
         <Bbox
+          id={properties.index}
           index={index}
           dimension={
             properties.original

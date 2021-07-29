@@ -1,9 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  bboxList: [],
+  bboxList: {},
   activeBox: undefined,
   imgProperty: {
+    id: "",
+
     clientHeight: undefined,
     clientWidth: undefined,
     naturalHeight: undefined,
@@ -38,30 +40,37 @@ export const recognitionSlice = createSlice({
   initialState,
   reducers: {
     createBbox: (state, action) => {
-      state.bboxList = [
-        ...state.bboxList,
-        {
-          ...defaultBbox,
-          ...action.payload,
-        },
-      ];
+      state.bboxList[action.payload.id] = state.bboxList[action.payload.id]
+        ? [
+            ...state.bboxList[action.payload.id],
+            {
+              ...defaultBbox,
+              ...action.payload.bbox,
+            },
+          ]
+        : [
+            {
+              ...defaultBbox,
+              ...action.payload.bbox,
+            },
+          ];
     },
 
     deleteBox: (state, action) => {
-      if (action.payload === undefined) {
-        state.bboxList = [];
+      if (action.payload.target === undefined) {
+        state.bboxList[action.payload.id] = [];
         state.activeBox = undefined;
       } else {
-        state.bboxList = state.bboxList.filter(
-          (value, index) => index !== action.payload
-        );
+        state.bboxList[action.payload.id] = state.bboxList[
+          action.payload.id
+        ].filter((value, index) => index !== action.payload.target);
         state.activeBox = undefined;
       }
     },
 
     updateBbox: (state, action) => {
-      state.bboxList[action.payload.index] = {
-        ...state.bboxList[action.payload.index],
+      state.bboxList[action.payload.id][action.payload.index] = {
+        ...state.bboxList[action.payload.id][action.payload.index],
         ...action.payload.updatedBbox,
       };
     },
@@ -76,21 +85,25 @@ export const recognitionSlice = createSlice({
       const heightRatio =
         action.payload.clientHeight / state.imgProperty.clientHeight;
 
-      state.bboxList = state.bboxList.map((Bbox) => ({
-        ...Bbox,
+      if (state.bboxList[action.payload.id]) {
+        state.bboxList[action.payload.id] = state.bboxList[
+          action.payload.id
+        ].map((Bbox) => ({
+          ...Bbox,
 
-        originalX: Math.round(Bbox.originalX * widthRatio),
-        originalY: Math.round(Bbox.originalY * heightRatio),
-        originalWidth: Math.round(Bbox.originalWidth * widthRatio),
-        originalHeight: Math.round(Bbox.originalHeight * heightRatio),
+          originalX: Math.round(Bbox.originalX * widthRatio),
+          originalY: Math.round(Bbox.originalY * heightRatio),
+          originalWidth: Math.round(Bbox.originalWidth * widthRatio),
+          originalHeight: Math.round(Bbox.originalHeight * heightRatio),
 
-        translatedX: Math.round(Bbox.translatedX * widthRatio),
-        translatedY: Math.round(Bbox.translatedX * widthRatio),
-        translatedWidth: Math.round(Bbox.translatedX * widthRatio),
-        translatedHeight: Math.round(Bbox.translatedX * widthRatio),
+          translatedX: Math.round(Bbox.translatedX * widthRatio),
+          translatedY: Math.round(Bbox.translatedY * heightRatio),
+          translatedWidth: Math.round(Bbox.translatedWidth * widthRatio),
+          translatedHeight: Math.round(Bbox.translatedHeight * heightRatio),
 
-        fontSize: Math.round(Bbox.fontSize * widthRatio),
-      }));
+          fontSize: Math.round(Bbox.fontSize * widthRatio),
+        }));
+      }
 
       state.imgProperty = action.payload;
     },

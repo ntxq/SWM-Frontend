@@ -14,7 +14,14 @@ function EditorButtons(properties) {
         <Button
           type="primary"
           icon={<DeleteOutlined />}
-          onClick={() => dispatch(deleteBox(properties.activeBox))}
+          onClick={() =>
+            dispatch(
+              deleteBox({
+                id: properties.index,
+                target: properties.activeBox,
+              })
+            )
+          }
         />
       </Tooltip>
       <Tooltip title="Delete all box">
@@ -22,7 +29,7 @@ function EditorButtons(properties) {
           type="primary"
           icon={<DeleteOutlined />}
           danger
-          onClick={() => dispatch(deleteBox())}
+          onClick={() => dispatch(deleteBox({ id: properties.index }))}
         />
       </Tooltip>
       <Button type="primary">Submit All</Button>

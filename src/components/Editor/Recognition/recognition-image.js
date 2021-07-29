@@ -2,7 +2,10 @@ import React, { useCallback, useState, useLayoutEffect } from "react";
 import { Image } from "antd";
 
 import { useDispatch } from "react-redux";
-import { createBbox, setImageProperty } from "../../../contexts/recognition-slice";
+import {
+  createBbox,
+  setImageProperty,
+} from "../../../contexts/recognition-slice";
 
 function RecognitionImage(properties) {
   const [startPoint, setStartPoint] = useState([undefined, undefined]);
@@ -12,20 +15,23 @@ function RecognitionImage(properties) {
     (x, y) => {
       dispatch(
         createBbox({
-          originalX: Math.min(startPoint[0], x),
-          originalY: Math.min(startPoint[1], y),
-          originalWidth: Math.abs(x - startPoint[0]),
-          originalHeight: Math.abs(y - startPoint[1]),
+          id: properties.index,
+          bbox: {
+            originalX: Math.min(startPoint[0], x),
+            originalY: Math.min(startPoint[1], y),
+            originalWidth: Math.abs(x - startPoint[0]),
+            originalHeight: Math.abs(y - startPoint[1]),
 
-          translatedX: Math.min(startPoint[0], x),
-          translatedY: Math.min(startPoint[1], y),
-          translatedWidth: Math.abs(x - startPoint[0]),
-          translatedHeight: Math.abs(y - startPoint[1]),
+            translatedX: Math.min(startPoint[0], x),
+            translatedY: Math.min(startPoint[1], y),
+            translatedWidth: Math.abs(x - startPoint[0]),
+            translatedHeight: Math.abs(y - startPoint[1]),
+          },
         })
       );
       setStartPoint([undefined, undefined]);
     },
-    [dispatch, startPoint]
+    [dispatch, startPoint, properties.index]
   );
 
   useLayoutEffect(() => {
@@ -33,6 +39,7 @@ function RecognitionImage(properties) {
     function dispatchProperty() {
       dispatch(
         setImageProperty({
+          id: properties.index,
           clientHeight: image.clientHeight,
           clientWidth: image.clientWidth,
           naturalHeight: image.naturalHeight,
@@ -45,7 +52,7 @@ function RecognitionImage(properties) {
     return () => {
       window.removeEventListener("resize", dispatchProperty);
     };
-  }, [dispatch]);
+  }, [dispatch, properties.index]);
 
   return (
     <Image
