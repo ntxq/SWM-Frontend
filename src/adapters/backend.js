@@ -133,7 +133,7 @@ export async function getOCRResult(request_id) {
 
   const result = await backendInstance
     .get("/upload/OCR/result", data)
-    .then((response) => response.data.success)
+    .then((response) => response.data.complete)
     .catch((error) => console.log(error));
 
   return result;

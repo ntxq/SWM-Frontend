@@ -12,7 +12,6 @@ const initialState = {
 const defaultImage = {
   original: "",
   inpaint: "",
-  translated: "",
   mask: [],
   filename: "",
   id: "",
