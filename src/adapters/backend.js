@@ -167,19 +167,3 @@ export async function uploadEdit(request_id, bboxList) {
 
   return result;
 }
-
-export async function uploadStyles(request_id, styleList) {
-  const data = {
-    params: {
-      req_id: request_id,
-      bboxList: styleList,
-    },
-  };
-
-  const result = await backendInstance
-    .get("/upload/OCR/styles", data)
-    .then((response) => response.data.success)
-    .catch((error) => console.log(error));
-
-  return result;
-}
