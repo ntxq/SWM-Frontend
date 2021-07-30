@@ -15,7 +15,7 @@ function CreateProject(properties) {
     <Form
       name="project"
       requiredMark={false}
-      onFinish={ () => {
+      onFinish={() => {
         setLoading(true);
         upload();
       }}
@@ -64,7 +64,7 @@ function CreateProject(properties) {
             className="submit"
             loading={loading}
           >
-            Start translation
+            Start Translate
           </Button>
         </div>
       </Form.Item>

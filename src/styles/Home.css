@@ -1,9 +1,9 @@
 .upload {
-  padding: 2% 0;
+  padding: 3vh 0;
 }
 
 .content {
-  padding: 0 2%;
+  padding: 0 2vw;
 }
 
 .footer {
@@ -18,6 +18,10 @@
 .crop {
   height: 25vh;
   overflow: hidden;
+}
+
+.top-cover {
+  margin-bottom: 2vh;
 }
 
 .preview_card .title {
@@ -35,19 +39,15 @@
   margin-right: 5% !important;
 }
 
-.cover_space {
-  margin-top: 5%;
-}
-
 .submit_container {
   text-align: center;
-  margin-top: 1%;
-}
-
-.submit {
-  width: 10%;
+  margin-top: 3vh;
 }
 
 .form_card {
   margin-top: 3% !important;
+}
+
+.upload-row {
+  width: 100%;
 }
