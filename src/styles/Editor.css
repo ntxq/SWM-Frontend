@@ -27,6 +27,7 @@
 
 .editor_panel {
   position: fixed !important;
+  max-width: inherit;
 }
 
 .editor_header {
@@ -43,8 +44,7 @@
 }
 
 .side_crop {
-  height: 30vh;
-  margin: 0 auto;
+  max-height: 30vh;
   overflow: hidden;
 }
 
@@ -53,8 +53,8 @@
 }
 
 .content_editor {
-  margin-left: 320px;
-  margin-right: 1%;
+  margin-left: 1vw;
+  margin-right: 1vw;
 }
 
 .title {
@@ -64,4 +64,10 @@
 .ant-modal-content {
   background: rgba(0, 0, 0, 0) !important;
   box-shadow: none !important;
+}
+
+@media (min-width: 1600px) {
+  .content_editor {
+    margin-left: 13vw;
+  }
 }

@@ -14,7 +14,7 @@ const initialState = {
 };
 
 const defaultBbox = {
-  id: "",
+  bbox_id: "",
 
   originalX: 0,
   originalY: 0,

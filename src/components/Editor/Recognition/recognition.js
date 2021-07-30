@@ -21,7 +21,7 @@ function Recognition(properties) {
         <Steps.Step title="Recognition" />
         <Steps.Step title="Finish" />
       </Steps>
-      <Row>
+      <Row gutter={24}>
         <Col span={8}>
           <RecognitionImage
             src={properties.webtoon.original}

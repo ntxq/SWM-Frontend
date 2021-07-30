@@ -16,7 +16,7 @@ function Webtoons(properties) {
       />
       <Row>
         {properties.images.map((image, index) => (
-          <Col span={6} key={image.filename}>
+          <Col xs={24} sm={12} md={8} lg={6} key={image.filename}>
             <Link to={`/editor/${index}/segmentation`}>
               <WebtoonCard
                 url={image.original}

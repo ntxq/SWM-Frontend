@@ -24,7 +24,7 @@ function useRecognitionResult(index) {
               createBbox({
                 id: index,
                 bbox: {
-                  id: bbox.id,
+                  bbox_id: bbox.bbox_id,
 
                   originalX: bbox.x,
                   originalY: bbox.y,
