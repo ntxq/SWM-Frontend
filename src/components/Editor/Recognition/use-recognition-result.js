@@ -26,18 +26,18 @@ function useRecognitionResult(index) {
                 bbox: {
                   bbox_id: bbox.bbox_id,
 
-                  originalX: bbox.x,
-                  originalY: bbox.y,
-                  originalWidth: bbox.width,
-                  originalHeight: bbox.height,
+                  originalX: bbox.originalX,
+                  originalY: bbox.originalY,
+                  originalWidth: bbox.originalWidth,
+                  originalHeight: bbox.originalHeight,
 
-                  translatedX: bbox.x,
-                  translatedY: bbox.y,
-                  translatedWidth: bbox.width,
-                  translatedHeight: bbox.height,
+                  translatedX: bbox.originalX,
+                  translatedY: bbox.originalY,
+                  translatedWidth: bbox.originalWidth,
+                  translatedHeight: bbox.originalHeight,
 
                   originalText: bbox.original,
-                  translatedText: bbox.translated,
+                  // translatedText: bbox.translated,
                 },
               })
             )

@@ -38,6 +38,7 @@ function Bbox(properties) {
       onResizeStop={(event, direction, reference, delta, position) =>
         dispatch(
           updateBbox({
+            id: properties.id,
             index: properties.index,
             updatedBbox: properties.original
               ? {
