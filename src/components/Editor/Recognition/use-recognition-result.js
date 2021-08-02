@@ -3,13 +3,16 @@ import {
   getOCRResult,
   getOCRResultBbox,
 } from "../../../adapters/backend";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { createBbox } from "../../../contexts/recognition-slice";
 
-function useRecognitionResult(index) {
+function useRecognitionResult(index, callback) {
+  const bboxList = useSelector((state) => state.recognition.bboxList[index]);
   const dispatch = useDispatch();
 
   return async function () {
+    if (!Array.isArray(bboxList) || bboxList.length === 0) return callback();
+
     const ocrSuccess = await selectOCR(index);
 
     if (ocrSuccess) {
@@ -36,12 +39,13 @@ function useRecognitionResult(index) {
                   translatedWidth: bbox.originalWidth,
                   translatedHeight: bbox.originalHeight,
 
-                  originalText: bbox.original,
+                  originalText: bbox.originalText,
                   // translatedText: bbox.translated,
                 },
               })
             )
           );
+          callback();
         }
       }, 2000);
     }

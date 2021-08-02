@@ -1,14 +1,18 @@
-import React, { useEffect } from "react";
-import { Col, Row, Steps } from "antd";
+import React, { useEffect, useState } from "react";
+import { Col, Row, Steps, Modal, Spin } from "antd";
 
 import RecognitionImage from "./recognition-image";
 import BboxLayer from "./bbox-layer";
 import RecognitionEditor from "./recognition-editor";
 
-import useREcognitionResult from "./use-recognition-result";
+import useRecognitionResult from "./use-recognition-result";
 
 function Recognition(properties) {
-  const getResult = useREcognitionResult(properties.webtoon.id);
+  const [isModalVisible, setIsModalVisible] = useState(true);
+
+  const getResult = useRecognitionResult(properties.webtoon.id, () =>
+    setIsModalVisible(false)
+  );
 
   useEffect(() => {
     getResult();
@@ -16,6 +20,27 @@ function Recognition(properties) {
 
   return (
     <>
+      <Modal
+        visible={isModalVisible}
+        centered
+        closable={false}
+        destroyOnClose={true}
+        // eslint-disable-next-line unicorn/no-null
+        footer={null}
+        maskClosable={false}
+        style={{
+          background: "rgba(100, 0, 0, 0)",
+        }}
+        bodyStyle={{
+          background: "rgba(0, 0, 0, 0)",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Spin size="large" />
+      </Modal>
+
       <Steps current={1} className="editor_progress">
         <Steps.Step title="Segmentation" />
         <Steps.Step title="Recognition" />

@@ -6,7 +6,7 @@ import {
 } from "../../../adapters/backend";
 import { updateWebtoon } from "../../../contexts/webtoon-drop-slice";
 
-function useSegmentationResult(index) {
+function useSegmentationResult(index, callback) {
   const image = useSelector((state) => state.webtoons.images[index]);
   const dispatch = useDispatch();
 
@@ -49,9 +49,10 @@ function useSegmentationResult(index) {
               },
             })
           );
+          callback();
         }
       }, 2000);
-    }
+    } else callback();
   };
 }
 
