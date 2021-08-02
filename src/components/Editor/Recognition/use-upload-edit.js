@@ -7,7 +7,7 @@ function useUploadEdit(request_id) {
   );
 
   return async function () {
-    const success = await uploadEdit(request_id, bboxList);
+    await uploadEdit(request_id, bboxList);
   };
 }
 

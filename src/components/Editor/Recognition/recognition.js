@@ -47,14 +47,14 @@ function Recognition(properties) {
         <Steps.Step title="Finish" />
       </Steps>
       <Row gutter={24}>
-        <Col span={8}>
+        <Col span={8} className="recognition_col">
           <RecognitionImage
             src={properties.webtoon.original}
             index={properties.webtoon.id}
           />
           <BboxLayer original={true} index={properties.webtoon.id} />
         </Col>
-        <Col span={8}>
+        <Col span={8} className="recognition_col">
           <RecognitionImage
             src={properties.webtoon.inpaint}
             index={properties.webtoon.id}

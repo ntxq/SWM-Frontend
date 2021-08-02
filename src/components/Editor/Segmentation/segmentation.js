@@ -14,19 +14,22 @@ import useMaskUpload from "./use-mask-upload";
 function Segmentation(properties) {
   const history = useHistory();
   const dispatch = useDispatch();
-  const postUpload = useMaskUpload(properties.index);
 
   const rootReference = useRef(null);
   const lsfReference = useRef(null);
   const [isModalVisible, setIsModalVisible] = useState(true);
 
-  const getResult = useSegmentationResult(properties.index, () =>
-    setIsModalVisible(false)
-  );
+  const getResult = useSegmentationResult(properties.index);
+  const postUpload = useMaskUpload(properties.index);
 
   useEffect(() => {
     getResult();
   }, [getResult]);
+
+  useEffect(() => {
+    if (properties.webtoon.inpaint) setIsModalVisible(false);
+    else setIsModalVisible(true);
+  }, [properties.webtoon.inpaint]);
 
   useEffect(() => {
     if (rootReference.current) {

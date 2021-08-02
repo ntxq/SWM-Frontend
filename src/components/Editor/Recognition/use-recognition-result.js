@@ -11,7 +11,7 @@ function useRecognitionResult(index, callback) {
   const dispatch = useDispatch();
 
   return async function () {
-    if (!Array.isArray(bboxList) || bboxList.length === 0) return callback();
+    if (Array.isArray(bboxList) && bboxList.length > 0) return callback();
 
     const ocrSuccess = await selectOCR(index);
 

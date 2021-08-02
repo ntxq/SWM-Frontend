@@ -1,7 +1,7 @@
 import axios from "axios";
 import FormData from "form-data";
 
-const url = "http://3.36.117.231:3000";
+const url = "http://3.38.47.70:3000";
 
 const backendInstance = axios.create({
   baseURL: url,
