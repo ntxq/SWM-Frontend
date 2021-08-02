@@ -22,7 +22,9 @@ export async function uploadOriginals(imageSlice, projectTitle) {
   const result = await backendInstance
     .post("/upload/segmentation/source", data)
     .then((response) => response.data.req_ids)
-    .catch((error) => console.error(error));
+    .catch(() => ({
+      req_ids: [],
+    }));
 
   return result;
 }
@@ -50,7 +52,9 @@ export async function uploadBlank(imageSlice, request_ids) {
   const result = await backendInstance
     .post("/upload/segmentation/blank", data)
     .then((response) => response.data.req_ids)
-    .catch((error) => console.error(error));
+    .catch(() => ({
+      req_ids: [],
+    }));
 
   return result;
 }
@@ -149,7 +153,7 @@ export async function getOCRResultBbox(request_id) {
   };
 
   const result = await backendInstance
-    .get("/upload/OCR/result/edit", data)
+    .get("/upload/OCR/result/bbox", data)
     .then((response) => response.data.bboxList)
     .catch((error) => console.error(error));
 
@@ -159,7 +163,7 @@ export async function getOCRResultBbox(request_id) {
 export async function uploadEdit(request_id, bboxList) {
   const data = {
     req_id: request_id,
-    bboxList,
+    bboxList: JSON.stringify(bboxList),
   };
 
   const result = await backendInstance

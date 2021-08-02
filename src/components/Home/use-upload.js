@@ -10,10 +10,7 @@ function useUpload() {
 
   return function () {
     uploadOriginals(webtoons.images, webtoons.form.title)
-      .then((request_ids) => {
-        uploadBlank(webtoons.images, request_ids);
-        return request_ids;
-      })
+      .then((request_ids) => uploadBlank(webtoons.images, request_ids))
       .then((request_ids) => dispatch(mapIds(request_ids)))
       .then(() => history.push("/dashboard"));
   };
