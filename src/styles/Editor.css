@@ -21,12 +21,14 @@
   position: absolute;
   top: 50%;
   left: 50%;
+  white-space: pre;
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
 }
 
 .editor_panel {
   position: fixed !important;
+  max-width: inherit;
 }
 
 .editor_header {
@@ -43,8 +45,7 @@
 }
 
 .side_crop {
-  height: 30vh;
-  margin: 0 auto;
+  max-height: 30vh;
   overflow: hidden;
 }
 
@@ -53,9 +54,31 @@
 }
 
 .content_editor {
-  margin-left: 320px !important;
+  margin-left: 1vw;
+  margin-right: 1vw;
+  overflow: visible !important;
 }
 
 .title {
   width: 100%;
+}
+
+.ant-modal-content {
+  background: rgba(0, 0, 0, 0) !important;
+  box-shadow: none !important;
+}
+
+@media (min-width: 1600px) {
+  .content_editor {
+    margin-left: 13vw;
+  }
+}
+
+.recognition_col {
+  padding: 0 !important;
+}
+
+.ls-menu {
+  position: sticky;
+  top: 10vh;
 }

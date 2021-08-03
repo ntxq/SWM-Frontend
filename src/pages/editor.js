@@ -6,8 +6,8 @@ import { useSelector } from "react-redux";
 import BasicMenu from "../components/Common/basic-menu";
 import PreviewSider from "../components/Editor/preview-sider";
 
-import Segmentation from "../components/Editor/segmentation";
-import Recognition from "../components/Editor/recognition";
+import Segmentation from "../components/Editor/Segmentation/segmentation";
+import Recognition from "../components/Editor/Recognition/recognition";
 import "../styles/Editor.css";
 
 const { Header, Content, Footer } = Layout;
@@ -16,7 +16,6 @@ function Editor(properties) {
   const { url } = useRouteMatch();
   const { file } = useParams();
   const webtoon = useSelector((state) => state.webtoons.images[file]);
-  const mask = useSelector((state) => state.webtoons.mask);
 
   return (
     <Layout>
@@ -28,7 +27,7 @@ function Editor(properties) {
         <Content className="content_editor">
           <Switch>
             <Route path={`${url}/segmentation`}>
-              <Segmentation webtoon={webtoon} mask={mask} index={file} />
+              <Segmentation webtoon={webtoon} index={file} />
             </Route>
             <Route path={`${url}/recognition`}>
               <Recognition webtoon={webtoon} />

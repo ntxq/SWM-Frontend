@@ -18,12 +18,11 @@ function Home(properties) {
         <BasicMenu default={"1"} />
       </Header>
       <Content className="content">
-        <Row className="upload">
-          <Col span={11}>
+        <Row gutter={[60, 20]} className="upload">
+          <Col sm={24} lg={12} className="upload-row">
             <WebtoonDrop />
           </Col>
-          <Col span={2} />
-          <Col span={11}>
+          <Col sm={24} lg={12} className="upload-row">
             <InpaintDrop />
           </Col>
         </Row>

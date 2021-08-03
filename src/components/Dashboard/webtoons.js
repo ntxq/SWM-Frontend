@@ -1,6 +1,5 @@
 import React from "react";
 import { Col, Row, Radio } from "antd";
-import { Link } from "react-router-dom";
 
 import WebtoonCard from "./webtoon-card";
 
@@ -16,15 +15,13 @@ function Webtoons(properties) {
       />
       <Row>
         {properties.images.map((image, index) => (
-          <Col span={6} key={image.filename}>
-            <Link to={`/editor/${index}/segmentation`}>
-              <WebtoonCard
-                url={image.original}
-                name={image.filename}
-                id={image.id}
-                index={index}
-              />
-            </Link>
+          <Col xs={24} sm={12} md={8} lg={6} key={image.filename}>
+            <WebtoonCard
+              url={image.original}
+              name={image.filename}
+              id={image.id}
+              index={index}
+            />
           </Col>
         ))}
       </Row>

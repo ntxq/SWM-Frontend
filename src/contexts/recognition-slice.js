@@ -1,11 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  bboxList: [],
-  translationList: [],
+  bboxList: {},
   activeBox: undefined,
-  bboxText: [],
   imgProperty: {
+    id: "",
+
     clientHeight: undefined,
     clientWidth: undefined,
     naturalHeight: undefined,
@@ -13,106 +13,98 @@ const initialState = {
   },
 };
 
+const defaultBbox = {
+  bbox_id: "",
+
+  originalX: 0,
+  originalY: 0,
+  originalWidth: 0,
+  originalHeight: 0,
+
+  translatedX: 0,
+  translatedY: 0,
+  translatedWidth: 0,
+  translatedHeight: 0,
+
+  originalText: "",
+  translatedText: "TRANSLATED",
+  fontColor: "#000000",
+  fontSize: 15,
+  fontFamily: "Open Sans",
+  fontWeight: "normal",
+  fontStyle: "normal",
+};
+
 export const recognitionSlice = createSlice({
   name: "recognition",
   initialState,
   reducers: {
     createBbox: (state, action) => {
-      if (action.payload[0]) {
-        state.bboxList = [...state.bboxList, action.payload];
-        state.translationList = [...state.translationList, action.payload];
-        state.bboxText = [
-          ...state.bboxText,
-          {
-            original: "ORIGINAL",
-            translated: "TRANSLATED",
-            fontColor: "#000000",
-            fontSize: 15,
-            fontFamily: "Open Sans",
-            fontWeight: "normal",
-            fontStyle: "normal",
-          },
-        ];
-      }
+      state.bboxList[action.payload.id] = state.bboxList[action.payload.id]
+        ? [
+            ...state.bboxList[action.payload.id],
+            {
+              ...defaultBbox,
+              ...action.payload.bbox,
+            },
+          ]
+        : [
+            {
+              ...defaultBbox,
+              ...action.payload.bbox,
+            },
+          ];
     },
 
     deleteBox: (state, action) => {
-      if (action.payload === undefined) {
-        state.bboxList = [];
-        state.translationList = [];
-        state.bboxText = [];
+      if (action.payload.target === undefined) {
+        state.bboxList[action.payload.id] = [];
         state.activeBox = undefined;
       } else {
-        state.bboxList = state.bboxList.filter(
-          (value, index) => index !== action.payload
-        );
-        state.translationList = state.translationList.filter(
-          (value, index) => index !== action.payload
-        );
-        state.bboxText = state.bboxText.filter(
-          (value, index) => index !== action.payload
-        );
+        state.bboxList[action.payload.id] = state.bboxList[
+          action.payload.id
+        ].filter((value, index) => index !== action.payload.target);
         state.activeBox = undefined;
       }
     },
 
-    updateLocation: (state, action) => {
-      const index = action.payload[1];
-
-      if (action.payload[0]) {
-        state.bboxList[index][0] = action.payload[2][0];
-        state.bboxList[index][1] = action.payload[2][1];
-      } else {
-        state.translationList[index][0] = action.payload[2][0];
-        state.translationList[index][1] = action.payload[2][1];
-      }
-    },
-
-    updateSize: (state, action) => {
-      const index = action.payload[1];
-
-      if (action.payload[0]) {
-        state.bboxList[index][2] = action.payload[2][0];
-        state.bboxList[index][3] = action.payload[2][1];
-      } else {
-        state.translationList[index][2] = action.payload[2][0];
-        state.translationList[index][3] = action.payload[2][1];
-      }
+    updateBbox: (state, action) => {
+      state.bboxList[action.payload.id][action.payload.index] = {
+        ...state.bboxList[action.payload.id][action.payload.index],
+        ...action.payload.updatedBbox,
+      };
     },
 
     selectBox: (state, action) => {
       state.activeBox = action.payload;
     },
 
-    updateText: (state, action) => {
-      state.bboxText[action.payload.index] = {
-        ...state.bboxText[action.payload.index],
-        ...action.payload.text,
-      };
-    },
-
     setImageProperty: (state, action) => {
-      const heightRatio =
-        action.payload.clientHeight / state.imgProperty.clientHeight;
       const widthRatio =
         action.payload.clientWidth / state.imgProperty.clientWidth;
+      const heightRatio =
+        action.payload.clientHeight / state.imgProperty.clientHeight;
 
-      function resizeBboxList(bboxList) {
-        return bboxList.map((bbox) =>
-          bbox.map((value, index) =>
-            index % 2
-              ? Math.round(value * widthRatio)
-              : Math.round(value * heightRatio)
-          )
-        );
+      if (state.bboxList[action.payload.id]) {
+        state.bboxList[action.payload.id] = state.bboxList[
+          action.payload.id
+        ].map((Bbox) => ({
+          ...Bbox,
+
+          originalX: Math.round(Bbox.originalX * widthRatio),
+          originalY: Math.round(Bbox.originalY * heightRatio),
+          originalWidth: Math.round(Bbox.originalWidth * widthRatio),
+          originalHeight: Math.round(Bbox.originalHeight * heightRatio),
+
+          translatedX: Math.round(Bbox.translatedX * widthRatio),
+          translatedY: Math.round(Bbox.translatedY * heightRatio),
+          translatedWidth: Math.round(Bbox.translatedWidth * widthRatio),
+          translatedHeight: Math.round(Bbox.translatedHeight * heightRatio),
+
+          fontSize: Math.round(Bbox.fontSize * widthRatio),
+        }));
       }
 
-      state.bboxText = state.bboxText.map((textStyle) => ({
-        ...textStyle,
-        fontSize: Math.round(textStyle.fontSize * widthRatio),
-      }));
-      state.bboxList = resizeBboxList(state.bboxList);
-      state.translationList = resizeBboxList(state.translationList);
       state.imgProperty = action.payload;
     },
   },
@@ -121,10 +113,8 @@ export const recognitionSlice = createSlice({
 export const {
   createBbox,
   deleteBox,
-  updateLocation,
-  updateSize,
+  updateBbox,
   selectBox,
-  updateText,
   setImageProperty,
 } = recognitionSlice.actions;
 

@@ -8,7 +8,12 @@ function PreviewSider(properties) {
   const history = useHistory();
 
   return (
-    <Layout.Sider width={300} className="preview_sider">
+    <Layout.Sider
+      breakpoint="xxl"
+      collapsedWidth={0}
+      width="12vw"
+      className="preview_sider"
+    >
       {webtoons.map((image, index) => (
         <Card
           cover={

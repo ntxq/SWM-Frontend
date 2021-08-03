@@ -16,7 +16,7 @@ function Preview(properties) {
       )}
       <Row>
         {webtoons.map((image, index) => (
-          <Col span={4} key={image.filename}>
+          <Col xs={24} sm={12} md={8} lg={6} xl={4} key={image.filename}>
             <PreviewCard
               url={image.original}
               name={image.filename}

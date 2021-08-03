@@ -16,8 +16,9 @@ function PreviewCard(properties) {
       hoverable
       cover={
         <>
-          <CropImage url={properties.url} />
-          <span className="cover_space" />
+          <div className="top-cover">
+            <CropImage url={properties.url} />
+          </div>
           <BlankUpload index={properties.index} inpaint={properties.inpaint} />
         </>
       }

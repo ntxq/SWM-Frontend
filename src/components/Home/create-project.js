@@ -1,23 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import { Form, Card, Input, Radio, Select, Button } from "antd";
-import { useHistory } from "react-router-dom";
 
 import { useDispatch } from "react-redux";
 import { setForm } from "../../contexts/webtoon-drop-slice";
 import useUpload from "./use-upload";
 
 function CreateProject(properties) {
-  const history = useHistory();
   const dispatch = useDispatch();
   const upload = useUpload();
+
+  const [loading, setLoading] = useState(false);
 
   return (
     <Form
       name="project"
       requiredMark={false}
-      onFinish={async () => {
-        await upload();
-        history.push("/dashboard");
+      onFinish={() => {
+        setLoading(true);
+        upload();
       }}
       onValuesChange={(changed, all) => dispatch(setForm(all))}
     >
@@ -62,8 +62,9 @@ function CreateProject(properties) {
             size="large"
             htmlType="submit"
             className="submit"
+            loading={loading}
           >
-            Start translation
+            Start Translate
           </Button>
         </div>
       </Form.Item>

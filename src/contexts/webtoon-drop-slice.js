@@ -9,18 +9,32 @@ const initialState = {
   images: [],
 };
 
+const defaultImage = {
+  original: "",
+  inpaint: "",
+  mask: [],
+  filename: "",
+  id: "",
+};
+
 export const webtoonDropSlice = createSlice({
   name: "webtoonDrop",
   initialState,
   reducers: {
-    uploadOriginal: (state, action) => {
-      state.images = [...state.images, action.payload];
+    uploadWebtoon: (state, action) => {
+      state.images = [
+        ...state.images,
+        {
+          ...defaultImage,
+          ...action.payload,
+        },
+      ];
     },
-    uploadInpaint: (state, action) => {
-      state.images[action.payload.index].inpaint = action.payload.inpaint;
-    },
-    updateMask: (state, action) => {
-      state.images[action.payload.index].mask = action.payload.mask;
+    updateWebtoon: (state, action) => {
+      state.images[action.payload.index] = {
+        ...state.images[action.payload.index],
+        ...action.payload.webtoon,
+      };
     },
     singleDelete: (state, action) => {
       state.images = state.images.filter(
@@ -32,20 +46,16 @@ export const webtoonDropSlice = createSlice({
     },
     mapIds: (state, action) => {
       state.images = state.images.map((image) => {
-        image.id = action.payload[image.filename];
+        if (action.payload && action.payload.hasOwnProperty(image.filename))
+          image.id = action.payload[image.filename];
+
         return image;
       });
     },
   },
 });
 
-export const {
-  uploadOriginal,
-  uploadInpaint,
-  updateMask,
-  singleDelete,
-  setForm,
-  mapIds,
-} = webtoonDropSlice.actions;
+export const { uploadWebtoon, updateWebtoon, singleDelete, setForm, mapIds } =
+  webtoonDropSlice.actions;
 
 export default webtoonDropSlice.reducer;

@@ -2,28 +2,36 @@ import React, { useCallback, useState, useLayoutEffect } from "react";
 import { Image } from "antd";
 
 import { useDispatch } from "react-redux";
-import { createBbox, setImageProperty } from "../../contexts/recognition-slice";
+import {
+  createBbox,
+  setImageProperty,
+} from "../../../contexts/recognition-slice";
 
 function RecognitionImage(properties) {
-  const [bbox, setBbox] = useState([undefined, undefined]);
+  const [startPoint, setStartPoint] = useState([undefined, undefined]);
   const dispatch = useDispatch();
 
   const newBbox = useCallback(
-    (x, y, step) => {
-      if (step === 0) setBbox([x, y]);
-      else {
-        dispatch(
-          createBbox([
-            Math.min(bbox[0], x),
-            Math.min(bbox[1], y),
-            Math.abs(x - bbox[0]),
-            Math.abs(y - bbox[1]),
-          ])
-        );
-        setBbox([undefined, undefined]);
-      }
+    (x, y) => {
+      dispatch(
+        createBbox({
+          id: properties.index,
+          bbox: {
+            originalX: Math.min(startPoint[0], x),
+            originalY: Math.min(startPoint[1], y),
+            originalWidth: Math.abs(x - startPoint[0]),
+            originalHeight: Math.abs(y - startPoint[1]),
+
+            translatedX: Math.min(startPoint[0], x),
+            translatedY: Math.min(startPoint[1], y),
+            translatedWidth: Math.abs(x - startPoint[0]),
+            translatedHeight: Math.abs(y - startPoint[1]),
+          },
+        })
+      );
+      setStartPoint([undefined, undefined]);
     },
-    [setBbox, dispatch, bbox]
+    [dispatch, startPoint, properties.index]
   );
 
   useLayoutEffect(() => {
@@ -31,6 +39,7 @@ function RecognitionImage(properties) {
     function dispatchProperty() {
       dispatch(
         setImageProperty({
+          id: properties.index,
           clientHeight: image.clientHeight,
           clientWidth: image.clientWidth,
           naturalHeight: image.naturalHeight,
@@ -43,17 +52,17 @@ function RecognitionImage(properties) {
     return () => {
       window.removeEventListener("resize", dispatchProperty);
     };
-  }, [dispatch]);
+  }, [dispatch, properties.index]);
 
   return (
     <Image
       src={properties.src}
       preview={false}
       onMouseDown={(event) =>
-        newBbox(event.nativeEvent.offsetX, event.nativeEvent.offsetY, 0)
+        setStartPoint([event.nativeEvent.offsetX, event.nativeEvent.offsetY])
       }
       onMouseUp={(event) =>
-        newBbox(event.nativeEvent.offsetX, event.nativeEvent.offsetY, 1)
+        newBbox(event.nativeEvent.offsetX, event.nativeEvent.offsetY)
       }
       onLoad={({ target }) =>
         dispatch(
