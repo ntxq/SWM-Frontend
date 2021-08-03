@@ -1,18 +1,16 @@
+import { useCallback } from "react";
 import {
   selectOCR,
   getOCRResult,
   getOCRResultBbox,
 } from "../../../adapters/backend";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { createBbox } from "../../../contexts/recognition-slice";
 
-function useRecognitionResult(index, callback) {
-  const bboxList = useSelector((state) => state.recognition.bboxList[index]);
+function useRecognitionResult(index) {
   const dispatch = useDispatch();
 
-  return async function () {
-    if (Array.isArray(bboxList) && bboxList.length > 0) return callback();
-
+  const getResult = useCallback(async () => {
     const ocrSuccess = await selectOCR(index);
 
     if (ocrSuccess) {
@@ -40,16 +38,22 @@ function useRecognitionResult(index, callback) {
                   translatedHeight: bbox.originalHeight,
 
                   originalText: bbox.originalText,
-                  // translatedText: bbox.translated,
+                  translatedText: bbox.originalText,
+
+                  //Temporary for Korean
+                  fontSize: bbox.originalHeight * 0.8,
+                  fontWeight: "bold",
+                  fontFamily: "Nanum Gothic"
                 },
               })
             )
           );
-          callback();
         }
       }, 2000);
     }
-  };
+  }, [index, dispatch]);
+
+  return getResult;
 }
 
 export default useRecognitionResult;

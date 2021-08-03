@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Col, Row, Steps, Modal, Spin } from "antd";
+import { useSelector } from "react-redux";
 
 import RecognitionImage from "./recognition-image";
 import BboxLayer from "./bbox-layer";
@@ -9,14 +10,16 @@ import useRecognitionResult from "./use-recognition-result";
 
 function Recognition(properties) {
   const [isModalVisible, setIsModalVisible] = useState(true);
-
-  const getResult = useRecognitionResult(properties.webtoon.id, () =>
-    setIsModalVisible(false)
+  const bboxList = useSelector(
+    (state) => state.recognition.bboxList[properties.webtoon.id]
   );
 
+  const getOCRResult = useRecognitionResult(properties.webtoon.id);
+
   useEffect(() => {
-    getResult();
-  }, [getResult]);
+    if (Array.isArray(bboxList)) setIsModalVisible(false);
+    else getOCRResult();
+  }, [getOCRResult, bboxList]);
 
   return (
     <>
@@ -46,6 +49,7 @@ function Recognition(properties) {
         <Steps.Step title="Recognition" />
         <Steps.Step title="Finish" />
       </Steps>
+
       <Row gutter={24}>
         <Col span={8} className="recognition_col">
           <RecognitionImage

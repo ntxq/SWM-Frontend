@@ -27,7 +27,8 @@ function RecognitionEditor(properties) {
         text={
           recognition.activeBox !== undefined &&
           recognition.bboxList[properties.index] &&
-          recognition.bboxList[properties.index][recognition.activeBox].originalText
+          recognition.bboxList[properties.index][recognition.activeBox]
+            .originalText
         }
         original={true}
       />
@@ -38,7 +39,8 @@ function RecognitionEditor(properties) {
         text={
           recognition.activeBox !== undefined &&
           recognition.bboxList[properties.index] &&
-          recognition.bboxList[properties.index][recognition.activeBox].translatedText
+          recognition.bboxList[properties.index][recognition.activeBox]
+            .translatedText
         }
         original={false}
       />
@@ -53,24 +55,28 @@ function RecognitionEditor(properties) {
         fontColor={
           recognition.activeBox !== undefined &&
           recognition.bboxList[properties.index] &&
-          recognition.bboxList[properties.index][recognition.activeBox].fontColor
+          recognition.bboxList[properties.index][recognition.activeBox]
+            .fontColor
         }
         fontFamily={
           recognition.activeBox !== undefined &&
           recognition.bboxList[properties.index]
-            ? recognition.bboxList[properties.index][recognition.activeBox].fontFamily
+            ? recognition.bboxList[properties.index][recognition.activeBox]
+                .fontFamily
             : "Open Sans"
         }
         fontWeight={
           recognition.activeBox !== undefined &&
           recognition.bboxList[properties.index]
-            ? recognition.bboxList[properties.index][recognition.activeBox].fontWeight
+            ? recognition.bboxList[properties.index][recognition.activeBox]
+                .fontWeight
             : "normal"
         }
         fontStyle={
           recognition.activeBox !== undefined &&
           recognition.bboxList[properties.index]
-            ? recognition.bboxList[properties.index][recognition.activeBox].fontStyle
+            ? recognition.bboxList[properties.index][recognition.activeBox]
+                .fontStyle
             : "normal"
         }
       />

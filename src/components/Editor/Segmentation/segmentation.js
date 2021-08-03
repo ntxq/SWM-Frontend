@@ -19,17 +19,13 @@ function Segmentation(properties) {
   const lsfReference = useRef(null);
   const [isModalVisible, setIsModalVisible] = useState(true);
 
-  const getResult = useSegmentationResult(properties.index);
-  const postUpload = useMaskUpload(properties.index);
-
-  useEffect(() => {
-    getResult();
-  }, [getResult]);
+  const getSegmentationResult = useSegmentationResult(properties.index);
+  const postMaskChange = useMaskUpload(properties.index);
 
   useEffect(() => {
     if (properties.webtoon.inpaint) setIsModalVisible(false);
-    else setIsModalVisible(true);
-  }, [properties.webtoon.inpaint]);
+    else getSegmentationResult();
+  }, [getSegmentationResult, properties.webtoon.inpaint]);
 
   useEffect(() => {
     if (rootReference.current) {
@@ -82,7 +78,7 @@ function Segmentation(properties) {
               },
             })
           );
-          postUpload(annotation.serializeAnnotation());
+          postMaskChange(annotation.serializeAnnotation());
         },
         onUpdateAnnotation: function (ls, annotation) {
           setIsModalVisible(true);
@@ -94,11 +90,11 @@ function Segmentation(properties) {
               },
             })
           );
-          postUpload(annotation.serializeAnnotation());
+          postMaskChange(annotation.serializeAnnotation());
         },
       });
     }
-  }, [properties.webtoon, properties.index, postUpload, dispatch]);
+  }, [properties.webtoon, properties.index, postMaskChange, dispatch]);
 
   return (
     <>
