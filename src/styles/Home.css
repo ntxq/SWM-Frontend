@@ -16,7 +16,7 @@
 }
 
 .crop {
-  height: 25vh;
+  max-height: 30vh;
   overflow: hidden;
 }
 
@@ -31,6 +31,10 @@
 
 .preview_card .delete {
   float: right;
+}
+
+.preview_mask {
+  max-height: 30vh;
 }
 
 .blank_upload {

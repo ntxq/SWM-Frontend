@@ -14,6 +14,7 @@ function CropImage(properties) {
         onClick={showModal}
         preview={{
           visible: false,
+          maskClassName: "preview_mask",
         }}
         className="preview_image"
       />
