@@ -4,12 +4,15 @@ import { useSelector } from "react-redux";
 
 import RecognitionImage from "./recognition-image";
 import BboxLayer from "./bbox-layer";
-import RecognitionEditor from "./recognition-editor";
+
+import RecognitionStyle from "./recognition-style";
+import RecognitionTable from "./recognition-table";
 
 import useRecognitionResult from "./use-recognition-result";
 
 function Recognition(properties) {
   const [isModalVisible, setIsModalVisible] = useState(true);
+  const [isTableVisible, setIsTableVisible] = useState(true);
   const bboxList = useSelector(
     (state) => state.recognition.bboxList[properties.webtoon.id]
   );
@@ -58,16 +61,11 @@ function Recognition(properties) {
           />
           <BboxLayer original={true} index={properties.webtoon.id} />
         </Col>
-        <Col span={8} className="recognition_col">
-          <RecognitionImage
-            src={properties.webtoon.inpaint}
-            index={properties.webtoon.id}
-          />
-          <BboxLayer original={false} index={properties.webtoon.id} />
-        </Col>
-        <Col span={8}>
-          <RecognitionEditor index={properties.webtoon.id} />
-        </Col>
+        {isTableVisible ? (
+          <RecognitionTable index={properties.webtoon.id} />
+        ) : (
+          <RecognitionStyle webtoon={properties.webtoon} />
+        )}
       </Row>
     </>
   );
