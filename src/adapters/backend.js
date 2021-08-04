@@ -3,9 +3,7 @@ import FormData from "form-data";
 
 const url = "http://ec2-3-38-47-70.ap-northeast-2.compute.amazonaws.com:3000";
 
-const backendInstance = axios.create({
-  baseURL: url,
-});
+const backendInstance = axios.create();
 
 export async function uploadOriginals(imageSlice, projectTitle) {
   const data = new FormData();
