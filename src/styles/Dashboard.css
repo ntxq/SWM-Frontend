@@ -1,0 +1,13 @@
+.crop {
+  height: 40vh;
+  overflow: hidden;
+}
+
+.language_choice {
+  margin-bottom: 3vh !important;
+}
+
+.project_title {
+  margin-top: 2vh !important;
+  margin-bottom: 0 !important;
+}

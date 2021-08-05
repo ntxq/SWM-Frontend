@@ -1,0 +1,84 @@
+.editor_progress {
+  margin-top: 1vh !important;
+  margin-bottom: 2vh !important;
+}
+
+.unselectable {
+  user-drag: none;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
+.bbox {
+  border: 3px solid;
+}
+
+.bbox_text {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  white-space: pre;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.editor_panel {
+  position: fixed !important;
+  max-width: inherit;
+}
+
+.editor_header {
+  z-index: 1;
+}
+
+.preview_sider {
+  overflow-y: scroll;
+  position: fixed !important;
+  padding-top: 30px;
+
+  height: 100vh !important;
+  top: 0 !important;
+}
+
+.side_crop {
+  max-height: 30vh;
+  overflow: hidden;
+}
+
+.side_card {
+  margin: 50px 20px !important;
+}
+
+.content_editor {
+  margin-left: 1vw;
+  margin-right: 1vw;
+  overflow: visible !important;
+}
+
+.title {
+  width: 100%;
+}
+
+.ant-modal-content {
+  background: rgba(0, 0, 0, 0) !important;
+  box-shadow: none !important;
+}
+
+@media (min-width: 1600px) {
+  .content_editor {
+    margin-left: 13vw;
+  }
+}
+
+.recognition_col {
+  padding: 0 !important;
+}
+
+.ls-menu {
+  position: sticky;
+  top: 10vh;
+}

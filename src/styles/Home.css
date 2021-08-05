@@ -1,0 +1,57 @@
+.upload {
+  padding: 3vh 0;
+}
+
+.content {
+  padding: 0 2vw;
+}
+
+.footer {
+  text-align: center;
+}
+
+.preview_card {
+  flex: "auto";
+  margin: 2% !important;
+}
+
+.crop {
+  max-height: 30vh;
+  overflow: hidden;
+}
+
+.top-cover {
+  margin-bottom: 2vh;
+}
+
+.preview_card .title {
+  width: 100%;
+  float: left;
+}
+
+.preview_card .delete {
+  float: right;
+}
+
+.preview_mask {
+  max-height: 30vh;
+}
+
+.blank_upload {
+  width: auto !important;
+  margin-left: 5% !important;
+  margin-right: 5% !important;
+}
+
+.submit_container {
+  text-align: center;
+  margin-top: 3vh;
+}
+
+.form_card {
+  margin-top: 3% !important;
+}
+
+.upload-row {
+  width: 100%;
+}
