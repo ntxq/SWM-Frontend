@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useState, useEffect } from "react";
 import {
   selectOCR,
   getOCRResult,
@@ -9,6 +9,9 @@ import { createBbox } from "../../../contexts/recognition-slice";
 
 function useRecognitionResult(index) {
   const dispatch = useDispatch();
+
+  const [currentID, setCurrentID] = useState();
+  const [cancelResult, setCancelResult] = useState(false);
 
   const getResult = useCallback(async () => {
     const ocrSuccess = await selectOCR(index);
@@ -43,17 +46,22 @@ function useRecognitionResult(index) {
                   //Temporary for Korean
                   fontSize: bbox.originalHeight * 0.8,
                   fontWeight: "bold",
-                  fontFamily: "Nanum Gothic"
+                  fontFamily: "Nanum Gothic",
                 },
               })
             )
           );
         }
       }, 2000);
+      setCurrentID(intervalID);
     }
   }, [index, dispatch]);
 
-  return getResult;
+  useEffect(() => {
+    if (cancelResult) clearInterval(currentID);
+  }, [currentID, cancelResult]);
+
+  return [getResult, setCancelResult];
 }
 
 export default useRecognitionResult;

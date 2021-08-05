@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   getSegmentationInpaint,
@@ -10,6 +10,9 @@ import { updateWebtoon } from "../../../contexts/webtoon-drop-slice";
 function useMaskUpload(index) {
   const image = useSelector((state) => state.webtoons.images[index]);
   const dispatch = useDispatch();
+
+  const [cancelUpload, setCancelUpload] = useState(false);
+  const [currentID, setCurrentID] = useState();
 
   const maskUpload = useCallback(
     async (mask) => {
@@ -31,12 +34,20 @@ function useMaskUpload(index) {
             );
           }
         }, 2000);
+        setCurrentID(intervalID);
       }
     },
     [dispatch, image.id, index]
   );
 
-  return maskUpload;
+  useEffect(() => {
+    if (cancelUpload) {
+      clearInterval(currentID);
+      setCancelUpload(false);
+    }
+  }, [currentID, cancelUpload]);
+
+  return [maskUpload, setCancelUpload];
 }
 
 export default useMaskUpload;

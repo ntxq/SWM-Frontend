@@ -82,3 +82,7 @@
   position: sticky;
   top: 10vh;
 }
+
+.loading_tip {
+  color: #1890ff !important;
+}

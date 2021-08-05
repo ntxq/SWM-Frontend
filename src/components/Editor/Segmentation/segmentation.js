@@ -1,15 +1,18 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { Button, Steps, Modal, Spin } from "antd";
+import { Button } from "antd";
 
-import { useDispatch } from "react-redux";
-import { updateWebtoon } from "../../../contexts/webtoon-drop-slice";
+import ModalLoading from "../../Common/modal-loading";
 
 import LabelStudio from "label-studio";
 import "label-studio/build/static/css/main.css";
 
+import { useDispatch } from "react-redux";
+import { updateWebtoon } from "../../../contexts/webtoon-drop-slice";
+
 import useSegmentationResult from "./use-segmentation-result";
 import useMaskUpload from "./use-mask-upload";
+import EditorProgress from "../editor-progress";
 
 function Segmentation(properties) {
   const history = useHistory();
@@ -17,10 +20,13 @@ function Segmentation(properties) {
 
   const rootReference = useRef(null);
   const lsfReference = useRef(null);
+
   const [isModalVisible, setIsModalVisible] = useState(true);
 
-  const getSegmentationResult = useSegmentationResult(properties.index);
-  const postMaskChange = useMaskUpload(properties.index);
+  const [getSegmentationResult, setCancelResult] = useSegmentationResult(
+    properties.index
+  );
+  const [postMaskChange, setCancelUpload] = useMaskUpload(properties.index);
 
   useEffect(() => {
     if (properties.webtoon.inpaint) setIsModalVisible(false);
@@ -98,33 +104,19 @@ function Segmentation(properties) {
 
   return (
     <>
-      <Modal
-        visible={isModalVisible}
-        centered
-        closable={false}
-        destroyOnClose={true}
-        // eslint-disable-next-line unicorn/no-null
-        footer={null}
-        maskClosable={false}
-        style={{
-          background: "rgba(100, 0, 0, 0)",
-        }}
-        bodyStyle={{
-          background: "rgba(0, 0, 0, 0)",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <Spin size="large" />
-      </Modal>
+      <ModalLoading
+        loading={isModalVisible}
+        cancel={() => {
+          properties.webtoon.inpaint
+            ? setCancelUpload(true)
+            : setCancelResult(true);
 
-      <Steps current={0} className="editor_progress">
-        <Steps.Step title="Segmentation" />
-        <Steps.Step title="Recognition" />
-        <Steps.Step title="Finish" />
-      </Steps>
+          setIsModalVisible(false);
+        }}
+        tip="Loading Segmentation..."
+      />
 
+      <EditorProgress current={0} />
       <div className="label-studio-root" ref={rootReference} />
       <Button
         type="primary"
