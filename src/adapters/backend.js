@@ -1,9 +1,14 @@
 import axios from "axios";
 import FormData from "form-data";
 
-const url = "http://ec2-3-38-47-70.ap-northeast-2.compute.amazonaws.com:3000";
+const url =
+  process.env.NODE_ENV === "production"
+    ? ""
+    : "http://ec2-3-38-47-70.ap-northeast-2.compute.amazonaws.com:3000";
 
-const backendInstance = axios.create();
+const backendInstance = axios.create({
+  baseURL: url,
+});
 
 export async function uploadOriginals(imageSlice, projectTitle) {
   const data = new FormData();
