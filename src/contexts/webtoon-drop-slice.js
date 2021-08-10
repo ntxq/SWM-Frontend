@@ -43,6 +43,14 @@ export const webtoonDropSlice = createSlice({
     },
     setForm: (state, action) => {
       state.form = action.payload;
+
+      if (
+        !Array.isArray(state.form.langauge) ||
+        state.form.language.length === 0
+      )
+        state.form.language = ["Korean", "English"];
+
+      if (!state.form.title) state.form.title = "Title";
     },
     mapIds: (state, action) => {
       state.images = state.images.map((image) => {

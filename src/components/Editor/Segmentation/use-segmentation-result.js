@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   getSegmentationResult,
@@ -10,6 +10,9 @@ import { updateWebtoon } from "../../../contexts/webtoon-drop-slice";
 function useSegmentationResult(index) {
   const image = useSelector((state) => state.webtoons.images[index]);
   const dispatch = useDispatch();
+
+  const [cancelResult, setCancelResult] = useState(false);
+  const [currentID, setCurrentID] = useState();
 
   const getResult = useCallback(async () => {
     const intervalID = setInterval(async () => {
@@ -51,9 +54,14 @@ function useSegmentationResult(index) {
         );
       }
     }, 2000);
+    setCurrentID(intervalID);
   }, [dispatch, image.id, index]);
 
-  return getResult;
+  useEffect(() => {
+    if (cancelResult) clearInterval(currentID);
+  }, [currentID, cancelResult]);
+
+  return [getResult, setCancelResult];
 }
 
 export default useSegmentationResult;

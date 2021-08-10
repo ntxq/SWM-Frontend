@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useState, useEffect } from "react";
 import {
   selectOCR,
   getOCRResult,
@@ -10,6 +10,9 @@ import { createBbox } from "../../../contexts/recognition-slice";
 function useRecognitionResult(index) {
   const dispatch = useDispatch();
 
+  const [currentID, setCurrentID] = useState();
+  const [cancelResult, setCancelResult] = useState(false);
+
   const getResult = useCallback(async () => {
     const ocrSuccess = await selectOCR(index);
 
@@ -20,6 +23,12 @@ function useRecognitionResult(index) {
         if (processFinished) {
           clearInterval(intervalID);
           const bboxList = await getOCRResultBbox(index);
+
+          const image = document.querySelector(".unselectable");
+          const widthRatio = image.clientWidth / image.naturalWidth;
+          const heightRatio = image.clientHeight / image.naturalHeight;
+
+
           bboxList.map((bbox) =>
             dispatch(
               createBbox({
@@ -27,33 +36,38 @@ function useRecognitionResult(index) {
                 bbox: {
                   bbox_id: bbox.bbox_id,
 
-                  originalX: bbox.originalX,
-                  originalY: bbox.originalY,
-                  originalWidth: bbox.originalWidth,
-                  originalHeight: bbox.originalHeight,
+                  originalX: bbox.originalX * widthRatio,
+                  originalY: bbox.originalY * heightRatio,
+                  originalWidth: bbox.originalWidth * widthRatio,
+                  originalHeight: bbox.originalHeight * heightRatio,
 
-                  translatedX: bbox.originalX,
-                  translatedY: bbox.originalY,
-                  translatedWidth: bbox.originalWidth,
-                  translatedHeight: bbox.originalHeight,
+                  translatedX: bbox.originalX * widthRatio,
+                  translatedY: bbox.originalY * heightRatio,
+                  translatedWidth: bbox.originalWidth * widthRatio,
+                  translatedHeight: bbox.originalHeight * heightRatio,
 
                   originalText: bbox.originalText,
                   translatedText: bbox.originalText,
 
                   //Temporary for Korean
-                  fontSize: bbox.originalHeight * 0.8,
+                  fontSize: bbox.originalHeight * heightRatio * 0.8,
                   fontWeight: "bold",
-                  fontFamily: "Nanum Gothic"
+                  fontFamily: "Nanum Gothic",
                 },
               })
             )
           );
         }
       }, 2000);
+      setCurrentID(intervalID);
     }
   }, [index, dispatch]);
 
-  return getResult;
+  useEffect(() => {
+    if (cancelResult) clearInterval(currentID);
+  }, [currentID, cancelResult]);
+
+  return [getResult, setCancelResult];
 }
 
 export default useRecognitionResult;
