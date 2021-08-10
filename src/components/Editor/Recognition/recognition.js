@@ -52,7 +52,7 @@ function Recognition(properties) {
           />
           <BboxLayer original={false} index={properties.webtoon.id} />
         </Col>
-        <Col span={8}>
+        <Col span={8} className="editor_col">
           <RecognitionEditor index={properties.webtoon.id} />
         </Col>
       </Row>

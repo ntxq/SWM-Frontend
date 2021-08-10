@@ -27,8 +27,12 @@
 }
 
 .editor_panel {
-  position: fixed !important;
-  max-width: inherit;
+  position: sticky !important;
+  top: 5vh;
+}
+
+.editor_col {
+  height: auto;
 }
 
 .editor_header {
@@ -74,13 +78,9 @@
   }
 }
 
-.recognition_col {
-  padding: 0 !important;
-}
-
 .ls-menu {
   position: sticky;
-  top: 10vh;
+  top: 5vh;
 }
 
 .loading_tip {
