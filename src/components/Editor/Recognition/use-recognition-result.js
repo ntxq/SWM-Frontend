@@ -28,7 +28,6 @@ function useRecognitionResult(index) {
           const widthRatio = image.clientWidth / image.naturalWidth;
           const heightRatio = image.clientHeight / image.naturalHeight;
 
-
           bboxList.map((bbox) =>
             dispatch(
               createBbox({
@@ -50,7 +49,7 @@ function useRecognitionResult(index) {
                   translatedText: bbox.originalText,
 
                   //Temporary for Korean
-                  fontSize: bbox.originalHeight * heightRatio * 0.8,
+                  fontSize: Math.round(bbox.originalHeight * heightRatio * 0.8),
                   fontWeight: "bold",
                   fontFamily: "Nanum Gothic",
                 },
