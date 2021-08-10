@@ -86,3 +86,7 @@
 .loading_tip {
   color: #1890ff !important;
 }
+
+.recognition_col {
+  padding-left: 0 !important;
+}
