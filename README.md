@@ -59,7 +59,7 @@ src
 |
 ---- contexts : Redux를 활용한 store 관련 폴더입니다.
 |
----- pages : React 컴포넌트들이 모인 전체적인 페이지 폴더입니다..
+---- pages : React 컴포넌트들이 모인 전체적인 페이지 폴더입니다.
 |
 ---- styles : css등 스타일 관련 폴더입니다.
 ```
