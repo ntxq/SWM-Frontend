@@ -13,6 +13,7 @@ const defaultImage = {
   original: "",
   inpaint: "",
   mask: [],
+  progress: "start",
   filename: "",
   id: "",
 };

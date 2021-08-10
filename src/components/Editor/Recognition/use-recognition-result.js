@@ -5,6 +5,7 @@ import {
   getOCRResultBbox,
 } from "../../../adapters/backend";
 import { useDispatch } from "react-redux";
+import { updateWebtoon } from "../../../contexts/webtoon-drop-slice";
 import { createBbox } from "../../../contexts/recognition-slice";
 
 function useRecognitionResult(index) {
@@ -18,16 +19,23 @@ function useRecognitionResult(index) {
 
     if (ocrSuccess) {
       const intervalID = setInterval(async () => {
-        const processFinished = await getOCRResult(index);
+        const progress = await getOCRResult(index);
+        dispatch(
+          updateWebtoon({
+            index,
+            webtoon: {
+              progress,
+            },
+          })
+        );
 
-        if (processFinished) {
+        if (progress === "bbox") {
           clearInterval(intervalID);
           const bboxList = await getOCRResultBbox(index);
 
           const image = document.querySelector(".unselectable");
           const widthRatio = image.clientWidth / image.naturalWidth;
           const heightRatio = image.clientHeight / image.naturalHeight;
-
 
           bboxList.map((bbox) =>
             dispatch(

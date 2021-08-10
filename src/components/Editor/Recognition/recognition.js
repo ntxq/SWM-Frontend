@@ -3,6 +3,8 @@ import { Col, Row } from "antd";
 import { useSelector } from "react-redux";
 
 import ModalLoading from "../../Common/modal-loading";
+import loadingText from "../../Common/loading-text";
+
 import RecognitionImage from "./recognition-image";
 import BboxLayer from "./bbox-layer";
 import RecognitionEditor from "./recognition-editor";
@@ -33,7 +35,7 @@ function Recognition(properties) {
           cancelResult(true);
           setIsModalVisible(false);
         }}
-        tip="Loading Recognition..."
+        tip={loadingText[properties.webtoon.progress]}
       />
 
       <EditorProgress current={1} />

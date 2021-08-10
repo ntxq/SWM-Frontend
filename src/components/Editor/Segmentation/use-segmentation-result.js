@@ -16,9 +16,17 @@ function useSegmentationResult(index) {
 
   const getResult = useCallback(async () => {
     const intervalID = setInterval(async () => {
-      const processFinished = await getSegmentationResult(image.id);
+      const progress = await getSegmentationResult(image.id);
+      dispatch(
+        updateWebtoon({
+          index,
+          webtoon: {
+            progress,
+          },
+        })
+      );
 
-      if (processFinished) {
+      if (progress === "inpaint") {
         clearInterval(intervalID);
 
         const aiInpaint = await getSegmentationInpaint(image.id);

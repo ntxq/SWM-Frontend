@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 import { Button } from "antd";
 
 import ModalLoading from "../../Common/modal-loading";
+import loadingText from "../../Common/loading-text";
 
 import LabelStudio from "label-studio";
 import "label-studio/build/static/css/main.css";
@@ -30,6 +31,7 @@ function Segmentation(properties) {
 
   useEffect(() => {
     if (properties.webtoon.inpaint) {
+      console.log("resize event");
       setIsModalVisible(false);
       setTimeout(() => window.dispatchEvent(new Event("resize")), 1000);
     } else getSegmentationResult();
@@ -115,7 +117,7 @@ function Segmentation(properties) {
 
           setIsModalVisible(false);
         }}
-        tip="Loading Segmentation..."
+        tip={loadingText[properties.webtoon.progress]}
       />
 
       <EditorProgress current={0} />
