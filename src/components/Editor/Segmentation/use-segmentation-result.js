@@ -58,7 +58,6 @@ function useSegmentationResult(index) {
   }, [dispatch, image.id, index]);
 
   useEffect(() => {
-    console.log(currentID, cancelResult);
     if (cancelResult) clearInterval(currentID);
   }, [currentID, cancelResult]);
 

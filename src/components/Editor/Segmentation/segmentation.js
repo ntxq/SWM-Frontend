@@ -29,8 +29,10 @@ function Segmentation(properties) {
   const [postMaskChange, setCancelUpload] = useMaskUpload(properties.index);
 
   useEffect(() => {
-    if (properties.webtoon.inpaint) setIsModalVisible(false);
-    else getSegmentationResult();
+    if (properties.webtoon.inpaint) {
+      setIsModalVisible(false);
+      setTimeout(() => window.dispatchEvent(new Event("resize")), 1000);
+    } else getSegmentationResult();
   }, [getSegmentationResult, properties.webtoon.inpaint]);
 
   useEffect(() => {
