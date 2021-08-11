@@ -18,9 +18,7 @@ function Recognition(properties) {
     (state) => state.recognition.bboxList[properties.webtoon.id]
   );
 
-  const [getOCRResult, cancelResult] = useRecognitionResult(
-    properties.webtoon.id
-  );
+  const [getOCRResult, cancelResult] = useRecognitionResult(properties.index);
 
   useEffect(() => {
     if (Array.isArray(bboxList)) setIsModalVisible(false);

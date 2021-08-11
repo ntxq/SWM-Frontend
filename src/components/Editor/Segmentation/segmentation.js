@@ -31,7 +31,6 @@ function Segmentation(properties) {
 
   useEffect(() => {
     if (properties.webtoon.inpaint) {
-      console.log("resize event");
       setIsModalVisible(false);
       setTimeout(() => window.dispatchEvent(new Event("resize")), 1000);
     } else getSegmentationResult();
@@ -104,7 +103,14 @@ function Segmentation(properties) {
         },
       });
     }
-  }, [properties.webtoon, properties.index, postMaskChange, dispatch]);
+  }, [
+    properties.webtoon.original,
+    properties.webtoon.inpaint,
+    properties.webtoon.mask,
+    properties.index,
+    postMaskChange,
+    dispatch,
+  ]);
 
   return (
     <>

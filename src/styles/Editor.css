@@ -85,8 +85,17 @@
 
 .loading_tip {
   color: #1890ff !important;
+  font-size: 20px;
 }
 
 .recognition_col {
   padding-left: 0 !important;
+}
+
+span.ant-tree-node-content-wrapper.ant-tree-node-content-wrapper-normal.ant-tree-node-selected.draggable {
+  background-color: transparent;
+}
+
+span.ant-tree-node-content-wrapper.ant-tree-node-content-wrapper-normal.draggable:hover {
+  background-color: transparent;
 }

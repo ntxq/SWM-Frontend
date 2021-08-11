@@ -30,7 +30,7 @@ function Editor(properties) {
               <Segmentation webtoon={webtoon} index={file} />
             </Route>
             <Route path={`${url}/recognition`}>
-              <Recognition webtoon={webtoon} />
+              <Recognition webtoon={webtoon} index={file} />
             </Route>
           </Switch>
         </Content>
