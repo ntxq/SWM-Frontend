@@ -17,10 +17,20 @@ function useMaskUpload(index) {
   const maskUpload = useCallback(
     async (mask) => {
       const maskSuccess = await uploadMask(image.id, mask);
+
       if (maskSuccess) {
         const intervalID = setInterval(async () => {
-          const processFinished = await getSegmentationResult(image.id);
-          if (processFinished) {
+          const progress = await getSegmentationResult(image.id);
+          dispatch(
+            updateWebtoon({
+              index,
+              webtoon: {
+                progress,
+              },
+            })
+          );
+
+          if (progress === "inpaint") {
             clearInterval(intervalID);
 
             const inpaint = await getSegmentationInpaint(image.id);

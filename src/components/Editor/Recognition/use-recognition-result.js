@@ -4,35 +4,44 @@ import {
   getOCRResult,
   getOCRResultBbox,
 } from "../../../adapters/backend";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { updateWebtoon } from "../../../contexts/webtoon-drop-slice";
 import { createBbox } from "../../../contexts/recognition-slice";
 
 function useRecognitionResult(index) {
+  const imageID = useSelector((state) => state.webtoons.images[index].id);
   const dispatch = useDispatch();
 
   const [currentID, setCurrentID] = useState();
   const [cancelResult, setCancelResult] = useState(false);
 
   const getResult = useCallback(async () => {
-    const ocrSuccess = await selectOCR(index);
+    const ocrSuccess = await selectOCR(imageID);
 
     if (ocrSuccess) {
       const intervalID = setInterval(async () => {
-        const processFinished = await getOCRResult(index);
+        const progress = await getOCRResult(imageID);
+        dispatch(
+          updateWebtoon({
+            index,
+            webtoon: {
+              progress,
+            },
+          })
+        );
 
-        if (processFinished) {
+        if (progress === "bbox") {
           clearInterval(intervalID);
-          const bboxList = await getOCRResultBbox(index);
+          const bboxList = await getOCRResultBbox(imageID);
 
           const image = document.querySelector(".unselectable");
           const widthRatio = image.clientWidth / image.naturalWidth;
           const heightRatio = image.clientHeight / image.naturalHeight;
 
-
           bboxList.map((bbox) =>
             dispatch(
               createBbox({
-                id: index,
+                id: imageID,
                 bbox: {
                   bbox_id: bbox.bbox_id,
 
@@ -61,7 +70,7 @@ function useRecognitionResult(index) {
       }, 2000);
       setCurrentID(intervalID);
     }
-  }, [index, dispatch]);
+  }, [imageID, index, dispatch]);
 
   useEffect(() => {
     if (cancelResult) clearInterval(currentID);

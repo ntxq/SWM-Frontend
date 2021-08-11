@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 import { Button } from "antd";
 
 import ModalLoading from "../../Common/modal-loading";
+import loadingText from "../../Common/loading-text";
 
 import LabelStudio from "label-studio";
 import "label-studio/build/static/css/main.css";
@@ -102,7 +103,14 @@ function Segmentation(properties) {
         },
       });
     }
-  }, [properties.webtoon, properties.index, postMaskChange, dispatch]);
+  }, [
+    properties.webtoon.original,
+    properties.webtoon.inpaint,
+    properties.webtoon.mask,
+    properties.index,
+    postMaskChange,
+    dispatch,
+  ]);
 
   return (
     <>
@@ -115,7 +123,7 @@ function Segmentation(properties) {
 
           setIsModalVisible(false);
         }}
-        tip="Loading Segmentation..."
+        tip={loadingText[properties.webtoon.progress]}
       />
 
       <EditorProgress current={0} />
