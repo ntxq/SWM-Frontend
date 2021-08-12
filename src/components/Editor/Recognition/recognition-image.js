@@ -15,7 +15,7 @@ function RecognitionImage(properties) {
     (x, y) => {
       dispatch(
         createBbox({
-          id: properties.index,
+          requestID: properties.requestID,
           bbox: {
             originalX: Math.min(startPoint[0], x),
             originalY: Math.min(startPoint[1], y),
@@ -31,7 +31,7 @@ function RecognitionImage(properties) {
       );
       setStartPoint([undefined, undefined]);
     },
-    [dispatch, startPoint, properties.index]
+    [dispatch, startPoint, properties.requestID]
   );
 
   useLayoutEffect(() => {
@@ -39,7 +39,8 @@ function RecognitionImage(properties) {
     function dispatchProperty() {
       dispatch(
         setImageProperty({
-          id: properties.index,
+          requestID: properties.requestID,
+          cutIndex: properties.cutIndex,
           clientHeight: image.clientHeight,
           clientWidth: image.clientWidth,
           naturalHeight: image.naturalHeight,
@@ -52,7 +53,7 @@ function RecognitionImage(properties) {
     return () => {
       window.removeEventListener("resize", dispatchProperty);
     };
-  }, [dispatch, properties.index]);
+  }, [dispatch, properties.requestID, properties.cutIndex]);
 
   return (
     <Image
@@ -67,6 +68,9 @@ function RecognitionImage(properties) {
       onLoad={({ target }) =>
         dispatch(
           setImageProperty({
+            requestID: properties.requestID,
+            cutIndex: properties.cutIndex,
+
             clientHeight: target.clientHeight,
             clientWidth: target.clientWidth,
             naturalHeight: target.naturalHeight,

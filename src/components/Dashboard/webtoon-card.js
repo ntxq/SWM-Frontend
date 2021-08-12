@@ -12,8 +12,11 @@ function WebtoonCard(properties) {
       hoverable
       cover={<CropWebtoon url={properties.url} />}
       onClick={() => {
-        if (properties.id)
-          history.push(`/editor/${properties.index}/segmentation`);
+        if (properties.webtoonIndex !== undefined)
+          history.push(
+            `/editor/${properties.webtoonIndex}/${properties.index}/segmentation`
+          );
+        else history.push(`/dashboard/${properties.index}`);
       }}
       className="preview_card"
     >

@@ -11,10 +11,10 @@ function App() {
   return (
     <Router>
       <Switch>
-        <Route path="/editor/:file">
+        <Route path="/editor/:webtoonIndex/:cutIndex">
           <Editor />
         </Route>
-        <Route path="/dashboard">
+        <Route path={["/dashboard/:webtoonIndex", "/dashboard"]}>
           <DashBoard />
         </Route>
         <Route path="/">

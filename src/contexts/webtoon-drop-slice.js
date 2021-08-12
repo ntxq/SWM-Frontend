@@ -10,12 +10,17 @@ const initialState = {
 };
 
 const defaultImage = {
+  id: "",
+  cutID: "",
+  filename: "",
+  cutCount: 0,
   original: "",
   inpaint: "",
+
   mask: [],
   progress: "start",
-  filename: "",
-  id: "",
+
+  cut: [],
 };
 
 export const webtoonDropSlice = createSlice({
@@ -37,6 +42,12 @@ export const webtoonDropSlice = createSlice({
         ...action.payload.webtoon,
       };
     },
+    updateCut: (state, action) => {
+      state.images[action.payload.index].cut[action.payload.cutIndex] = {
+        ...state.images[action.payload.index].cut[action.payload.cutIndex],
+        ...action.payload.webtoon,
+      };
+    },
     singleDelete: (state, action) => {
       state.images = state.images.filter(
         (item, index) => index !== action.payload
@@ -55,16 +66,36 @@ export const webtoonDropSlice = createSlice({
     },
     mapIds: (state, action) => {
       state.images = state.images.map((image) => {
-        if (action.payload && action.payload.hasOwnProperty(image.filename))
-          image.id = action.payload[image.filename];
+        if (action.payload && action.payload.hasOwnProperty(image.filename)) {
+          image.id = action.payload[image.filename].req_id;
+          image.cutCount = action.payload[image.filename].cut_count;
 
+          // eslint-disable-next-line unicorn/new-for-builtins
+          image.cut = Array.from(
+            {
+              length: image.cutCount,
+            },
+            (_, index) => ({
+              ...defaultImage,
+              id: image.id,
+              cutID: index + 1,
+              filename: image.filename + ` (Cut ${index + 1})`,
+            })
+          );
+        }
         return image;
       });
     },
   },
 });
 
-export const { uploadWebtoon, updateWebtoon, singleDelete, setForm, mapIds } =
-  webtoonDropSlice.actions;
+export const {
+  uploadWebtoon,
+  updateWebtoon,
+  updateCut,
+  singleDelete,
+  setForm,
+  mapIds,
+} = webtoonDropSlice.actions;
 
 export default webtoonDropSlice.reducer;

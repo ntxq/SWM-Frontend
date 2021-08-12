@@ -5,25 +5,28 @@ import {
   getOCRResultBbox,
 } from "../../../adapters/backend";
 import { useDispatch, useSelector } from "react-redux";
-import { updateWebtoon } from "../../../contexts/webtoon-drop-slice";
+import { updateCut } from "../../../contexts/webtoon-drop-slice";
 import { createBbox } from "../../../contexts/recognition-slice";
 
-function useRecognitionResult(index) {
-  const imageID = useSelector((state) => state.webtoons.images[index].id);
+function useRecognitionResult(webtoonIndex, cutIndex) {
+  const image = useSelector(
+    (state) => state.webtoons.images[webtoonIndex].cut[cutIndex]
+  );
   const dispatch = useDispatch();
 
   const [currentID, setCurrentID] = useState();
   const [cancelResult, setCancelResult] = useState(false);
 
   const getResult = useCallback(async () => {
-    const ocrSuccess = await selectOCR(imageID);
+    const ocrSuccess = await selectOCR(image.id, cutIndex + 1);
 
     if (ocrSuccess) {
       const intervalID = setInterval(async () => {
-        const progress = await getOCRResult(imageID);
+        const progress = await getOCRResult(image.id, cutIndex + 1);
         dispatch(
-          updateWebtoon({
-            index,
+          updateCut({
+            index: webtoonIndex,
+            cutIndex: cutIndex,
             webtoon: {
               progress,
             },
@@ -32,16 +35,18 @@ function useRecognitionResult(index) {
 
         if (progress === "bbox") {
           clearInterval(intervalID);
-          const bboxList = await getOCRResultBbox(imageID);
+          const bboxList = await getOCRResultBbox(image.id, cutIndex + 1);
 
-          const image = document.querySelector(".unselectable");
-          const widthRatio = image.clientWidth / image.naturalWidth;
-          const heightRatio = image.clientHeight / image.naturalHeight;
+          const clientImage = document.querySelector(".unselectable");
+          const widthRatio = clientImage.clientWidth / clientImage.naturalWidth;
+          const heightRatio =
+            clientImage.clientHeight / clientImage.naturalHeight;
 
           bboxList.map((bbox) =>
             dispatch(
               createBbox({
-                id: imageID,
+                requestID: image.id,
+                cutIndex: cutIndex,
                 bbox: {
                   bbox_id: bbox.bbox_id,
 
@@ -59,7 +64,7 @@ function useRecognitionResult(index) {
                   translatedText: bbox.originalText,
 
                   //Temporary for Korean
-                  fontSize: bbox.originalHeight * heightRatio * 0.8,
+                  fontSize: Math.round(bbox.originalHeight * heightRatio * 0.8),
                   fontWeight: "bold",
                   fontFamily: "Nanum Gothic",
                 },
@@ -70,7 +75,7 @@ function useRecognitionResult(index) {
       }, 2000);
       setCurrentID(intervalID);
     }
-  }, [imageID, index, dispatch]);
+  }, [webtoonIndex, cutIndex, image.id, dispatch]);
 
   useEffect(() => {
     if (cancelResult) clearInterval(currentID);

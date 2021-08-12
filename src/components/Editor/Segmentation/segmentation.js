@@ -9,7 +9,7 @@ import LabelStudio from "label-studio";
 import "label-studio/build/static/css/main.css";
 
 import { useDispatch } from "react-redux";
-import { updateWebtoon } from "../../../contexts/webtoon-drop-slice";
+import { updateCut } from "../../../contexts/webtoon-drop-slice";
 
 import useSegmentationResult from "./use-segmentation-result";
 import useMaskUpload from "./use-mask-upload";
@@ -25,9 +25,14 @@ function Segmentation(properties) {
   const [isModalVisible, setIsModalVisible] = useState(true);
 
   const [getSegmentationResult, setCancelResult] = useSegmentationResult(
-    properties.index
+    properties.webtoonIndex,
+    properties.cutIndex
   );
-  const [postMaskChange, setCancelUpload] = useMaskUpload(properties.index);
+
+  const [postMaskChange, setCancelUpload] = useMaskUpload(
+    properties.webtoonIndex,
+    properties.cutIndex
+  );
 
   useEffect(() => {
     if (properties.webtoon.inpaint) {
@@ -80,8 +85,9 @@ function Segmentation(properties) {
         onSubmitAnnotation: function (ls, annotation) {
           setIsModalVisible(true);
           dispatch(
-            updateWebtoon({
-              index: properties.index,
+            updateCut({
+              index: properties.webtoonIndex,
+              cutIndex: properties.cutIndex,
               webtoon: {
                 mask: annotation.serializeAnnotation(),
               },
@@ -92,8 +98,9 @@ function Segmentation(properties) {
         onUpdateAnnotation: function (ls, annotation) {
           setIsModalVisible(true);
           dispatch(
-            updateWebtoon({
-              index: properties.index,
+            updateCut({
+              index: properties.webtoonIndex,
+              cutIndex: properties.cutIndex,
               webtoon: {
                 mask: annotation.serializeAnnotation(),
               },
@@ -107,7 +114,8 @@ function Segmentation(properties) {
     properties.webtoon.original,
     properties.webtoon.inpaint,
     properties.webtoon.mask,
-    properties.index,
+    properties.webtoonIndex,
+    properties.cutIndex,
     postMaskChange,
     dispatch,
   ]);
@@ -131,7 +139,9 @@ function Segmentation(properties) {
       <Button
         type="primary"
         onClick={() => {
-          history.push(`/editor/${properties.index}/recognition`);
+          history.push(
+            `/editor/${properties.webtoonIndex}/${properties.cutIndex}/recognition`
+          );
           window.scrollTo(0, 0);
         }}
       >

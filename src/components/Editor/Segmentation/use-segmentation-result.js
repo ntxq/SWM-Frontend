@@ -5,10 +5,12 @@ import {
   getSegmentationInpaint,
   getSegmentationMask,
 } from "../../../adapters/backend";
-import { updateWebtoon } from "../../../contexts/webtoon-drop-slice";
+import { updateCut } from "../../../contexts/webtoon-drop-slice";
 
-function useSegmentationResult(index) {
-  const image = useSelector((state) => state.webtoons.images[index]);
+function useSegmentationResult(webtoonIndex, cutIndex) {
+  const image = useSelector(
+    (state) => state.webtoons.images[webtoonIndex].cut[cutIndex]
+  );
   const dispatch = useDispatch();
 
   const [cancelResult, setCancelResult] = useState(false);
@@ -16,10 +18,11 @@ function useSegmentationResult(index) {
 
   const getResult = useCallback(async () => {
     const intervalID = setInterval(async () => {
-      const progress = await getSegmentationResult(image.id);
+      const progress = await getSegmentationResult(image.id, cutIndex + 1);
       dispatch(
-        updateWebtoon({
-          index,
+        updateCut({
+          index: webtoonIndex,
+          cutIndex: cutIndex,
           webtoon: {
             progress,
           },
@@ -29,20 +32,25 @@ function useSegmentationResult(index) {
       if (progress === "inpaint") {
         clearInterval(intervalID);
 
-        const aiInpaint = await getSegmentationInpaint(image.id);
+        const inpaintBlob = await getSegmentationInpaint(
+          image.id,
+          cutIndex + 1
+        );
         dispatch(
-          updateWebtoon({
-            index,
+          updateCut({
+            index: webtoonIndex,
+            cutIndex: cutIndex,
             webtoon: {
-              inpaint: URL.createObjectURL(aiInpaint),
+              inpaint: URL.createObjectURL(inpaintBlob),
             },
           })
         );
 
-        const aiMask = await getSegmentationMask(image.id);
+        const maskRle = await getSegmentationMask(image.id, cutIndex + 1);
         dispatch(
-          updateWebtoon({
-            index,
+          updateCut({
+            index: webtoonIndex,
+            cutIndex: cutIndex,
             webtoon: {
               mask: [
                 {
@@ -52,7 +60,7 @@ function useSegmentationResult(index) {
                   type: "brushlabels",
                   value: {
                     format: "rle",
-                    rle: aiMask,
+                    rle: maskRle,
                     brushlabels: ["AI"],
                   },
                 },
@@ -63,7 +71,7 @@ function useSegmentationResult(index) {
       }
     }, 2000);
     setCurrentID(intervalID);
-  }, [dispatch, image.id, index]);
+  }, [dispatch, image.id, webtoonIndex, cutIndex]);
 
   useEffect(() => {
     if (cancelResult) clearInterval(currentID);

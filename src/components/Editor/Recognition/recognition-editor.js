@@ -15,68 +15,73 @@ function RecognitionEditor(properties) {
       extra={
         <EditorButtons
           activeBox={recognition.activeBox}
-          index={properties.index}
+          requestID={properties.requestID}
+          cutIndex={properties.cutIndex}
         />
       }
       className="editor_panel"
     >
       <TextInput
-        index={properties.index}
+        requestID={properties.requestID}
+        cutIndex={properties.cutIndex}
         title={"Original Text"}
         activeBox={recognition.activeBox}
         text={
           recognition.activeBox !== undefined &&
-          recognition.bboxList[properties.index] &&
-          recognition.bboxList[properties.index][recognition.activeBox]
-            .originalText
+          recognition.bboxList[properties.requestID][properties.cutIndex][
+            recognition.activeBox
+          ].originalText
         }
         original={true}
       />
       <TextInput
-        index={properties.index}
+        requestID={properties.requestID}
+        cutIndex={properties.cutIndex}
         title={"Translated Text"}
         activeBox={recognition.activeBox}
         text={
           recognition.activeBox !== undefined &&
-          recognition.bboxList[properties.index] &&
-          recognition.bboxList[properties.index][recognition.activeBox]
-            .translatedText
+          recognition.bboxList[properties.requestID][properties.cutIndex][
+            recognition.activeBox
+          ].translatedText
         }
         original={false}
       />
       <StyleEditor
-        index={properties.index}
+        requestID={properties.requestID}
+        cutIndex={properties.cutIndex}
         activeBox={recognition.activeBox}
         fontSize={
           recognition.activeBox !== undefined &&
-          recognition.bboxList[properties.index] &&
-          recognition.bboxList[properties.index][recognition.activeBox].fontSize
+          recognition.bboxList[properties.requestID][properties.cutIndex][
+            recognition.activeBox
+          ].fontSize
         }
         fontColor={
           recognition.activeBox !== undefined &&
-          recognition.bboxList[properties.index] &&
-          recognition.bboxList[properties.index][recognition.activeBox]
-            .fontColor
+          recognition.bboxList[properties.requestID][properties.cutIndex][
+            recognition.activeBox
+          ].fontColor
         }
         fontFamily={
-          recognition.activeBox !== undefined &&
-          recognition.bboxList[properties.index]
-            ? recognition.bboxList[properties.index][recognition.activeBox]
-                .fontFamily
+          recognition.activeBox !== undefined
+            ? recognition.bboxList[properties.requestID][properties.cutIndex][
+                recognition.activeBox
+              ].fontFamily
             : "Open Sans"
         }
         fontWeight={
-          recognition.activeBox !== undefined &&
-          recognition.bboxList[properties.index]
-            ? recognition.bboxList[properties.index][recognition.activeBox]
-                .fontWeight
+          recognition.activeBox !== undefined
+            ? recognition.bboxList[properties.requestID][properties.cutIndex][
+                recognition.activeBox
+              ].fontWeight
             : "normal"
         }
         fontStyle={
-          recognition.activeBox !== undefined &&
-          recognition.bboxList[properties.index]
-            ? recognition.bboxList[properties.index][recognition.activeBox]
-                .fontStyle
+          recognition.activeBox !== undefined
+            ? recognition.bboxList[properties.requestID][properties.cutIndex][
+                recognition.activeBox
+              ].fontStyle
             : "normal"
         }
       />

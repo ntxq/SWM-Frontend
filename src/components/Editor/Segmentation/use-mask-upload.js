@@ -5,10 +5,12 @@ import {
   getSegmentationResult,
   uploadMask,
 } from "../../../adapters/backend";
-import { updateWebtoon } from "../../../contexts/webtoon-drop-slice";
+import { updateCut } from "../../../contexts/webtoon-drop-slice";
 
-function useMaskUpload(index) {
-  const image = useSelector((state) => state.webtoons.images[index]);
+function useMaskUpload(webtoonIndex, cutIndex) {
+  const image = useSelector(
+    (state) => state.webtoons.images[webtoonIndex].cut[cutIndex]
+  );
   const dispatch = useDispatch();
 
   const [cancelUpload, setCancelUpload] = useState(false);
@@ -16,14 +18,15 @@ function useMaskUpload(index) {
 
   const maskUpload = useCallback(
     async (mask) => {
-      const maskSuccess = await uploadMask(image.id, mask);
+      const maskSuccess = await uploadMask(image.id, cutIndex + 1, mask);
 
       if (maskSuccess) {
         const intervalID = setInterval(async () => {
-          const progress = await getSegmentationResult(image.id);
+          const progress = await getSegmentationResult(image.id, cutIndex + 1);
           dispatch(
-            updateWebtoon({
-              index,
+            updateCut({
+              index: webtoonIndex,
+              cutIndex: cutIndex,
               webtoon: {
                 progress,
               },
@@ -33,10 +36,14 @@ function useMaskUpload(index) {
           if (progress === "inpaint") {
             clearInterval(intervalID);
 
-            const inpaint = await getSegmentationInpaint(image.id);
+            const inpaint = await getSegmentationInpaint(
+              image.id,
+              cutIndex + 1
+            );
             dispatch(
-              updateWebtoon({
-                index,
+              updateCut({
+                index: webtoonIndex,
+                cutIndex: cutIndex,
                 webtoon: {
                   inpaint: URL.createObjectURL(inpaint),
                 },
@@ -47,7 +54,7 @@ function useMaskUpload(index) {
         setCurrentID(intervalID);
       }
     },
-    [dispatch, image.id, index]
+    [dispatch, image.id, webtoonIndex, cutIndex]
   );
 
   useEffect(() => {

@@ -21,7 +21,8 @@ function Bbox(properties) {
       onDragStop={(event, data) =>
         dispatch(
           updateBbox({
-            id: properties.id,
+            requestID: properties.requestID,
+            cutIndex: properties.cutIndex,
             index: properties.index,
             updatedBbox: properties.original
               ? {
@@ -38,7 +39,8 @@ function Bbox(properties) {
       onResizeStop={(event, direction, reference, delta, position) =>
         dispatch(
           updateBbox({
-            id: properties.id,
+            requestID: properties.requestID,
+            cutIndex: properties.cutIndex,
             index: properties.index,
             updatedBbox: properties.original
               ? {

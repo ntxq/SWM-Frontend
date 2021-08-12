@@ -15,15 +15,19 @@ import EditorProgress from "../editor-progress";
 function Recognition(properties) {
   const [isModalVisible, setIsModalVisible] = useState(true);
   const bboxList = useSelector(
-    (state) => state.recognition.bboxList[properties.webtoon.id]
+    (state) =>
+      state.recognition.bboxList[properties.webtoon.id][properties.cutIndex]
   );
 
-  const [getOCRResult, cancelResult] = useRecognitionResult(properties.index);
+  const [getOCRResult, cancelResult] = useRecognitionResult(
+    properties.webtoonIndex,
+    properties.cutIndex
+  );
 
   useEffect(() => {
-    if (Array.isArray(bboxList)) setIsModalVisible(false);
-    else getOCRResult();
-  }, [getOCRResult, bboxList]);
+    if (bboxList.length > 0 && isModalVisible) setIsModalVisible(false);
+    else if (bboxList.length === 0 && isModalVisible) getOCRResult();
+  }, [getOCRResult, bboxList, isModalVisible]);
 
   return (
     <>
@@ -41,19 +45,32 @@ function Recognition(properties) {
         <Col span={8} className="recognition_col">
           <RecognitionImage
             src={properties.webtoon.original}
-            index={properties.webtoon.id}
+            requestID={properties.webtoon.id}
+            cutIndex={properties.cutIndex}
           />
-          <BboxLayer original={true} index={properties.webtoon.id} />
+          <BboxLayer
+            original={true}
+            requestID={properties.webtoon.id}
+            cutIndex={properties.cutIndex}
+          />
         </Col>
         <Col span={8} className="recognition_col">
           <RecognitionImage
             src={properties.webtoon.inpaint}
-            index={properties.webtoon.id}
+            requestID={properties.webtoon.id}
+            cutIndex={properties.cutIndex}
           />
-          <BboxLayer original={false} index={properties.webtoon.id} />
+          <BboxLayer
+            original={false}
+            requestID={properties.webtoon.id}
+            cutIndex={properties.cutIndex}
+          />
         </Col>
         <Col span={8} className="editor_col">
-          <RecognitionEditor index={properties.webtoon.id} />
+          <RecognitionEditor
+            requestID={properties.webtoon.id}
+            cutIndex={properties.cutIndex}
+          />
         </Col>
       </Row>
     </>

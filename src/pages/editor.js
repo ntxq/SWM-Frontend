@@ -14,8 +14,8 @@ const { Header, Content, Footer } = Layout;
 
 function Editor(properties) {
   const { url } = useRouteMatch();
-  const { file } = useParams();
-  const webtoon = useSelector((state) => state.webtoons.images[file]);
+  const { webtoonIndex, cutIndex } = useParams();
+  const webtoon = useSelector((state) => state.webtoons.images[webtoonIndex].cut[cutIndex]);
 
   return (
     <Layout>
@@ -27,10 +27,10 @@ function Editor(properties) {
         <Content className="content_editor">
           <Switch>
             <Route path={`${url}/segmentation`}>
-              <Segmentation webtoon={webtoon} index={file} />
+              <Segmentation webtoon={webtoon} webtoonIndex={webtoonIndex} cutIndex={cutIndex} />
             </Route>
             <Route path={`${url}/recognition`}>
-              <Recognition webtoon={webtoon} index={file} />
+              <Recognition webtoon={webtoon} webtoonIndex={webtoonIndex} cutIndex={cutIndex} />
             </Route>
           </Switch>
         </Content>

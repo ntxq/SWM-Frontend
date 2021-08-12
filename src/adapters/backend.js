@@ -1,10 +1,9 @@
 import axios from "axios";
 import FormData from "form-data";
 
-const url =
-  process.env.NODE_ENV === "production"
-    ? ""
-    : "http://ec2-3-38-47-70.ap-northeast-2.compute.amazonaws.com:3000";
+export const url =
+  process.env.NODE_ENV === "production" ? "" : "http://localhost:3000";
+// : "http://ec2-3-38-47-70.ap-northeast-2.compute.amazonaws.com:3000";
 
 const backendInstance = axios.create({
   baseURL: url,
@@ -39,13 +38,13 @@ export async function uploadBlank(imageSlice, request_ids) {
 
   for (const image of imageSlice) {
     if (image.inpaint && request_ids.hasOwnProperty(image.filename)) {
-      idList.push(request_ids[image.filename]);
+      idList.push(request_ids[image.filename].req_id);
       await fetch(image.inpaint)
         .then((result) => result.blob())
         .then((blob) => new File([blob], image.filename, { type: blob.type }))
         .then((file) => data.append("blank", file));
     } else if (request_ids.hasOwnProperty(image.filename)) {
-      emptyList.push(request_ids[image.filename]);
+      emptyList.push(request_ids[image.filename].req_id);
     }
   }
 
@@ -62,10 +61,17 @@ export async function uploadBlank(imageSlice, request_ids) {
   return result;
 }
 
-export async function getSegmentationResult(request_id) {
+export async function getCutImage(request_id, cutIndex) {
+  return await fetch(
+    url + `/upload/segmentation/cut?req_id=${request_id}&cut_id=${cutIndex}`
+  ).then((image) => image.blob());
+}
+
+export async function getSegmentationResult(request_id, cutIndex) {
   const data = {
     params: {
       req_id: request_id,
+      cut_id: cutIndex,
     },
   };
 
@@ -77,20 +83,18 @@ export async function getSegmentationResult(request_id) {
   return result;
 }
 
-export async function getSegmentationInpaint(request_id) {
-  const result = await fetch(
-    url + `/upload/segmentation/result/inpaint?req_id=${request_id}`
-  )
-    .then((response) => response.blob())
-    .catch((error) => console.error(error));
-
-  return result;
+export async function getSegmentationInpaint(request_id, cutID) {
+  return await fetch(
+    url +
+      `/upload/segmentation/result/inpaint?req_id=${request_id}&cut_id=${cutID}`
+  ).then((image) => image.blob());
 }
 
-export async function getSegmentationMask(request_id) {
+export async function getSegmentationMask(request_id, cutID) {
   const data = {
     params: {
       req_id: request_id,
+      cut_id: cutID,
     },
   };
 
@@ -102,9 +106,10 @@ export async function getSegmentationMask(request_id) {
   return result;
 }
 
-export async function uploadMask(request_id, mask) {
+export async function uploadMask(request_id, cutID, mask) {
   const data = {
     req_id: request_id,
+    cut_id: cutID,
     mask: JSON.stringify({
       result: mask,
     }),
@@ -118,10 +123,11 @@ export async function uploadMask(request_id, mask) {
   return result;
 }
 
-export async function selectOCR(request_id) {
+export async function selectOCR(request_id, cutID) {
   const data = {
     params: {
       req_id: request_id,
+      cut_id: cutID,
     },
   };
 
@@ -133,10 +139,11 @@ export async function selectOCR(request_id) {
   return result;
 }
 
-export async function getOCRResult(request_id) {
+export async function getOCRResult(request_id, cutID) {
   const data = {
     params: {
       req_id: request_id,
+      cut_id: cutID,
     },
   };
 
@@ -148,10 +155,11 @@ export async function getOCRResult(request_id) {
   return result;
 }
 
-export async function getOCRResultBbox(request_id) {
+export async function getOCRResultBbox(request_id, cutID) {
   const data = {
     params: {
       req_id: request_id,
+      cut_id: cutID,
     },
   };
 
@@ -163,9 +171,10 @@ export async function getOCRResultBbox(request_id) {
   return result;
 }
 
-export async function uploadEdit(request_id, bboxList) {
+export async function uploadEdit(request_id, cutID, bboxList) {
   const data = {
     req_id: request_id,
+    cut_id: cutID,
     bboxList: JSON.stringify(bboxList),
   };
 
