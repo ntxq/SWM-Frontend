@@ -27,7 +27,7 @@ function Recognition(properties) {
   useEffect(() => {
     if (bboxList.length > 0 && isModalVisible) setIsModalVisible(false);
     else if (bboxList.length === 0 && isModalVisible) getOCRResult();
-  }, [getOCRResult, bboxList, isModalVisible]);
+  }, [getOCRResult, bboxList.length, isModalVisible]);
 
   return (
     <>

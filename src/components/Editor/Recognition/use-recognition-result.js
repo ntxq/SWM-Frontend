@@ -72,7 +72,7 @@ function useRecognitionResult(webtoonIndex, cutIndex) {
             )
           );
         }
-      }, 2000);
+      }, 3000);
       setCurrentID(intervalID);
     }
   }, [webtoonIndex, cutIndex, image.id, dispatch]);
