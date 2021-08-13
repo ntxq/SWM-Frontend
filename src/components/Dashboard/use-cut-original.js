@@ -10,24 +10,26 @@ function useCutOriginal(webtoonIndex) {
 
   const getOriginal = useCallback(() => {
     for (const cut of webtoon.cut) {
-      getCutImage(cut.id, cut.cutID).then((blob) =>
-        dispatch(
-          updateCut({
-            index: webtoonIndex,
-            cutIndex: cut.cutID - 1,
-            webtoon: {
-              original: URL.createObjectURL(blob),
-            },
-          })
-        )
+      if (!cut.original) {
+        getCutImage(cut.id, cut.cutID).then((original) =>
+          dispatch(
+            updateCut({
+              index: webtoonIndex,
+              cutIndex: cut.cutID - 1,
+              webtoon: {
+                original,
+              },
+            })
+          )
+        );
+      }
+      dispatch(
+        initializeBbox({
+          requestID: webtoon.id,
+          cutCount: webtoon.cutCount,
+        })
       );
     }
-    dispatch(
-      initializeBbox({
-        requestID: webtoon.id,
-        cutCount: webtoon.cutCount,
-      })
-    );
   }, [webtoonIndex, dispatch, webtoon]);
 
   return getOriginal;

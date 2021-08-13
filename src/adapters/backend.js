@@ -3,7 +3,6 @@ import FormData from "form-data";
 
 export const url =
   process.env.NODE_ENV === "production" ? "" : "http://localhost:3000";
-// : "http://ec2-3-38-47-70.ap-northeast-2.compute.amazonaws.com:3000";
 
 const backendInstance = axios.create({
   baseURL: url,
@@ -64,7 +63,14 @@ export async function uploadBlank(imageSlice, request_ids) {
 export async function getCutImage(request_id, cutIndex) {
   return await fetch(
     url + `/upload/segmentation/cut?req_id=${request_id}&cut_id=${cutIndex}`
-  ).then((image) => image.blob());
+  )
+    .then((response) => {
+      if (response.ok) return response;
+      else throw new Error("Server Error");
+    })
+    .then((image) => image.blob())
+    .then((blob) => URL.createObjectURL(blob))
+    .catch((error) => "");
 }
 
 export async function getSegmentationResult(request_id, cutIndex) {

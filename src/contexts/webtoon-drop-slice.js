@@ -11,9 +11,7 @@ const initialState = {
 
 const defaultImage = {
   id: "",
-  cutID: "",
   filename: "",
-  cutCount: 0,
   original: "",
   inpaint: "",
 
@@ -21,6 +19,19 @@ const defaultImage = {
   progress: "start",
 
   cut: [],
+  cutCount: 0,
+};
+
+const defaultCut = {
+  id: "",
+  filename: "",
+  original: "",
+  inpaint: "",
+
+  mask: [],
+  progress: "cut",
+
+  cutID: "",
 };
 
 export const webtoonDropSlice = createSlice({
@@ -76,7 +87,7 @@ export const webtoonDropSlice = createSlice({
               length: image.cutCount,
             },
             (_, index) => ({
-              ...defaultImage,
+              ...defaultCut,
               id: image.id,
               cutID: index + 1,
               filename: image.filename + ` (Cut ${index + 1})`,
