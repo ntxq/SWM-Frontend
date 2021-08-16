@@ -33,7 +33,7 @@ function useRecognitionResult(webtoonIndex, cutIndex) {
           })
         );
 
-        if (progress === "bbox") {
+        if (progress === 100) {
           clearInterval(intervalID);
           const bboxList = await getOCRResultBbox(image.id, cutIndex + 1);
 
@@ -70,6 +70,16 @@ function useRecognitionResult(webtoonIndex, cutIndex) {
                 },
               })
             )
+          );
+
+          dispatch(
+            updateCut({
+              index: webtoonIndex,
+              cutIndex: cutIndex,
+              webtoon: {
+                progress: 0,
+              },
+            })
           );
         }
       }, 3000);

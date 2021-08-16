@@ -29,7 +29,7 @@ function useSegmentationResult(webtoonIndex, cutIndex) {
         })
       );
 
-      if (progress === "inpaint") {
+      if (progress === 100) {
         clearInterval(intervalID);
 
         const inpaintBlob = await getSegmentationInpaint(
@@ -65,6 +65,7 @@ function useSegmentationResult(webtoonIndex, cutIndex) {
                   },
                 },
               ],
+              progress: 0,
             },
           })
         );

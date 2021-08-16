@@ -33,7 +33,7 @@ function useMaskUpload(webtoonIndex, cutIndex) {
             })
           );
 
-          if (progress === "inpaint") {
+          if (progress === 100) {
             clearInterval(intervalID);
 
             const inpaint = await getSegmentationInpaint(
@@ -46,6 +46,7 @@ function useMaskUpload(webtoonIndex, cutIndex) {
                 cutIndex: cutIndex,
                 webtoon: {
                   inpaint: URL.createObjectURL(inpaint),
+                  progress: 0,
                 },
               })
             );

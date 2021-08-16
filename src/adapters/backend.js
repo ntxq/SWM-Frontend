@@ -83,7 +83,7 @@ export async function getSegmentationResult(request_id, cutIndex) {
 
   const result = await backendInstance
     .get("/upload/segmentation/result", data)
-    .then((response) => response.data.complete)
+    .then((response) => response.data.progress)
     .catch((error) => console.error(error));
 
   return result;
@@ -155,7 +155,7 @@ export async function getOCRResult(request_id, cutID) {
 
   const result = await backendInstance
     .get("/upload/OCR/result", data)
-    .then((response) => response.data.complete)
+    .then((response) => response.data.progress)
     .catch((error) => console.error(error));
 
   return result;

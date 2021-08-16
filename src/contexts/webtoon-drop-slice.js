@@ -16,7 +16,7 @@ const defaultImage = {
   inpaint: "",
 
   mask: [],
-  progress: "start",
+  progress: 0,
 
   cut: [],
   cutCount: 0,
@@ -29,7 +29,7 @@ const defaultCut = {
   inpaint: "",
 
   mask: [],
-  progress: "cut",
+  progress: 0,
 
   cutID: "",
 };
