@@ -15,9 +15,14 @@
   margin: 2% !important;
 }
 
-.crop {
-  max-height: 30vh;
-  overflow: hidden;
+.preview_image {
+  width: 100%;
+  height: 30vh;
+}
+
+.preview_mask {
+  width: 100%;
+  height: 30vh;
 }
 
 .top-cover {
@@ -31,10 +36,6 @@
 
 .preview_card .delete {
   float: right;
-}
-
-.preview_mask {
-  max-height: 30vh;
 }
 
 .blank_upload {
