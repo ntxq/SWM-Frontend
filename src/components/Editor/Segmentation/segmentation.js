@@ -3,7 +3,6 @@ import { useHistory } from "react-router-dom";
 import { Button } from "antd";
 
 import ModalLoading from "../../Common/modal-loading";
-import loadingText from "../../Common/loading-text";
 
 import LabelStudio from "label-studio";
 import "label-studio/build/static/css/main.css";
@@ -131,7 +130,7 @@ function Segmentation(properties) {
 
           setIsModalVisible(false);
         }}
-        tip={loadingText[properties.webtoon.progress]}
+        tip={properties.webtoon.progress}
       />
 
       <EditorProgress current={0} />
