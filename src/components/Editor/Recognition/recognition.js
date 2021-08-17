@@ -31,12 +31,12 @@ function Recognition(properties) {
   return (
     <>
       <ModalLoading
-        loading={isModalVisible}
+        visible={isModalVisible}
         cancel={() => {
           cancelResult(true);
           setIsModalVisible(false);
         }}
-        tip={properties.webtoon.progress}
+        progress={properties.webtoon.progress}
       />
 
       <EditorProgress current={1} />

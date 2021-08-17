@@ -122,7 +122,7 @@ function Segmentation(properties) {
   return (
     <>
       <ModalLoading
-        loading={isModalVisible}
+        visible={isModalVisible}
         cancel={() => {
           properties.webtoon.inpaint
             ? setCancelUpload(true)
@@ -130,7 +130,7 @@ function Segmentation(properties) {
 
           setIsModalVisible(false);
         }}
-        tip={properties.webtoon.progress}
+        progress={properties.webtoon.progress}
       />
 
       <EditorProgress current={0} />

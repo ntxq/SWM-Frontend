@@ -1,10 +1,10 @@
-import { Modal, Space, Spin, Typography, Button } from "antd";
+import { Modal, Space, Button, Progress } from "antd";
 import React from "react";
 
 function ModalLoading(properties) {
   return (
     <Modal
-      visible={properties.loading}
+      visible={properties.visible}
       centered
       closable={false}
       destroyOnClose={true}
@@ -12,26 +12,25 @@ function ModalLoading(properties) {
       footer={null}
       maskClosable={false}
       maskStyle={{
-        backgroundColor: "rgba(0, 0, 0, 0.7)",
+        backgroundColor: "rgba(0, 0, 0, 0.75)",
       }}
       bodyStyle={{
         display: "flex",
         justifyContent: "center",
       }}
     >
-      <Spin
-        size="large"
-        tip={
-          <Space direction="vertical">
-            <Typography.Text strong className="loading_tip">
-              {properties.tip}
-            </Typography.Text>
-            <Button danger ghost type="primary" onClick={properties.cancel}>
-              Cancel
-            </Button>
-          </Space>
-        }
-      />
+      <Space direction="vertical">
+        <Progress type="circle" percent={properties.progress} />
+        <Button
+          danger
+          ghost
+          type="primary"
+          onClick={properties.cancel}
+          className="progress_cancel"
+        >
+          Cancel
+        </Button>
+      </Space>
     </Modal>
   );
 }
