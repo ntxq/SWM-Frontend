@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { Button } from "antd";
 
@@ -39,6 +39,14 @@ function Segmentation(properties) {
       setTimeout(() => window.dispatchEvent(new Event("resize")), 1000);
     } else getSegmentationResult();
   }, [getSegmentationResult, properties.webtoon.inpaint]);
+
+  useLayoutEffect(() => {
+    const dispatchResize = () =>
+      setTimeout(() => window.dispatchEvent(new Event("resize")), 1000);
+
+    window.addEventListener("focus", dispatchResize);
+    return () => window.removeEventListener("focus", dispatchResize);
+  }, []);
 
   useEffect(() => {
     if (rootReference.current) {

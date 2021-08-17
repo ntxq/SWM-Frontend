@@ -107,7 +107,7 @@ export async function getSegmentationMask(request_id, cutID) {
   const result = await backendInstance
     .get("/upload/segmentation/result/mask", data)
     .then((response) => response.data.mask)
-    .catch((error) => console.error(error));
+    .catch((error) => {});
 
   return result;
 }

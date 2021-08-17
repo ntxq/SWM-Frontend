@@ -18,11 +18,11 @@ function WebtoonCard(properties) {
         )
       }
       onClick={() => {
-        if (properties.webtoonIndex !== undefined)
+        if (properties.webtoonIndex !== undefined && properties.url)
           history.push(
             `/editor/${properties.webtoonIndex}/${properties.index}/segmentation`
           );
-        else history.push(`/dashboard/${properties.index}`);
+        else if (properties.url) history.push(`/dashboard/${properties.index}`);
       }}
       className="preview_card"
     >
