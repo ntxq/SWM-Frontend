@@ -59,6 +59,10 @@ export const webtoonDropSlice = createSlice({
         ...action.payload.webtoon,
       };
     },
+    updateProgress: (state, action) => {
+      state.images[action.payload.index].cut[action.payload.cutIndex].progress =
+        action.payload.progress;
+    },
     singleDelete: (state, action) => {
       state.images = state.images.filter(
         (item, index) => index !== action.payload
@@ -104,6 +108,7 @@ export const {
   uploadWebtoon,
   updateWebtoon,
   updateCut,
+  updateProgress,
   singleDelete,
   setForm,
   mapIds,

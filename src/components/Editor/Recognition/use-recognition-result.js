@@ -5,7 +5,10 @@ import {
   getOCRResultBbox,
 } from "../../../adapters/backend";
 import { useDispatch, useSelector } from "react-redux";
-import { updateCut } from "../../../contexts/webtoon-drop-slice";
+import {
+  updateCut,
+  updateProgress,
+} from "../../../contexts/webtoon-drop-slice";
 import { createBbox } from "../../../contexts/recognition-slice";
 
 function useRecognitionResult(webtoonIndex, cutIndex) {
@@ -24,12 +27,10 @@ function useRecognitionResult(webtoonIndex, cutIndex) {
       const intervalID = setInterval(async () => {
         const progress = await getOCRResult(image.id, cutIndex + 1);
         dispatch(
-          updateCut({
+          updateProgress({
             index: webtoonIndex,
             cutIndex: cutIndex,
-            webtoon: {
-              progress,
-            },
+            progress,
           })
         );
 

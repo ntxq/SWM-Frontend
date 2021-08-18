@@ -16,6 +16,7 @@ function RecognitionImage(properties) {
       dispatch(
         createBbox({
           requestID: properties.requestID,
+          cutIndex: properties.cutIndex,
           bbox: {
             originalX: Math.min(startPoint[0], x),
             originalY: Math.min(startPoint[1], y),
@@ -31,7 +32,7 @@ function RecognitionImage(properties) {
       );
       setStartPoint([undefined, undefined]);
     },
-    [dispatch, startPoint, properties.requestID]
+    [dispatch, startPoint, properties.requestID, properties.cutIndex]
   );
 
   useLayoutEffect(() => {

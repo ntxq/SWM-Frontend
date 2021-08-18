@@ -5,7 +5,11 @@ import {
   getSegmentationResult,
   uploadMask,
 } from "../../../adapters/backend";
-import { updateCut } from "../../../contexts/webtoon-drop-slice";
+import { initializeBbox } from "../../../contexts/recognition-slice";
+import {
+  updateCut,
+  updateProgress,
+} from "../../../contexts/webtoon-drop-slice";
 
 function useMaskUpload(webtoonIndex, cutIndex) {
   const image = useSelector(
@@ -24,12 +28,10 @@ function useMaskUpload(webtoonIndex, cutIndex) {
         const intervalID = setInterval(async () => {
           const progress = await getSegmentationResult(image.id, cutIndex + 1);
           dispatch(
-            updateCut({
+            updateProgress({
               index: webtoonIndex,
               cutIndex: cutIndex,
-              webtoon: {
-                progress,
-              },
+              progress,
             })
           );
 
@@ -50,12 +52,18 @@ function useMaskUpload(webtoonIndex, cutIndex) {
                 },
               })
             );
+            dispatch(
+              initializeBbox({
+                requestID: image.id,
+                cutCount: image.cutCount,
+              })
+            );
           }
         }, 2000);
         setCurrentID(intervalID);
       }
     },
-    [dispatch, image.id, webtoonIndex, cutIndex]
+    [dispatch, image.id, image.cutCount, webtoonIndex, cutIndex]
   );
 
   useEffect(() => {

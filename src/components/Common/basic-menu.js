@@ -4,7 +4,11 @@ import { Link } from "react-router-dom";
 
 function BasicMenu(properties) {
   return (
-    <Menu theme="dark" mode="horizontal" defaultSelectedKeys={properties.default}>
+    <Menu
+      theme="dark"
+      mode="horizontal"
+      defaultSelectedKeys={properties.default}
+    >
       <Menu.Item key={1}>
         <Link to="/">Home</Link>
       </Menu.Item>

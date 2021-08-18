@@ -46,6 +46,7 @@ export const recognitionSlice = createSlice({
         action.payload.cutCount
       ).fill([]);
     },
+
     createBbox: (state, action) => {
       state.bboxList[action.payload.requestID][action.payload.cutIndex] = [
         ...state.bboxList[action.payload.requestID][action.payload.cutIndex],
