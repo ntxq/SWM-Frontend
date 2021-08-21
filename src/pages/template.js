@@ -8,9 +8,11 @@ const { Header, Content, Footer } = Layout;
 function Template(properties) {
   return (
     <Layout>
-      <Header className={properties.headerClass}>
-        <BasicMenu default={properties.defaultMenu} />
-      </Header>
+      {!properties.removeHeader && (
+        <Header className={properties.headerClass}>
+          <BasicMenu default={properties.defaultMenu} />
+        </Header>
+      )}
       {properties.overrideContent ? (
         properties.children
       ) : (

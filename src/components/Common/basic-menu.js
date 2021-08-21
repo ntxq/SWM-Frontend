@@ -11,7 +11,7 @@ function BasicMenu(properties) {
       selectable={false}
     >
       <Menu.Item key={1}>
-        <Link to="/">Home</Link>
+        <Link to="/home">Home</Link>
       </Menu.Item>
       <Menu.Item key={2}>
         <Link to="/dashboard">Dashboard</Link>

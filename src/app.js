@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
+import Login from "./pages/login";
 import Home from "./pages/home";
 import DashBoard from "./pages/dashboard";
 import Editor from "./pages/editor";
@@ -17,8 +18,11 @@ function App() {
         <Route path={["/dashboard/:webtoonIndex", "/dashboard"]}>
           <DashBoard />
         </Route>
-        <Route path="/">
+        <Route path="/home">
           <Home />
+        </Route>
+        <Route path="/">
+          <Login />
         </Route>
       </Switch>
     </Router>
