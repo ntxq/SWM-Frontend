@@ -5,10 +5,12 @@ import { initializeBbox } from "../../contexts/recognition-slice";
 import { getCutImage } from "../../adapters/backend";
 
 function useCutOriginal(webtoonIndex) {
-  const webtoon = useSelector((state) => state.webtoons.images[webtoonIndex]);
+  const webtoon = useSelector((state) => state.webtoons.images?.[webtoonIndex]);
   const dispatch = useDispatch();
 
   const getOriginal = useCallback(() => {
+    if (webtoonIndex === undefined) return;
+
     for (let cutID = 1; cutID <= webtoon.cutCount; ++cutID) {
       getCutImage(webtoon.id, cutID).then((original) => {
         dispatch(
@@ -28,7 +30,7 @@ function useCutOriginal(webtoonIndex) {
         cutCount: webtoon.cutCount,
       })
     );
-  }, [webtoonIndex, dispatch, webtoon.id, webtoon.cutCount]);
+  }, [webtoonIndex, dispatch, webtoon?.id, webtoon?.cutCount]);
 
   return getOriginal;
 }

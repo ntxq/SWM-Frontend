@@ -13,7 +13,7 @@ function DashBoard(properties) {
   return (
     <Template defaultMenu="2" contentClass="content" footerClass="footer">
       <Typography.Title className="project_title">
-        {webtoons.form.title} ({webtoons.images.length}) /{" "}
+        {webtoons.form.title} ({webtoons.images.length})
       </Typography.Title>
       <Tabs defaultActiveKey="1" size="large">
         <Tabs.TabPane

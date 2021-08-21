@@ -7,7 +7,7 @@ import useCutOriginal from "./use-cut-original";
 
 function Webtoons(properties) {
   const { webtoonIndex } = useParams();
-  const getCutOriginal = useCutOriginal(webtoonIndex || 0);
+  const getCutOriginal = useCutOriginal(webtoonIndex);
 
   useEffect(() => {
     if (webtoonIndex !== undefined) getCutOriginal();

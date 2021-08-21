@@ -8,6 +8,7 @@ function BasicMenu(properties) {
       theme="dark"
       mode="horizontal"
       defaultSelectedKeys={properties.default}
+      selectable={false}
     >
       <Menu.Item key={1}>
         <Link to="/">Home</Link>
@@ -15,9 +16,7 @@ function BasicMenu(properties) {
       <Menu.Item key={2}>
         <Link to="/dashboard">Dashboard</Link>
       </Menu.Item>
-      <Menu.Item key={3}>
-        <Link to="/editor">Editor</Link>
-      </Menu.Item>
+      <Menu.Item key={3}>Editor</Menu.Item>
     </Menu>
   );
 }
