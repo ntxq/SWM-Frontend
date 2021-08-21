@@ -85,7 +85,6 @@ export const webtoonDropSlice = createSlice({
           image.id = action.payload[image.filename].req_id;
           image.cutCount = action.payload[image.filename].cut_count;
 
-          // eslint-disable-next-line unicorn/new-for-builtins
           image.cut = Array.from(
             {
               length: image.cutCount,

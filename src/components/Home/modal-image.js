@@ -1,12 +1,11 @@
-import { Image, Modal } from "antd";
 import React from "react";
+import { Image, Modal } from "antd";
 
 function ModalImage(properties) {
   return (
     <Modal
       visible={properties.isModalVisible}
-      // eslint-disable-next-line unicorn/no-null
-      footer={null}
+      footer={false}
       closable={false}
       onCancel={properties.closeModal}
     >

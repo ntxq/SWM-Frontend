@@ -8,8 +8,7 @@ function ModalLoading(properties) {
       centered
       closable={false}
       destroyOnClose={true}
-      // eslint-disable-next-line unicorn/no-null
-      footer={null}
+      footer={false}
       maskClosable={false}
       maskStyle={{
         backgroundColor: "rgba(0, 0, 0, 0.75)",

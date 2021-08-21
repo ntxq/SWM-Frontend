@@ -1,7 +1,15 @@
+import { useCallback } from "react";
 import { useSelector } from "react-redux";
 
 function useUniquename() {
   const uploaded = useSelector((state) => state.webtoons.images);
+
+  const isDuplicateName = useCallback(
+    (uniqueName) => {
+      return uploaded.some(({ filename }) => filename === uniqueName);
+    },
+    [uploaded]
+  );
 
   return function (originalFile) {
     const originalName = originalFile.name;
@@ -11,8 +19,7 @@ function useUniquename() {
     let count = 1;
     let uniqueName = originalName;
 
-    // eslint-disable-next-line no-loop-func
-    while (uploaded.some((file) => file.filename === uniqueName)) {
+    while (isDuplicateName(uniqueName)) {
       uniqueName = baseName + "(" + String(++count) + ")." + extension;
     }
 
