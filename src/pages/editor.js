@@ -1,16 +1,14 @@
 import React from "react";
+import Template from "./template";
 import { Layout } from "antd";
 import { Route, Switch, useParams, useRouteMatch } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-import BasicMenu from "../components/Common/basic-menu";
 import PreviewSider from "../components/Editor/preview-sider";
 
 import Segmentation from "../components/Editor/Segmentation/segmentation";
 import Recognition from "../components/Editor/Recognition/recognition";
 import "../styles/Editor.css";
-
-const { Header, Content, Footer } = Layout;
 
 function Editor(properties) {
   const { url } = useRouteMatch();
@@ -20,13 +18,16 @@ function Editor(properties) {
   );
 
   return (
-    <Layout>
-      <Header className="editor_header">
-        <BasicMenu default="3" />
-      </Header>
+    <Template
+      overrideContent={true}
+      defaultMenu="3"
+      headerClass="editor_header"
+      contentClass="content_editor"
+      footerClass="footer"
+    >
       <Layout>
         <PreviewSider />
-        <Content className="content_editor">
+        <Layout.Content className="content_editor">
           <Switch>
             <Route path={`${url}/segmentation`}>
               <Segmentation
@@ -43,10 +44,9 @@ function Editor(properties) {
               />
             </Route>
           </Switch>
-        </Content>
+        </Layout.Content>
       </Layout>
-      <Footer className="footer">전지적 독자시점 ©2021</Footer>
-    </Layout>
+    </Template>
   );
 }
 

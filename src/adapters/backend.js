@@ -70,7 +70,7 @@ export async function getCutImage(request_id, cutIndex) {
     })
     .then((image) => image.blob())
     .then((blob) => URL.createObjectURL(blob))
-    .catch(() => getCutImage(request_id, cutIndex));
+    .catch(() => setTimeout(() => getCutImage(request_id, cutIndex), 1000));
 }
 
 export async function getSegmentationResult(request_id, cutIndex) {
