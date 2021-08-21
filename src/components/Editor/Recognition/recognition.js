@@ -1,21 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { Col, Row } from "antd";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { selectBox } from "../../../contexts/recognition-slice";
 
 import ModalLoading from "../../Common/modal-loading";
+import EditorProgress from "../editor-progress";
 
 import RecognitionImage from "./recognition-image";
 import BboxLayer from "./bbox-layer";
 import RecognitionEditor from "./recognition-editor";
-
 import useRecognitionResult from "./use-recognition-result";
-import EditorProgress from "../editor-progress";
 
 function Recognition(properties) {
   const [isModalVisible, setIsModalVisible] = useState(true);
-  const bboxList = useSelector(
+  const bboxListLength = useSelector(
     (state) =>
       state.recognition.bboxList[properties.webtoon.id][properties.cutIndex]
+        .length
   );
 
   const [getOCRResult, cancelResult] = useRecognitionResult(
@@ -24,9 +25,17 @@ function Recognition(properties) {
   );
 
   useEffect(() => {
-    if (bboxList.length > 0 && isModalVisible) setIsModalVisible(false);
-    else if (bboxList.length === 0 && isModalVisible) getOCRResult();
-  }, [getOCRResult, bboxList.length, isModalVisible]);
+    console.log(bboxListLength);
+    if (bboxListLength > 0 && isModalVisible) setIsModalVisible(false);
+    else if (bboxListLength === 0 && isModalVisible) getOCRResult();
+  }, [getOCRResult, bboxListLength, isModalVisible]);
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    return () => {
+      dispatch(selectBox());
+    };
+  }, [dispatch]);
 
   return (
     <>

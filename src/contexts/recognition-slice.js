@@ -41,10 +41,11 @@ export const recognitionSlice = createSlice({
   initialState,
   reducers: {
     initializeBbox: (state, action) => {
-      // eslint-disable-next-line unicorn/new-for-builtins
-      state.bboxList[action.payload.requestID] = Array(
-        action.payload.cutCount
-      ).fill([]);
+      if (!Array.isArray(state.bboxList[action.payload.requestID]))
+        // eslint-disable-next-line unicorn/new-for-builtins
+        state.bboxList[action.payload.requestID] = Array(
+          action.payload.cutCount
+        ).fill([]);
     },
 
     createBbox: (state, action) => {

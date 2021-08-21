@@ -27,10 +27,9 @@ function RecognitionEditor(properties) {
         title={"Original Text"}
         activeBox={recognition.activeBox}
         text={
-          recognition.activeBox !== undefined &&
-          recognition.bboxList[properties.requestID][properties.cutIndex][
+          recognition.bboxList?.[properties.requestID]?.[properties.cutIndex]?.[
             recognition.activeBox
-          ].originalText
+          ]?.originalText
         }
         original={true}
       />
@@ -40,10 +39,9 @@ function RecognitionEditor(properties) {
         title={"Translated Text"}
         activeBox={recognition.activeBox}
         text={
-          recognition.activeBox !== undefined &&
-          recognition.bboxList[properties.requestID][properties.cutIndex][
+          recognition.bboxList?.[properties.requestID]?.[properties.cutIndex]?.[
             recognition.activeBox
-          ].translatedText
+          ]?.translatedText
         }
         original={false}
       />
@@ -52,37 +50,29 @@ function RecognitionEditor(properties) {
         cutIndex={properties.cutIndex}
         activeBox={recognition.activeBox}
         fontSize={
-          recognition.activeBox !== undefined &&
-          recognition.bboxList[properties.requestID][properties.cutIndex][
+          recognition.bboxList?.[properties.requestID]?.[properties.cutIndex]?.[
             recognition.activeBox
-          ].fontSize
+          ]?.fontSize
         }
         fontColor={
-          recognition.activeBox !== undefined &&
-          recognition.bboxList[properties.requestID][properties.cutIndex][
+          recognition.bboxList?.[properties.requestID]?.[properties.cutIndex]?.[
             recognition.activeBox
-          ].fontColor
+          ]?.fontColor
         }
         fontFamily={
-          recognition.activeBox !== undefined
-            ? recognition.bboxList[properties.requestID][properties.cutIndex][
-                recognition.activeBox
-              ].fontFamily
-            : "Open Sans"
+          recognition.bboxList?.[properties.requestID]?.[properties.cutIndex]?.[
+            recognition.activeBox
+          ]?.fontFamily
         }
         fontWeight={
-          recognition.activeBox !== undefined
-            ? recognition.bboxList[properties.requestID][properties.cutIndex][
-                recognition.activeBox
-              ].fontWeight
-            : "normal"
+          recognition.bboxList?.[properties.requestID]?.[properties.cutIndex]?.[
+            recognition.activeBox
+          ]?.fontWeight
         }
         fontStyle={
-          recognition.activeBox !== undefined
-            ? recognition.bboxList[properties.requestID][properties.cutIndex][
-                recognition.activeBox
-              ].fontStyle
-            : "normal"
+          recognition.bboxList?.[properties.requestID]?.[properties.cutIndex]?.[
+            recognition.activeBox
+          ]?.fontStyle
         }
       />
     </Card>
