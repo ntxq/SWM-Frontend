@@ -3,8 +3,8 @@
 }
 
 .login_logo {
-  font-size: 84px;
-  margin: 3vh 0 5vh 0;
+  width: 300px !important;
+  margin: 0 calc(50% - 150px) -75px;
 }
 
 .login_title {

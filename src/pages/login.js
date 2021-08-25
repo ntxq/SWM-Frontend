@@ -1,9 +1,8 @@
 import React from "react";
 import Template from "./template";
 import { Link, useHistory } from "react-router-dom";
-import { Typography, Form, Input, Card, Checkbox, Button } from "antd";
+import { Typography, Form, Input, Card, Checkbox, Button, Image } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
-import { MdTranslate } from "react-icons/md";
 
 import "../styles/Login.css";
 
@@ -13,7 +12,11 @@ function Login(properties) {
   return (
     <Template removeHeader={true} footerClass="login_footer">
       <div className="login">
-        <MdTranslate className="login_logo" />
+        <Image
+          src={process.env.PUBLIC_URL + "/images/logo.png"}
+          preview={false}
+          className="login_logo"
+        />
         <Typography.Title level={3} className="login_title">
           Sign in to Convertoon
         </Typography.Title>

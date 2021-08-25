@@ -11,7 +11,7 @@ function RecognitionEditor(properties) {
 
   return (
     <Card
-      title="Text Editor"
+      title="Style Editor"
       extra={
         <EditorButtons
           activeBox={recognition.activeBox}

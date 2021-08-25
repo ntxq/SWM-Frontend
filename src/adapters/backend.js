@@ -176,18 +176,3 @@ export async function getOCRResultBbox(request_id, cutID) {
 
   return result;
 }
-
-export async function uploadEdit(request_id, cutID, bboxList) {
-  const data = {
-    req_id: request_id,
-    cut_id: cutID,
-    bboxList: JSON.stringify(bboxList),
-  };
-
-  const result = await backendInstance
-    .post("/upload/OCR/edit", data)
-    .then((response) => response.data.success)
-    .catch((error) => console.error(error));
-
-  return result;
-}

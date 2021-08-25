@@ -5,11 +5,8 @@ import { DeleteOutlined } from "@ant-design/icons";
 import { useDispatch } from "react-redux";
 import { deleteBox } from "../../../contexts/recognition-slice";
 
-import useUploadEdit from "./use-upload-edit";
-
 function EditorButtons(properties) {
   const dispatch = useDispatch();
-  const uploadEdit = useUploadEdit(properties.requestID, properties.cutIndex);
 
   return (
     <Space>
@@ -43,7 +40,7 @@ function EditorButtons(properties) {
           }
         />
       </Tooltip>
-      <Button type="primary" onClick={uploadEdit}>
+      <Button type="primary" onClick={properties.submit}>
         Submit All
       </Button>
     </Space>

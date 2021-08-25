@@ -8,11 +8,14 @@ import EditorProgress from "../editor-progress";
 
 import RecognitionImage from "./recognition-image";
 import BboxLayer from "./bbox-layer";
-import RecognitionEditor from "./recognition-editor";
+import RecognitionStyle from "./recognition-style";
+import RecognitionTable from "./recognition-table";
+
 import useRecognitionResult from "./use-recognition-result";
 
 function Recognition(properties) {
   const [isModalVisible, setIsModalVisible] = useState(true);
+  const [isTableVisible, setIsTableVisible] = useState(true);
   const bboxListLength = useSelector(
     (state) =>
       state.recognition.bboxList[properties.webtoon.id][properties.cutIndex]
@@ -61,24 +64,19 @@ function Recognition(properties) {
             cutIndex={properties.cutIndex}
           />
         </Col>
-        <Col span={8} className="recognition_col">
-          <RecognitionImage
+        {isTableVisible ? (
+          <RecognitionTable
+            requestID={properties.webtoon.id}
+            cutIndex={properties.cutIndex}
+            submit={() => setIsTableVisible(false)}
+          />
+        ) : (
+          <RecognitionStyle
             src={properties.webtoon.inpaint}
             requestID={properties.webtoon.id}
             cutIndex={properties.cutIndex}
           />
-          <BboxLayer
-            original={false}
-            requestID={properties.webtoon.id}
-            cutIndex={properties.cutIndex}
-          />
-        </Col>
-        <Col span={8} className="editor_col">
-          <RecognitionEditor
-            requestID={properties.webtoon.id}
-            cutIndex={properties.cutIndex}
-          />
-        </Col>
+        )}
       </Row>
     </>
   );
