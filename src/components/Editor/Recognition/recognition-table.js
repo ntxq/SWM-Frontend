@@ -31,7 +31,11 @@ function RecognitionTable(properties) {
           itemLayout="vertical"
           dataSource={bboxList}
           renderItem={(item, index) => (
-            <List.Item onClick={() => dispatch(selectBox(index))}>
+            <List.Item
+              onClick={() => dispatch(selectBox(index))}
+              style={index === activeBox ? { backgroundColor: "#f5f5f5" } : {}}
+              className="table_item"
+            >
               <List.Item.Meta
                 title={"Bbox " + index}
                 description={`x:${item.originalX} y:${item.originalY}`}

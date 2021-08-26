@@ -109,3 +109,17 @@ span.ant-tree-node-content-wrapper.ant-tree-node-content-wrapper-normal.draggabl
   transform: translateX(-50%);
   -ms-transform: translateX(-50%);
 }
+
+.table_item {
+  padding: 10px !important;
+}
+
+.bbox_sketch {
+  position: absolute;
+  top: 0;
+
+  color: #ffa940;
+  border: 3px solid;
+
+  transform-origin: left;
+}

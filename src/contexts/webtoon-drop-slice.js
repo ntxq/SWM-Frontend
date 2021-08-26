@@ -15,9 +15,6 @@ const defaultImage = {
   original: "",
   inpaint: "",
 
-  mask: [],
-  progress: 0,
-
   cut: [],
   cutCount: 0,
 };
