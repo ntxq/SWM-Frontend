@@ -1,7 +1,8 @@
 import React from "react";
-import { Card, List, Input, Col } from "antd";
+import { Card, List, Input, Col, Divider, Tooltip } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import { selectBox, updateBbox } from "../../../contexts/recognition-slice";
+import { MdTranslate, MdGTranslate } from "react-icons/md";
 
 import EditorButtons from "./editor-buttons";
 
@@ -41,6 +42,11 @@ function RecognitionTable(properties) {
                 description={`x:${item.originalX} y:${item.originalY}`}
               />
               <Input
+                prefix={
+                  <Tooltip title="Original Text">
+                    <MdTranslate />
+                  </Tooltip>
+                }
                 bordered={false}
                 defaultValue={item.originalText}
                 onBlur={(event) =>
@@ -51,6 +57,28 @@ function RecognitionTable(properties) {
                       index: index,
                       updatedBbox: {
                         originalText: event.target.value,
+                      },
+                    })
+                  )
+                }
+              />
+              <Divider dashed className="table_divider" />
+              <Input
+                prefix={
+                  <Tooltip title="Translated Text">
+                    <MdGTranslate />
+                  </Tooltip>
+                }
+                bordered={false}
+                defaultValue={item.translatedText}
+                onBlur={(event) =>
+                  dispatch(
+                    updateBbox({
+                      requestID: properties.requestID,
+                      cutIndex: properties.cutIndex,
+                      index: index,
+                      updatedBbox: {
+                        translatedText: event.target.value,
                       },
                     })
                   )
