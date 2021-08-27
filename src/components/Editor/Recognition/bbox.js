@@ -54,7 +54,10 @@ function Bbox(properties) {
           })
         )
       }
-      onClick={(event) => dispatch(selectBox(properties.index))}
+      onClick={(event) => {
+        dispatch(selectBox(properties.index));
+      }}
+      onMouseDown={(event) => event.stopPropagation()}
       bounds="parent"
       style={{ borderColor: properties.active ? "red" : "#ffa940" }}
       className="bbox"
