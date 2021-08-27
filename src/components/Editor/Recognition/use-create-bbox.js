@@ -11,8 +11,8 @@ function useCreateBbox(divReference, sketchReference, requestID, cutIndex) {
       const { top, left, bottom, right } =
         divReference.current.getBoundingClientRect();
 
-      const eventX = event.clientX;
-      const eventY = event.clientY;
+      const eventX = event.pageX;
+      const eventY = event.pageY - window.pageYOffset;
 
       if (eventX > left && eventX < right && eventY > top && eventY < bottom) {
         setStartPoint([eventX - left, eventY - top]);
@@ -32,13 +32,23 @@ function useCreateBbox(divReference, sketchReference, requestID, cutIndex) {
   const onMouseMove = useCallback(
     (event) => {
       if (sketchReference.current.style.visibility === "visible") {
-        const offsetX = Math.min(
-          event.clientX - divReference.current.getBoundingClientRect().left,
-          divReference.current.getBoundingClientRect().right
+        const offsetX = Math.max(
+          Math.min(
+            event.pageX - divReference.current.getBoundingClientRect().left,
+            divReference.current.getBoundingClientRect().right -
+              divReference.current.getBoundingClientRect().left
+          ),
+          0
         );
-        const offsetY = Math.min(
-          event.clientY - divReference.current.getBoundingClientRect().top,
-          divReference.current.getBoundingClientRect().bottom
+        const offsetY = Math.max(
+          Math.min(
+            event.pageY -
+              divReference.current.getBoundingClientRect().top -
+              window.pageYOffset,
+            divReference.current.getBoundingClientRect().bottom -
+              divReference.current.getBoundingClientRect().top
+          ),
+          0
         );
 
         sketchReference.current.style.transform = `translate(${Math.min(
@@ -60,13 +70,29 @@ function useCreateBbox(divReference, sketchReference, requestID, cutIndex) {
   const onMouseUp = useCallback(
     (event) => {
       if (sketchReference.current.style.visibility === "visible") {
-        const offsetX = Math.min(
-          event.clientX - divReference.current.getBoundingClientRect().left,
+        console.log(
+          event.pageX,
+          divReference.current.getBoundingClientRect().left,
           divReference.current.getBoundingClientRect().right
         );
-        const offsetY = Math.min(
-          event.clientY - divReference.current.getBoundingClientRect().top,
-          divReference.current.getBoundingClientRect().bottom
+
+        const offsetX = Math.max(
+          Math.min(
+            event.pageX - divReference.current.getBoundingClientRect().left,
+            divReference.current.getBoundingClientRect().right -
+              divReference.current.getBoundingClientRect().left
+          ),
+          0
+        );
+        const offsetY = Math.max(
+          Math.min(
+            event.pageY -
+              divReference.current.getBoundingClientRect().top -
+              window.pageYOffset,
+            divReference.current.getBoundingClientRect().bottom -
+              divReference.current.getBoundingClientRect().top
+          ),
+          0
         );
 
         dispatch(
