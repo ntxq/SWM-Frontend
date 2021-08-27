@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useLayoutEffect } from "react";
 import { Card, List, Input, Col, Divider, Tooltip } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import { selectBox, updateBbox } from "../../../contexts/recognition-slice";
@@ -13,6 +13,14 @@ function RecognitionTable(properties) {
       state.recognition.bboxList[properties.requestID][properties.cutIndex]
   );
   const dispatch = useDispatch();
+
+  const imageHeight = document.querySelector(".unselectable")?.clientHeight;
+
+  useLayoutEffect(() => {
+    const table = document.querySelector(".table_panel");
+
+    table.style.maxHeight = imageHeight + "px";
+  }, [imageHeight]);
 
   return (
     <Col span={16}>
@@ -39,7 +47,9 @@ function RecognitionTable(properties) {
             >
               <List.Item.Meta
                 title={"Bbox " + index}
-                description={`x:${item.originalX} y:${item.originalY}`}
+                description={`x:${Math.floor(item.originalX)} y:${Math.floor(
+                  item.originalY
+                )}`}
               />
               <Input
                 prefix={
