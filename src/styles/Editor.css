@@ -120,10 +120,15 @@ span.ant-tree-node-content-wrapper.ant-tree-node-content-wrapper-normal.draggabl
 
   color: #ffa940;
   border: 3px solid;
+  visibility: hidden;
 
   transform-origin: left;
 }
 
 .table_divider {
   margin: 10px 0 !important;
+}
+
+.table_panel {
+  overflow-y: scroll;
 }
