@@ -14,6 +14,9 @@ import {
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import { kakaoAuthCode } from "../adapters/kakao";
 
+import Logo from "../components/Login/logo.png";
+import Kakao_login from "../components/Login/kakao_login.png";
+
 import "../styles/Login.css";
 
 function Login(properties) {
@@ -22,11 +25,7 @@ function Login(properties) {
   return (
     <Template removeHeader={true} footerClass="login_footer">
       <div className="login">
-        <Image
-          src={process.env.PUBLIC_URL + "/images/logo.png"}
-          preview={false}
-          className="login_logo"
-        />
+        <Image src={Logo} preview={false} className="login_logo" />
         <Typography.Title level={3} className="login_title">
           Sign in to Convertoon
         </Typography.Title>
@@ -79,7 +78,7 @@ function Login(properties) {
                   Log in
                 </Button>
                 <Image
-                  src={process.env.PUBLIC_URL + "/images/kakao_login.png"}
+                  src={Kakao_login}
                   preview={false}
                   onClick={(event) => {
                     window.open(kakaoAuthCode(), "blank");
