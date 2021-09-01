@@ -1,8 +1,18 @@
 import React from "react";
 import Template from "./template";
 import { Link, useHistory } from "react-router-dom";
-import { Typography, Form, Input, Card, Checkbox, Button, Image } from "antd";
+import {
+  Typography,
+  Form,
+  Input,
+  Card,
+  Checkbox,
+  Button,
+  Image,
+  Space,
+} from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
+import { kakaoAuthCode } from "../adapters/kakao";
 
 import "../styles/Login.css";
 
@@ -59,16 +69,26 @@ function Login(properties) {
                 Forgot password
               </Link>
             </Form.Item>
-
             <Form.Item>
-              <Button
-                type="primary"
-                htmlType="submit"
-                className="login_form_button"
-              >
-                Log in
-              </Button>
-              Or <Link to="">register now!</Link>
+              <Space direction="vertical" className="login_wrap">
+                <Button
+                  type="primary"
+                  htmlType="submit"
+                  className="login_form_button"
+                >
+                  Log in
+                </Button>
+                <Image
+                  src={process.env.PUBLIC_URL + "/images/kakao_login.png"}
+                  preview={false}
+                  onClick={(event) => {
+                    window.open(kakaoAuthCode(), "blank");
+                  }}
+                />
+                <div>
+                  Or <Link to="">register now!</Link>
+                </div>
+              </Space>
             </Form.Item>
           </Card>
         </Form>

@@ -7,6 +7,10 @@
   margin: 0 calc(50% - 150px) -75px;
 }
 
+.login_card .ant-card-body {
+  padding-bottom: 0 !important;
+}
+
 .login_title {
   margin-bottom: 3vh !important;
 }
@@ -34,4 +38,8 @@
   bottom: 0;
   left: 0;
   right: 0;
+}
+
+.login_wrap {
+  width: 100%;
 }
