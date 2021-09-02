@@ -12,10 +12,9 @@ import {
   Space,
 } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
-import { kakaoAuthCode } from "../adapters/kakao";
 
 import Logo from "../components/Login/logo.png";
-import Kakao_login from "../components/Login/kakao_login.png";
+import KakaoLogin from "../components/Login/kakao-login";
 
 import "../styles/Login.css";
 
@@ -77,13 +76,7 @@ function Login(properties) {
                 >
                   Log in
                 </Button>
-                <Image
-                  src={Kakao_login}
-                  preview={false}
-                  onClick={(event) => {
-                    window.open(kakaoAuthCode(), "blank");
-                  }}
-                />
+                <KakaoLogin />
                 <div>
                   Or <Link to="">register now!</Link>
                 </div>
