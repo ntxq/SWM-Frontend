@@ -1,3 +1,16 @@
 body {
   background: #f0f2f5;
 }
+
+.content {
+  width: 1080px;
+  margin-left: calc(50% - 540px);
+}
+
+.header {
+  padding-left: calc(50% - 540px) !important;
+}
+
+.footer {
+  text-align: center;
+}

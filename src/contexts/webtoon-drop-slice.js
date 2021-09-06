@@ -57,8 +57,10 @@ export const webtoonDropSlice = createSlice({
       };
     },
     updateProgress: (state, action) => {
-      state.images[action.payload.index].cut[action.payload.cutIndex].progress =
-        action.payload.progress;
+      if (action.payload.progress)
+        state.images[action.payload.index].cut[
+          action.payload.cutIndex
+        ].progress = action.payload.progress;
     },
     singleDelete: (state, action) => {
       state.images = state.images.filter(

@@ -7,7 +7,7 @@ const { Header, Content, Footer } = Layout;
 
 function Template(properties) {
   return (
-    <Layout>
+    <Layout className={properties.className}>
       {!properties.removeHeader && (
         <Header className={properties.headerClass}>
           <BasicMenu default={properties.defaultMenu} />

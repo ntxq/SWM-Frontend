@@ -2,14 +2,6 @@
   padding: 3vh 0;
 }
 
-.content {
-  padding: 0 2vw;
-}
-
-.footer {
-  text-align: center;
-}
-
 .preview_card {
   flex: "auto";
   margin: 2% !important;

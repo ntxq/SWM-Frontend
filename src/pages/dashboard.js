@@ -11,7 +11,12 @@ function DashBoard(properties) {
   const webtoons = useSelector((state) => state.webtoons);
 
   return (
-    <Template defaultMenu="2" contentClass="content" footerClass="footer">
+    <Template
+      defaultMenu="2"
+      headerClass="header"
+      contentClass="content"
+      footerClass="footer"
+    >
       <Typography.Title className="project_title">
         {webtoons.form.title} ({webtoons.images.length})
       </Typography.Title>
