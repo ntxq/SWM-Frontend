@@ -1,0 +1,44 @@
+.profile .content .profile_top {
+  margin-top: 30px;
+}
+
+.profile .content .profile_top .profile_text {
+  text-align: center;
+}
+
+.profile .content .profile_card {
+  margin-top: 30px;
+}
+
+.profile .content .profile_quota {
+  text-align: center;
+  float: right;
+}
+
+.profile .content .profile_quota .profile_quota_box {
+  margin-top: 10px;
+  border-radius: 25px;
+
+  height: 5px;
+  width: 200px;
+  margin-left: calc(50% - 100px);
+
+  background-color: #bfbfbf;
+}
+
+.profile .content .profile_quota .profile_quota_box .profile_quota_fill {
+  border-radius: 25px;
+
+  height: 100%;
+  width: 50px;
+
+  background-color: #1890ff;
+}
+
+.profile .content .profile_top .profile_avatar {
+  margin-left: calc(50% - 50px);
+}
+
+.profile .content .profile_top .profile_edit_button {
+  float: right;
+}

@@ -1,14 +1,17 @@
 import React from "react";
 import { Menu, Typography } from "antd";
 import UserAvatar from "./user-avatar";
+import { Link } from "react-router-dom";
 
 function MenuAvatar(properties) {
   return (
     <Menu.SubMenu className="menu_avatar" key="avatar" title={<UserAvatar />}>
       <Menu.Item key="username">
-        <Typography.Text style={{ fontWeight: "bold" }}>
-          Username
-        </Typography.Text>
+        <Link to="/profile">
+          <Typography.Text style={{ fontWeight: "bold" }}>
+            Username
+          </Typography.Text>
+        </Link>
       </Menu.Item>
       <Menu.Item key="change_plan">
         <Typography.Text>Upgrade plan</Typography.Text>
