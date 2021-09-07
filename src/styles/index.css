@@ -8,7 +8,34 @@ body {
 }
 
 .header {
-  padding-left: calc(50% - 540px) !important;
+  padding: 0 calc(50% - 540px) !important;
+}
+
+.header .menu_avatar {
+  margin-left: auto;
+  padding: 0 10px !important;
+}
+
+.header .menu_avatar .user_avatar {
+  vertical-align: middle;
+}
+
+.header .menu_avatar .anticon-arrow-down {
+  vertical-align: middle;
+  margin-right: 0;
+}
+
+.ant-menu-submenu .ant-menu .ant-menu-item .ant-typography {
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.ant-menu-submenu .ant-menu .ant-menu-item .ant-typography {
+  color: rgba(255, 255, 255, 0.65);
+}
+
+
+li span .ant-typography {
+  color: rgba(255, 255, 255, 0.65);
 }
 
 .footer {

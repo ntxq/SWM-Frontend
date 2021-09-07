@@ -156,6 +156,7 @@ export async function getOCRResult(request_id, cutID) {
   const result = await backendInstance
     .get("/upload/OCR/result", data)
     .then((response) => response.data.progress)
+    .then((progress) => (progress === null ? 100 : progress))
     .catch((error) => console.error(error));
 
   return result;

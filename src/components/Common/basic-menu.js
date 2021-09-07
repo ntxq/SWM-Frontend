@@ -1,6 +1,7 @@
 import React from "react";
-import { Menu } from "antd";
+import { Menu, Space } from "antd";
 import { Link } from "react-router-dom";
+import MenuAvatar from "./menu-avatar";
 
 function BasicMenu(properties) {
   return (
@@ -17,6 +18,8 @@ function BasicMenu(properties) {
         <Link to="/dashboard">Dashboard</Link>
       </Menu.Item>
       <Menu.Item key={3}>Editor</Menu.Item>
+
+      <MenuAvatar />
     </Menu>
   );
 }
