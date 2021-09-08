@@ -1,6 +1,6 @@
 import React from "react";
-import { Menu, Space } from "antd";
 import { Link } from "react-router-dom";
+import { Menu } from "antd";
 import MenuAvatar from "./menu-avatar";
 
 function BasicMenu(properties) {

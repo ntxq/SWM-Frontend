@@ -6,6 +6,7 @@ import Home from "./pages/home";
 import DashBoard from "./pages/dashboard";
 import Editor from "./pages/editor";
 import Profile from "./pages/profile";
+import Preference from "./pages/preference";
 
 import "antd/dist/antd.css";
 
@@ -26,6 +27,10 @@ function App() {
         <Route path="/profile">
           <Profile />
         </Route>
+        <Route path="/preference">
+          <Preference />
+        </Route>
+
         <Route path="/">
           <Login />
         </Route>

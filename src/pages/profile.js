@@ -8,18 +8,21 @@ import {
 
 import Template from "./template";
 import "../styles/Profile.css";
+import { Link } from "react-router-dom";
 
 function Profile(properties) {
   return (
     <Template
       className="profile"
-      defaultMenu="avatar"
+      defaultMenu="username"
       headerClass="header"
       contentClass="content"
       footerClass="footer"
     >
       <div className="profile_top">
-        <Button icon={<EditOutlined />} className="profile_edit_button" />
+        <Link to="/preference">
+          <Button icon={<EditOutlined />} className="profile_edit_button" />
+        </Link>
         <Avatar className="profile_avatar" size={100} icon={<UserOutlined />} />
 
         <div className="profile_text">
@@ -70,10 +73,7 @@ function Profile(properties) {
               Quisque consequat non tortor vitae sodales. Nulla porttitor,
               ligula nec volutpat maximus, dolor diam ornare dui, in laoreet
               velit augue malesuada metus. Donec ullamcorper mauris quis egestas
-              convallis. Cras luctus viverra iaculis. Cras vitae venenatis
-              justo, non tincidunt elit. Proin accumsan feugiat placerat. Ut
-              tempor a ipsum id sollicitudin. In nisi libero, tempus non cursus
-              quis, tempor ut massa.
+              convallis.
             </Typography.Text>
           </List.Item>
 
@@ -98,14 +98,8 @@ function Profile(properties) {
               title="Project title2"
               description="Created on: September 21, 2021"
             />
-            <Typography.Text editable={true}>
-              Quisque consequat non tortor vitae sodales. Nulla porttitor,
-              ligula nec volutpat maximus, dolor diam ornare dui, in laoreet
-              velit augue malesuada metus. Donec ullamcorper mauris quis egestas
-              convallis. Cras luctus viverra iaculis. Cras vitae venenatis
-              justo, non tincidunt elit. Proin accumsan feugiat placerat. Ut
-              tempor a ipsum id sollicitudin. In nisi libero, tempus non cursus
-              quis, tempor ut massa.
+            <Typography.Text type="secondary" editable={true}>
+              No description
             </Typography.Text>
           </List.Item>
         </List>
