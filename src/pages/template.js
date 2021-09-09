@@ -1,5 +1,5 @@
 import React from "react";
-import { Layout } from "antd";
+import { Divider, Layout } from "antd";
 
 import BasicMenu from "../components/Common/basic-menu";
 
@@ -20,7 +20,10 @@ function Template(properties) {
           {properties.children}
         </Content>
       )}
-      <Footer className={properties.footerClass}>전지적 독자시점 ©2021</Footer>
+      <Footer className={properties.footerClass}>
+        <Divider />
+        전지적 독자시점 ©2021
+      </Footer>
     </Layout>
   );
 }
