@@ -37,7 +37,7 @@ function App() {
           <Plans />
         </Route>
 
-        <Route path="/">
+        <Route path={["/", "/login"]}>
           <Login />
         </Route>
       </Switch>

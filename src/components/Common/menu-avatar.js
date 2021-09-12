@@ -1,11 +1,20 @@
-import React from "react";
+import React, { useLayoutEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Menu } from "antd";
 
 import UserAvatar from "./user-avatar";
+import MenuLogin from "./menu-login";
 
 function MenuAvatar(properties) {
-  return (
+  const [kakaoCookie, setKakaoCookie] = useState(false);
+
+  useLayoutEffect(() => {
+    setKakaoCookie(
+      document.cookie.split("; ").some((row) => row.startsWith("kakao_token="))
+    );
+  }, []);
+
+  return kakaoCookie ? (
     <Menu.SubMenu className="menu_avatar" key="avatar" title={<UserAvatar />}>
       <Menu.Item key="username">
         <Link to="/profile">
@@ -21,6 +30,8 @@ function MenuAvatar(properties) {
       <Menu.Divider />
       <Menu.Item key="sign_out">Sign out</Menu.Item>
     </Menu.SubMenu>
+  ) : (
+    <MenuLogin />
   );
 }
 
