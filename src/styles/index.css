@@ -7,8 +7,8 @@ body {
   margin-left: calc(50% - 540px);
 }
 
-.header {
-  padding: 0 calc(50% - 540px) !important;
+.ant-layout .header {
+  padding: 0 calc(50% - 540px);
 }
 
 .header .menu_login {

@@ -15,11 +15,13 @@ import { UserOutlined, LockOutlined } from "@ant-design/icons";
 
 import Logo from "../components/Login/logo.png";
 import KakaoLogin from "../components/Login/kakao-login";
+import useLogout from "../components/Login/use-logout";
 
 import "../styles/Login.css";
 
 function Login(properties) {
   const history = useHistory();
+  useLogout();
 
   return (
     <Template

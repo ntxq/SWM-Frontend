@@ -28,7 +28,9 @@ function MenuAvatar(properties) {
         <Link to="/preference">Edit profile</Link>
       </Menu.Item>
       <Menu.Divider />
-      <Menu.Item key="sign_out">Sign out</Menu.Item>
+      <Menu.Item key="logout">
+        <Link to="/login?reset=true">Sign out</Link>
+      </Menu.Item>
     </Menu.SubMenu>
   ) : (
     <MenuLogin />

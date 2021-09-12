@@ -4,7 +4,7 @@ import FormData from "form-data";
 const url =
   process.env.NODE_ENV === "production" ? "" : "http://localhost:3000";
 
-const backendInstance = axios.create({
+export const backendInstance = axios.create({
   baseURL: url,
 });
 

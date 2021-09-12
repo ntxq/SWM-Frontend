@@ -35,8 +35,10 @@
   height: auto;
 }
 
-.editor_header {
+/* Bad style... */
+#root .editor_page .header {
   z-index: 1;
+  padding: 0 50px;
 }
 
 .preview_sider {

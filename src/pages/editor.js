@@ -21,9 +21,10 @@ function Editor(properties) {
     <Template
       overrideContent={true}
       defaultMenu="3"
-      headerClass="editor_header"
+      headerClass="header"
       contentClass="content_editor"
       footerClass="footer"
+      className="editor_page"
     >
       <Layout>
         <PreviewSider />
