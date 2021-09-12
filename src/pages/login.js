@@ -22,7 +22,12 @@ function Login(properties) {
   const history = useHistory();
 
   return (
-    <Template removeHeader={true} footerClass="login_footer">
+    <Template
+      removeHeader={true}
+      contentClass="login_content"
+      footerClass="login_footer"
+      className="login_page"
+    >
       <div className="login">
         <Image src={Logo} preview={false} className="login_logo" />
         <Typography.Title level={3} className="login_title">

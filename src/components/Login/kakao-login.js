@@ -10,6 +10,7 @@ function KakaoLogin(properties) {
       src={KakaoImage}
       preview={false}
       onClick={() => (window.location.href = kakaoAuthCode())}
+      className="kakao_login_button"
     />
   );
 }
