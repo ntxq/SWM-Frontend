@@ -2,8 +2,8 @@ import { useCallback, useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   getSegmentationResult,
-  getSegmentationInpaint,
   getSegmentationMask,
+  getSegmentationInpaintURL,
 } from "../../../adapters/backend";
 import {
   updateCut,
@@ -33,16 +33,13 @@ function useSegmentationResult(webtoonIndex, cutIndex) {
       if (progress === 100) {
         clearInterval(intervalID);
 
-        const inpaintBlob = await getSegmentationInpaint(
-          image.id,
-          cutIndex + 1
-        );
+        const inpaintURL = getSegmentationInpaintURL(image.id, cutIndex + 1);
         dispatch(
           updateCut({
             index: webtoonIndex,
             cutIndex: cutIndex,
             webtoon: {
-              inpaint: URL.createObjectURL(inpaintBlob),
+              inpaint: inpaintURL,
             },
           })
         );

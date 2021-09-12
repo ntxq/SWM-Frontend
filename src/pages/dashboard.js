@@ -1,11 +1,12 @@
 import React from "react";
 import Template from "./template";
-import { Tabs, Typography } from "antd";
+import { Tabs } from "antd";
 import { PictureFilled, BookFilled, DownloadOutlined } from "@ant-design/icons";
 import { useSelector } from "react-redux";
 
 import Webtoons from "../components/Dashboard/webtoons";
 import "../styles/Dashboard.css";
+import DashboardTitle from "../components/Dashboard/dashboard-title";
 
 function DashBoard(properties) {
   const webtoons = useSelector((state) => state.webtoons);
@@ -16,10 +17,9 @@ function DashBoard(properties) {
       headerClass="header"
       contentClass="content"
       footerClass="footer"
+      className="dashboard"
     >
-      <Typography.Title className="project_title">
-        {webtoons.form.title} ({webtoons.images.length})
-      </Typography.Title>
+      <DashboardTitle />
       <Tabs defaultActiveKey="1" size="large">
         <Tabs.TabPane
           tab={

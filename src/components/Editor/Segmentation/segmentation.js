@@ -58,18 +58,14 @@ function Segmentation(properties) {
               <Label value="Text" background="red" />
               <Label value="AI" background="blue" />
             </BrushLabels>
-            <Image name="img" value="${
-              properties.webtoon.original
-            }" zoomControl="true" />
+            <Image name="img" value="$original" zoomControl="true" />
           </View>
 
           <View style="flex: 50%; margin-left: 1em">
             <BrushLabels name="tag2" toName="inpaint">
               <Label value="Inpaint" background="green" />
             </BrushLabels>
-            <Image name="inpaint" value="${
-              properties.webtoon.inpaint || properties.webtoon.original
-            }" zoomControl="true" />
+            <Image name="inpaint" value="$inpaint" zoomControl="true" />
           </View>
         </View>
               `,
@@ -82,6 +78,10 @@ function Segmentation(properties) {
             },
           ],
           predictions: [],
+          data: {
+            original: properties.webtoon.original,
+            inpaint: properties.webtoon.inpaint || properties.webtoon.original,
+          },
         },
         onLabelStudioLoad: function (ls) {
           const c = ls.annotationStore.addAnnotation({

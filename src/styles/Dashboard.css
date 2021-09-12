@@ -1,18 +1,22 @@
-.dashboard_image {
+.dashboard .content .dashboard_image {
   width: 100%;
   height: 40vh;
 }
 
-.ant-skeleton, .ant-skeleton-image {
+.dashboard .content .ant-skeleton, .ant-skeleton-image {
   width: 100% !important;
   height: 40vh !important;
 }
 
-.language_choice {
-  margin-bottom: 3vh !important;
+.dashboard .content .language_choice {
+  margin-bottom: 3vh;
 }
 
-.project_title {
-  margin-top: 2vh !important;
-  margin-bottom: 0 !important;
+.dashboard .content .project_title {
+  margin-top: 2vh;
+  margin-bottom: 0;
+}
+
+.dashboard .content .project_title a {
+  color: rgba(0, 0, 0, 0.85);
 }

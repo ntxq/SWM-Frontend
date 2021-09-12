@@ -73,6 +73,12 @@ export async function getCutImage(request_id, cutIndex) {
     .catch(() => setTimeout(() => getCutImage(request_id, cutIndex), 1000));
 }
 
+export function getCutImageURL(request_id, cutIndex) {
+  return (
+    url + `/upload/segmentation/cut?req_id=${request_id}&cut_id=${cutIndex}`
+  );
+}
+
 export async function getSegmentationResult(request_id, cutIndex) {
   const data = {
     params: {
@@ -94,6 +100,13 @@ export async function getSegmentationInpaint(request_id, cutID) {
     url +
       `/upload/segmentation/result/inpaint?req_id=${request_id}&cut_id=${cutID}`
   ).then((image) => image.blob());
+}
+
+export function getSegmentationInpaintURL(request_id, cutID) {
+  return (
+    url +
+    `/upload/segmentation/result/inpaint?req_id=${request_id}&cut_id=${cutID}`
+  );
 }
 
 export async function getSegmentationMask(request_id, cutID) {
