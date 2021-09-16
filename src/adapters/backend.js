@@ -1,5 +1,4 @@
 import axios from "axios";
-import FormData from "form-data";
 
 const url =
   process.env.NODE_ENV === "production" ? "" : "http://localhost:3000";
@@ -8,69 +7,48 @@ export const backendInstance = axios.create({
   baseURL: url,
 });
 
-export async function uploadOriginals(imageSlice, projectTitle) {
-  const data = new FormData();
+export async function createProject(imageSlice, title) {
+  const filenames = [];
+  for (const image of imageSlice) filenames.push(image.filename);
 
-  data.append("title", projectTitle);
+  const data = {
+    title,
+    filenames: JSON.stringify(filenames),
+  };
 
-  for (const image of imageSlice) {
-    await fetch(image.original)
-      .then((result) => result.blob())
-      .then((blob) => new File([blob], image.filename, { type: blob.type }))
-      .then((file) => data.append("source", file));
+  const request_array = await backendInstance
+    .post("/upload/segmentation/project", data)
+    .then((response) => response.data.request_array);
+
+  const imageMap = {};
+
+  for (const reqeustInfo of request_array) {
+    await axios.put(reqeustInfo.s3_url, imageSlice.original);
+
+    await backendInstance
+      .post("/upload/segmentation/source", {
+        req_id: reqeustInfo.req_id,
+      })
+      .then((response) => response.data.cut_count)
+      .then((cut_count) => {
+        imageMap[reqeustInfo.filename] = {
+          req_id: reqeustInfo.req_id,
+          cut_count,
+        };
+      });
   }
 
-  const result = await backendInstance
-    .post("/upload/segmentation/source", data)
-    .then((response) => response.data.req_ids)
-    .catch(() => ({
-      req_ids: [],
-    }));
-
-  return result;
-}
-
-export async function uploadBlank(imageSlice, request_ids) {
-  const data = new FormData();
-  const idList = [];
-  const emptyList = [];
-
   for (const image of imageSlice) {
-    if (image.inpaint && request_ids.hasOwnProperty(image.filename)) {
-      idList.push(request_ids[image.filename].req_id);
-      await fetch(image.inpaint)
-        .then((result) => result.blob())
-        .then((blob) => new File([blob], image.filename, { type: blob.type }))
-        .then((file) => data.append("blank", file));
-    } else if (request_ids.hasOwnProperty(image.filename)) {
-      emptyList.push(request_ids[image.filename].req_id);
-    }
+    if (!image.inpaint) continue;
+
+    const blankURL = request_array.find(
+      (info) => info.filename === image.filename
+    ).s3_blank_url;
+
+    await axios.put(blankURL, image.inpaint);
   }
 
-  data.append("map_ids", JSON.stringify(idList));
-  data.append("empty_id", JSON.stringify(emptyList));
-
-  const result = await backendInstance
-    .post("/upload/segmentation/blank", data)
-    .then((response) => response.data.req_ids)
-    .catch(() => ({
-      req_ids: [],
-    }));
-
-  return result;
-}
-
-export async function getCutImage(request_id, cutIndex) {
-  return await fetch(
-    url + `/upload/segmentation/cut?req_id=${request_id}&cut_id=${cutIndex}`
-  )
-    .then((response) => {
-      if (response.ok) return response;
-      else throw new Error("Server Error");
-    })
-    .then((image) => image.blob())
-    .then((blob) => URL.createObjectURL(blob))
-    .catch(() => setTimeout(() => getCutImage(request_id, cutIndex), 1000));
+  return imageMap;
 }
 
 export function getCutImageURL(request_id, cutIndex) {
