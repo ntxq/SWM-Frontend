@@ -1,6 +1,7 @@
 import { useCallback, useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
+  postSegmentationStart,
   getSegmentationResult,
   getSegmentationMask,
   getSegmentationInpaintURL,
@@ -20,6 +21,8 @@ function useSegmentationResult(webtoonIndex, cutIndex) {
   const [currentID, setCurrentID] = useState();
 
   const getResult = useCallback(async () => {
+    await postSegmentationStart(image.id);
+
     const intervalID = setInterval(async () => {
       const progress = await getSegmentationResult(image.id, cutIndex + 1);
       dispatch(

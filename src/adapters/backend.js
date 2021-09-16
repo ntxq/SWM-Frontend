@@ -13,28 +13,12 @@ export async function createProject(imageSlice, title) {
 
   const data = {
     title,
-    filenames: JSON.stringify(filenames),
+    filenames,
   };
 
   const request_array = await backendInstance
     .post("/upload/segmentation/project", data)
     .then((response) => response.data.request_array);
-
-  for (const reqeustInfo of request_array) {
-    await axios.put(reqeustInfo.s3_url, imageSlice.original);
-
-    await backendInstance
-      .post("/upload/segmentation/source", {
-        req_id: reqeustInfo.req_id,
-      })
-      .then((response) => response.data.cut_count)
-      .then((cut_count) => {
-        imageMap[reqeustInfo.filename] = {
-          req_id: reqeustInfo.req_id,
-          cut_count,
-        };
-      });
-  }
 
   const imageMap = {};
   for (const image of imageSlice) {
@@ -46,7 +30,9 @@ export async function createProject(imageSlice, title) {
       .then((result) => result.blob())
       .then((blob) => new File([blob], image.filename, { type: blob.type }));
 
-    await axios.put(s3_url, originalFile);
+    await axios.put(s3_url, originalFile, {
+      headers: { "Content-Type": originalFile.type },
+    });
     await backendInstance
       .post("/upload/segmentation/source", {
         req_id,
@@ -64,7 +50,9 @@ export async function createProject(imageSlice, title) {
         .then((result) => result.blob())
         .then((blob) => new File([blob], image.filename, { type: blob.type }));
 
-      await axios.put(s3_blank_url, blankFile);
+      await axios.put(s3_blank_url, blankFile, {
+        headers: { "Content-Type": blankFile.type },
+      });
       await backendInstance.post("/upload/segmentation/blank", {
         req_id,
       });
@@ -78,6 +66,14 @@ export function getCutImageURL(request_id, cutIndex) {
   return (
     url + `/upload/segmentation/cut?req_id=${request_id}&cut_id=${cutIndex}`
   );
+}
+
+export async function postSegmentationStart(request_id) {
+  return await backendInstance
+    .post("/upload/segmentation/start", {
+      req_id: request_id,
+    })
+    .then((response) => response.data.success);
 }
 
 export async function getSegmentationResult(request_id, cutIndex) {
