@@ -1,14 +1,10 @@
 import React from "react";
-import { Avatar, Button, Card, Space, Typography, List, Image } from "antd";
-import {
-  EditOutlined,
-  UserOutlined,
-  FileImageOutlined,
-} from "@ant-design/icons";
+import { Card, Space, Typography, List, Image } from "antd";
+import { FileImageOutlined } from "@ant-design/icons";
 
 import Template from "./template";
+import ProfileTop from "../components/Profile/profile-top";
 import "../styles/Profile.css";
-import { Link } from "react-router-dom";
 
 function Profile(properties) {
   return (
@@ -19,21 +15,7 @@ function Profile(properties) {
       contentClass="content"
       footerClass="footer"
     >
-      <div className="profile_top">
-        <Link to="/preference">
-          <Button icon={<EditOutlined />} className="profile_edit_button" />
-        </Link>
-        <Avatar className="profile_avatar" size={100} icon={<UserOutlined />} />
-
-        <div className="profile_text">
-          <Typography.Title level={3}>Username</Typography.Title>
-          <Space>
-            <Typography.Text>@userid</Typography.Text>
-            <Typography.Text>{"\u00B7"}</Typography.Text>
-            <Typography.Text>Member since September 14, 1999</Typography.Text>
-          </Space>
-        </div>
-      </div>
+      <ProfileTop />
 
       <Card
         title={<Typography.Title level={3}>Created Projects</Typography.Title>}

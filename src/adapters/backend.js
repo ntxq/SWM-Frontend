@@ -1,5 +1,4 @@
 import axios from "axios";
-import FormData from "form-data";
 
 const url =
   process.env.NODE_ENV === "production" ? "" : "http://localhost:3000";
@@ -8,75 +7,73 @@ export const backendInstance = axios.create({
   baseURL: url,
 });
 
-export async function uploadOriginals(imageSlice, projectTitle) {
-  const data = new FormData();
+export async function createProject(imageSlice, title) {
+  const filenames = [];
+  for (const image of imageSlice) filenames.push(image.filename);
 
-  data.append("title", projectTitle);
+  const data = {
+    title,
+    filenames,
+  };
 
+  const request_array = await backendInstance
+    .post("/upload/segmentation/project", data)
+    .then((response) => response.data.request_array);
+
+  const imageMap = {};
   for (const image of imageSlice) {
-    await fetch(image.original)
+    const { req_id, s3_url, s3_blank_url } = request_array.find(
+      (info) => info.filename === image.filename
+    );
+
+    const originalFile = await fetch(image.original)
       .then((result) => result.blob())
-      .then((blob) => new File([blob], image.filename, { type: blob.type }))
-      .then((file) => data.append("source", file));
-  }
+      .then((blob) => new File([blob], image.filename, { type: blob.type }));
 
-  const result = await backendInstance
-    .post("/upload/segmentation/source", data)
-    .then((response) => response.data.req_ids)
-    .catch(() => ({
-      req_ids: [],
-    }));
+    await axios.put(s3_url, originalFile, {
+      headers: { "Content-Type": originalFile.type },
+    });
+    await backendInstance
+      .post("/upload/segmentation/source", {
+        req_id,
+      })
+      .then((response) => response.data.cut_count)
+      .then((cut_count) => {
+        imageMap[image.filename] = {
+          req_id,
+          cut_count,
+        };
+      });
 
-  return result;
-}
-
-export async function uploadBlank(imageSlice, request_ids) {
-  const data = new FormData();
-  const idList = [];
-  const emptyList = [];
-
-  for (const image of imageSlice) {
-    if (image.inpaint && request_ids.hasOwnProperty(image.filename)) {
-      idList.push(request_ids[image.filename].req_id);
-      await fetch(image.inpaint)
+    if (image.inpaint) {
+      const blankFile = await fetch(image.inpaint)
         .then((result) => result.blob())
-        .then((blob) => new File([blob], image.filename, { type: blob.type }))
-        .then((file) => data.append("blank", file));
-    } else if (request_ids.hasOwnProperty(image.filename)) {
-      emptyList.push(request_ids[image.filename].req_id);
+        .then((blob) => new File([blob], image.filename, { type: blob.type }));
+
+      await axios.put(s3_blank_url, blankFile, {
+        headers: { "Content-Type": blankFile.type },
+      });
+      await backendInstance.post("/upload/segmentation/blank", {
+        req_id,
+      });
     }
   }
 
-  data.append("map_ids", JSON.stringify(idList));
-  data.append("empty_id", JSON.stringify(emptyList));
-
-  const result = await backendInstance
-    .post("/upload/segmentation/blank", data)
-    .then((response) => response.data.req_ids)
-    .catch(() => ({
-      req_ids: [],
-    }));
-
-  return result;
-}
-
-export async function getCutImage(request_id, cutIndex) {
-  return await fetch(
-    url + `/upload/segmentation/cut?req_id=${request_id}&cut_id=${cutIndex}`
-  )
-    .then((response) => {
-      if (response.ok) return response;
-      else throw new Error("Server Error");
-    })
-    .then((image) => image.blob())
-    .then((blob) => URL.createObjectURL(blob))
-    .catch(() => setTimeout(() => getCutImage(request_id, cutIndex), 1000));
+  return imageMap;
 }
 
 export function getCutImageURL(request_id, cutIndex) {
   return (
     url + `/upload/segmentation/cut?req_id=${request_id}&cut_id=${cutIndex}`
   );
+}
+
+export async function postSegmentationStart(request_id) {
+  return await backendInstance
+    .post("/upload/segmentation/start", {
+      req_id: request_id,
+    })
+    .then((response) => response.data.success);
 }
 
 export async function getSegmentationResult(request_id, cutIndex) {

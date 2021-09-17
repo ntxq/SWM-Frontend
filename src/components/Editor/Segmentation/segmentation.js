@@ -28,7 +28,7 @@ function Segmentation(properties) {
     properties.cutIndex
   );
 
-  const [postMaskChange, setCancelUpload] = useMaskUpload(
+  const [postMaskChange, setCancelChange] = useMaskUpload(
     properties.webtoonIndex,
     properties.cutIndex
   );
@@ -91,6 +91,7 @@ function Segmentation(properties) {
         },
         onSubmitAnnotation: function (ls, annotation) {
           setIsModalVisible(true);
+
           dispatch(
             updateCut({
               index: properties.webtoonIndex,
@@ -104,6 +105,7 @@ function Segmentation(properties) {
         },
         onUpdateAnnotation: function (ls, annotation) {
           setIsModalVisible(true);
+
           dispatch(
             updateCut({
               index: properties.webtoonIndex,
@@ -133,7 +135,7 @@ function Segmentation(properties) {
         visible={isModalVisible}
         cancel={() => {
           properties.webtoon.inpaint
-            ? setCancelUpload(true)
+            ? setCancelChange(true)
             : setCancelResult(true);
 
           setIsModalVisible(false);

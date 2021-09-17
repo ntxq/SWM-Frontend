@@ -24,6 +24,7 @@ function WebtoonCard(properties) {
           );
         else if (properties.url) history.push(`/dashboard/${properties.index}`);
       }}
+      onMou
       className="preview_card"
     >
       <Card.Meta

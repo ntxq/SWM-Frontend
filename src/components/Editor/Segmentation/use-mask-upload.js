@@ -1,14 +1,9 @@
 import { useCallback, useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { uploadMask, getSegmentationResult } from "../../../adapters/backend";
 import {
-  getSegmentationInpaint,
-  getSegmentationResult,
-  uploadMask,
-} from "../../../adapters/backend";
-import { initializeBbox } from "../../../contexts/recognition-slice";
-import {
-  updateCut,
   updateProgress,
+  updateCut,
 } from "../../../contexts/webtoon-drop-slice";
 
 function useMaskUpload(webtoonIndex, cutIndex) {
@@ -34,37 +29,38 @@ function useMaskUpload(webtoonIndex, cutIndex) {
               progress,
             })
           );
-
-          if (progress === 100) {
-            clearInterval(intervalID);
-
-            const inpaint = await getSegmentationInpaint(
-              image.id,
-              cutIndex + 1
-            );
-            dispatch(
-              updateCut({
-                index: webtoonIndex,
-                cutIndex: cutIndex,
-                webtoon: {
-                  inpaint: URL.createObjectURL(inpaint),
-                  progress: 0,
-                },
-              })
-            );
-            dispatch(
-              initializeBbox({
-                requestID: image.id,
-                cutCount: image.cutCount,
-              })
-            );
-          }
         }, 2000);
         setCurrentID(intervalID);
       }
     },
-    [dispatch, image.id, image.cutCount, webtoonIndex, cutIndex]
+
+    [dispatch, webtoonIndex, image.id, cutIndex]
   );
+
+  useEffect(() => {
+    if (image.progress === 100 && currentID) {
+      clearInterval(currentID);
+      setCurrentID();
+
+      dispatch(
+        updateCut({
+          index: webtoonIndex,
+          cutIndex: cutIndex,
+          webtoon: {
+            inpaint: image.inpaint + "?" + Date.now(),
+            progress: 0,
+          },
+        })
+      );
+    }
+  }, [
+    dispatch,
+    currentID,
+    image.progress,
+    image.inpaint,
+    webtoonIndex,
+    cutIndex,
+  ]);
 
   useEffect(() => {
     if (cancelUpload) {

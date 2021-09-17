@@ -9,7 +9,7 @@ function Plans(properties) {
   return (
     <Template
       className="plans"
-      defaultMenu="1"
+      defaultMenu="change_plan"
       headerClass="header"
       contentClass="content"
       footerClass="footer"
