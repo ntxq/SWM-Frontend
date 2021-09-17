@@ -12,19 +12,20 @@ import {
 } from "../../../contexts/webtoon-drop-slice";
 
 function useSegmentationResult(webtoonIndex, cutIndex) {
-  const image = useSelector(
-    (state) => state.webtoons.images[webtoonIndex].cut[cutIndex]
+  const imageID = useSelector(
+    (state) => state.webtoons.images[webtoonIndex].cut[cutIndex].id
   );
+
   const dispatch = useDispatch();
 
   const [cancelResult, setCancelResult] = useState(false);
   const [currentID, setCurrentID] = useState();
 
   const getResult = useCallback(async () => {
-    await postSegmentationStart(image.id);
+    await postSegmentationStart(imageID);
 
     const intervalID = setInterval(async () => {
-      const progress = await getSegmentationResult(image.id, cutIndex + 1);
+      const progress = await getSegmentationResult(imageID, cutIndex + 1);
       dispatch(
         updateProgress({
           index: webtoonIndex,
@@ -36,7 +37,7 @@ function useSegmentationResult(webtoonIndex, cutIndex) {
       if (progress === 100) {
         clearInterval(intervalID);
 
-        const inpaintURL = getSegmentationInpaintURL(image.id, cutIndex + 1);
+        const inpaintURL = getSegmentationInpaintURL(imageID, cutIndex + 1);
         dispatch(
           updateCut({
             index: webtoonIndex,
@@ -47,7 +48,7 @@ function useSegmentationResult(webtoonIndex, cutIndex) {
           })
         );
 
-        const maskRle = await getSegmentationMask(image.id, cutIndex + 1);
+        const maskRle = await getSegmentationMask(imageID, cutIndex + 1);
         dispatch(
           updateCut({
             index: webtoonIndex,
@@ -73,7 +74,7 @@ function useSegmentationResult(webtoonIndex, cutIndex) {
       }
     }, 2000);
     setCurrentID(intervalID);
-  }, [dispatch, image.id, webtoonIndex, cutIndex]);
+  }, [dispatch, imageID, webtoonIndex, cutIndex]);
 
   useEffect(() => {
     if (cancelResult) clearInterval(currentID);

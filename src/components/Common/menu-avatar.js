@@ -4,9 +4,11 @@ import { Menu } from "antd";
 
 import UserAvatar from "./user-avatar";
 import MenuLogin from "./menu-login";
+import useProfile from "./use-profile";
 
 function MenuAvatar(properties) {
   const [kakaoCookie, setKakaoCookie] = useState(false);
+  const profile = useProfile();
 
   useLayoutEffect(() => {
     setKakaoCookie(
@@ -18,7 +20,7 @@ function MenuAvatar(properties) {
     <Menu.SubMenu className="menu_avatar" key="avatar" title={<UserAvatar />}>
       <Menu.Item key="username">
         <Link to="/profile">
-          <b>Username</b>
+          <b>{profile.username}</b>
         </Link>
       </Menu.Item>
       <Menu.Item key="change_plan">
