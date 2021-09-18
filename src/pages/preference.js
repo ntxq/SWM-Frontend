@@ -3,10 +3,10 @@ import { Button, Card, Divider } from "antd";
 import { SaveOutlined, DeleteOutlined } from "@ant-design/icons";
 
 import Template from "./template";
-import "../styles/Preference.css";
 import AvatarBlock from "../components/Preference/avatar-block";
 import AccountBlock from "../components/Preference/account-block";
 import DeleteBlock from "../components/Preference/delete-block";
+import "../styles/Preference.css";
 
 function Preference(properties) {
   return (

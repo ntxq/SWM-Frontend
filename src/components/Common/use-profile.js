@@ -8,17 +8,18 @@ function useProfile() {
 
   useEffect(() => {
     if (profile.username === "") {
-      let profileCookie = document.cookie
-        .split("; ")
-        .find((row) => row.startsWith("profile="))
-        .split("=")[1];
+      let profileCookie;
 
-      if (profileCookie) {
+      if (document.cookie) {
+        profileCookie = document.cookie
+          .split("; ")
+          .find((row) => row.startsWith("profile="))
+          .split("=")[1];
         profileCookie = decodeURIComponent(profileCookie);
         profileCookie = JSON.parse(profileCookie);
       }
 
-      if (profileCookie.username === "") {
+      if (!profileCookie || profileCookie.username === "") {
         profileCookie = {
           username: "myname",
           email: "useremail@test.com",
