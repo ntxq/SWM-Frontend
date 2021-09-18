@@ -92,13 +92,6 @@ export async function getSegmentationResult(request_id, cutIndex) {
   return result;
 }
 
-export async function getSegmentationInpaint(request_id, cutID) {
-  return await fetch(
-    url +
-      `/upload/segmentation/result/inpaint?req_id=${request_id}&cut_id=${cutID}`
-  ).then((image) => image.blob());
-}
-
 export function getSegmentationInpaintURL(request_id, cutID) {
   return (
     url +
