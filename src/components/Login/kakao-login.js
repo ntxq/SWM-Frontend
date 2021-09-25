@@ -1,17 +1,21 @@
 import React from "react";
-import { Image } from "antd";
-import { kakaoAuthCode } from "../../adapters/kakao";
+import { Button, Image } from "antd";
 
-import KakaoImage from "./kakao_image.png";
+import { kakaoAuthCode } from "../../adapters/kakao";
+import Kakao_Symbol from "./kakao_symbol.png";
 
 function KakaoLogin(properties) {
   return (
-    <Image
-      src={KakaoImage}
-      preview={false}
+    <Button
+      type="text"
+      className="login_form_kakao"
       onClick={() => (window.location.href = kakaoAuthCode())}
-      className="kakao_login_button"
-    />
+      icon={
+        <Image src={Kakao_Symbol} preview={false} className="kakao_symbol" />
+      }
+    >
+      Login with Kakao
+    </Button>
   );
 }
 

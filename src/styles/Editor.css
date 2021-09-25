@@ -127,6 +127,10 @@ span.ant-tree-node-content-wrapper.ant-tree-node-content-wrapper-normal.draggabl
   transform-origin: left;
 }
 
+.bbox_download {
+  border: none;
+}
+
 .table_divider {
   margin: 10px 0 !important;
 }

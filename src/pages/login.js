@@ -1,17 +1,8 @@
 import React from "react";
 import Template from "./template";
-import { Link, useHistory } from "react-router-dom";
-import {
-  Typography,
-  Form,
-  Input,
-  Card,
-  Checkbox,
-  Button,
-  Image,
-  Space,
-} from "antd";
-import { UserOutlined, LockOutlined } from "@ant-design/icons";
+import { useHistory } from "react-router-dom";
+import { Typography, Form, Card, Button, Image, Space } from "antd";
+import { ToolOutlined } from "@ant-design/icons";
 
 import Logo from "../components/Login/logo.png";
 import KakaoLogin from "../components/Login/kakao-login";
@@ -42,51 +33,17 @@ function Login(properties) {
           onFinish={() => history.push("/home")}
         >
           <Card className="login_card">
-            <Form.Item
-              name="username"
-              rules={[
-                { required: true, message: "Please input your Username!" },
-              ]}
-            >
-              <Input
-                prefix={<UserOutlined className="site-form-item-icon" />}
-                placeholder="Username"
-              />
-            </Form.Item>
-            <Form.Item
-              name="password"
-              rules={[
-                { required: true, message: "Please input your Password!" },
-              ]}
-            >
-              <Input
-                prefix={<LockOutlined className="site-form-item-icon" />}
-                type="password"
-                placeholder="Password"
-              />
-            </Form.Item>
-            <Form.Item>
-              <Form.Item name="remember" valuePropName="checked" noStyle>
-                <Checkbox>Remember me</Checkbox>
-              </Form.Item>
-
-              <Link className="login_form_forgot" to="">
-                Forgot password
-              </Link>
-            </Form.Item>
             <Form.Item>
               <Space direction="vertical" className="login_wrap">
+                <KakaoLogin />
                 <Button
                   type="primary"
                   htmlType="submit"
                   className="login_form_button"
+                  icon={<ToolOutlined className="login_symbol" />}
                 >
-                  Log in
+                  Development
                 </Button>
-                <KakaoLogin />
-                <div>
-                  Or <Link to="">register now!</Link>
-                </div>
               </Space>
             </Form.Item>
           </Card>
