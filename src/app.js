@@ -11,6 +11,8 @@ import Profile from "./pages/profile";
 import Preference from "./pages/preference";
 import Plans from "./pages/plans";
 
+import Error from "./pages/error";
+
 import "antd/dist/antd.css";
 
 function App() {
@@ -35,6 +37,10 @@ function App() {
         </Route>
         <Route path="/plans">
           <Plans />
+        </Route>
+
+        <Route path="/error/:status">
+          <Error />
         </Route>
 
         <Route exact path={["/", "/login"]}>

@@ -8,7 +8,7 @@ import RecognitionEditor from "./recognition-editor";
 function RecognitionStyle(properties) {
   return (
     <>
-      <Col span={8} className="recognition_col">
+      <Col span={8} className="recognition_col recognition_style">
         <RecognitionImage
           src={properties.src}
           requestID={properties.requestID}

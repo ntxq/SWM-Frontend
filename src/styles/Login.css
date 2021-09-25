@@ -28,8 +28,50 @@
   float: left;
 }
 
-.login_form_button {
+.login .login_form_button {
   width: 100%;
+  background-color: black;
+  border: none;
+}
+
+.login .login_form_button:hover {
+  background-color: black;
+}
+
+.login .login_form_kakao {
+  width: 100%;
+  background-color: #fee500;
+  color: rgba(0, 0, 0, 0.85);
+}
+
+.login .login_form_kakao:hover {
+  background-color: #fee500;
+}
+
+.login .login_form_kakao:active {
+  background-color: #fee500;
+}
+
+.login .login_form_kakao .ant-image {
+  height: 50%;
+  width: auto;
+
+  position: absolute;
+  left: 4.5%;
+  top: 25%;
+}
+
+.login .login_form_kakao .ant-image .kakao_symbol {
+  height: 100%;
+  width: auto;
+}
+
+.login .login_form .login_symbol {
+  height: 50%;
+
+  position: absolute;
+  left: 4.5%;
+  top: 25%;
 }
 
 .login_page .login_content .login_card .kakao_login_button {

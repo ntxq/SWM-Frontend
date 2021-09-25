@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { Card } from "antd";
 import { useSelector } from "react-redux";
+import html2canvas from "html2canvas";
 
 import EditorButtons from "./editor-buttons";
 import TextInput from "./text-input";
@@ -8,6 +9,29 @@ import StyleEditor from "./style-editor";
 
 function RecognitionEditor(properties) {
   const recognition = useSelector((state) => state.recognition);
+
+  const downloadText = useCallback(async () => {
+    for (const bbox of document.querySelectorAll(".recognition_style .bbox")) {
+      const canvas = await html2canvas(bbox, {
+        backgroundColor: "null",
+        onclone: (clonedCanvas) => {
+          for (const clonedBbox of clonedCanvas.querySelectorAll(".bbox")) {
+            clonedBbox.classList.add("bbox_download");
+          }
+        },
+        ignoreElements: (element) => {
+          return element.classList.contains("unselectable");
+        },
+        windowWidth: 16_384,
+        windowHeight: 16_384,
+      });
+
+      const a = document.createElement("a");
+      a.href = canvas.toDataURL("image/png");
+      a.download = "image.png";
+      a.click();
+    }
+  }, []);
 
   return (
     <Card
@@ -17,6 +41,7 @@ function RecognitionEditor(properties) {
           activeBox={recognition.activeBox}
           requestID={properties.requestID}
           cutIndex={properties.cutIndex}
+          submit={downloadText}
         />
       }
       className="editor_panel"
