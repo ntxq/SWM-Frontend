@@ -62,7 +62,7 @@ function useRecognitionResult(webtoonIndex, cutIndex) {
                   translatedHeight: bbox.originalHeight * heightRatio,
 
                   originalText: bbox.originalText,
-                  translatedText: bbox.originalText,
+                  translatedText: bbox.translatedText || bbox.originalText,
 
                   //Temporary for Korean
                   fontSize: Math.round(bbox.originalHeight * heightRatio * 0.8),
