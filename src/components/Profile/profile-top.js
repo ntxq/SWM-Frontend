@@ -12,7 +12,11 @@ function ProfileTop(properties) {
       <Link to="/preference">
         <Button icon={<EditOutlined />} className="profile_edit_button" />
       </Link>
-      <Avatar className="profile_avatar" size={100} icon={<UserOutlined />} />
+      <Avatar
+        className="profile_avatar"
+        size={100}
+        icon={profile.avatar || <UserOutlined />}
+      />
 
       <div className="profile_text">
         <Typography.Title level={3}>{profile.username}</Typography.Title>

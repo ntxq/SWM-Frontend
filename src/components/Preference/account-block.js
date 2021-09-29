@@ -21,12 +21,14 @@ function AccountBlock(properties) {
           <PreferenceBlock
             title="Username"
             defaultValue={profile.username}
+            onChange={properties.nameChange}
             description="Enter your name, so people you know can recognize you"
           />
 
           <PreferenceBlock
             title="Email"
             defaultValue={profile.email}
+            onChange={properties.emailChange}
             description="We use email for content verification and password reset"
           />
 

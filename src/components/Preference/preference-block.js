@@ -7,6 +7,7 @@ function PreferenceBlock(properties) {
       <Typography.Title level={5}>{properties.title}</Typography.Title>
       <Input
         defaultValue={properties.defaultValue}
+        onChange={(event) => properties.onChange(event.target.value)}
         className="preference_input"
       />
       <br />

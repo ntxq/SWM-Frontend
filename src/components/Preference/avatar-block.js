@@ -10,8 +10,11 @@ import {
   Upload,
 } from "antd";
 import { UploadOutlined, UserOutlined } from "@ant-design/icons";
+import useProfile from "../Common/use-profile";
 
 function AvatarBlock(properties) {
+  const profile = useProfile();
+
   return (
     <Row>
       <Col span={8} className="preference_description">
@@ -26,7 +29,7 @@ function AvatarBlock(properties) {
         <Avatar
           className="preference_avatar"
           size={150}
-          icon={<UserOutlined />}
+          icon={profile.avatar || <UserOutlined />}
         />
       </Col>
       <Col span={11} className="avatar_buttons">
