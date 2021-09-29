@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { getProfile } from "../../adapters/profile";
 import { updateProfile } from "../../contexts/profile-slice";
 
 function useProfile() {
@@ -8,31 +9,16 @@ function useProfile() {
 
   useEffect(() => {
     if (profile.username === "") {
-      let profileCookie;
-
-      if (document.cookie) {
-        profileCookie = document.cookie
-          .split("; ")
-          .find((row) => row.startsWith("profile="))
-          .split("=")[1];
-        profileCookie = decodeURIComponent(profileCookie);
-        profileCookie = JSON.parse(profileCookie);
-      }
-
-      if (!profileCookie || profileCookie.username === "") {
-        profileCookie = {
-          username: "myname",
-          email: "useremail@test.com",
-          createTime: new Date().toISOString(),
-        };
-      }
-
-      const dateOptions = { year: "numeric", month: "long", day: "numeric" };
-      profileCookie.createTime = new Date(
-        profileCookie.createTime
-      ).toLocaleDateString("en-US", dateOptions);
-
-      dispatch(updateProfile(profileCookie));
+      getProfile().then((newProfile) =>
+        dispatch(
+          updateProfile({
+            username: newProfile.username,
+            email: newProfile.email,
+            createTime: newProfile.create_time,
+            avatar: newProfile.pic_path,
+          })
+        )
+      );
     }
   }, [dispatch, profile]);
 
