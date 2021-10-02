@@ -1,10 +1,10 @@
 import React, { useLayoutEffect } from "react";
 import { Card, List, Input, Col, Divider, Tooltip } from "antd";
 import { useSelector, useDispatch } from "react-redux";
-import { selectBox, updateBbox } from "../../../contexts/recognition-slice";
+import { selectBox, updateBbox } from "../../../../contexts/recognition-slice";
 import { MdTranslate, MdGTranslate } from "react-icons/md";
 
-import EditorButtons from "./editor-buttons";
+import EditorButtons from "../editor-buttons";
 
 function RecognitionTable(properties) {
   const activeBox = useSelector((state) => state.recognition.activeBox);

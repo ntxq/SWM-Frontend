@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Col } from "antd";
 
-import RecognitionImage from "./recognition-image";
-import BboxLayer from "./bbox-layer";
+import RecognitionImage from "../recognition-image";
+import BboxLayer from "../bbox-layer";
 import RecognitionEditor from "./recognition-editor";
 
 function RecognitionStyle(properties) {

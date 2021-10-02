@@ -2,7 +2,7 @@ import React from "react";
 import { Card } from "antd";
 import { useSelector } from "react-redux";
 
-import EditorButtons from "./editor-buttons";
+import EditorButtons from "../editor-buttons";
 import TextInput from "./text-input";
 import StyleEditor from "./style-editor";
 import useImageCapture from "./use-image-capture";

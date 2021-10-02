@@ -8,8 +8,8 @@ import EditorProgress from "../editor-progress";
 
 import RecognitionImage from "./recognition-image";
 import BboxLayer from "./bbox-layer";
-import RecognitionStyle from "./recognition-style";
-import RecognitionTable from "./recognition-table";
+import RecognitionStyle from "./StyleLayer/recognition-style";
+import RecognitionTable from "./TableLayer/recognition-table";
 
 import useRecognitionResult from "./use-recognition-result";
 
