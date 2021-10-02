@@ -14,6 +14,7 @@ import RecognitionTable from "./recognition-table";
 import useRecognitionResult from "./use-recognition-result";
 
 function Recognition(properties) {
+  const dispatch = useDispatch();
   const [isModalVisible, setIsModalVisible] = useState(true);
   const [isTableVisible, setIsTableVisible] = useState(true);
   const bboxListLength = useSelector(
@@ -32,7 +33,6 @@ function Recognition(properties) {
     else if (bboxListLength === 0 && isModalVisible) getOCRResult();
   }, [getOCRResult, bboxListLength, isModalVisible]);
 
-  const dispatch = useDispatch();
   useEffect(() => {
     return () => {
       dispatch(selectBox());
