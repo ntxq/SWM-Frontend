@@ -70,12 +70,6 @@ function useCreateBbox(divReference, sketchReference, requestID, cutIndex) {
   const onMouseUp = useCallback(
     (event) => {
       if (sketchReference.current.style.visibility === "visible") {
-        console.log(
-          event.pageX,
-          divReference.current.getBoundingClientRect().left,
-          divReference.current.getBoundingClientRect().right
-        );
-
         const offsetX = Math.max(
           Math.min(
             event.pageX - divReference.current.getBoundingClientRect().left,

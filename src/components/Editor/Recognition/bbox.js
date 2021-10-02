@@ -36,7 +36,7 @@ function Bbox(properties) {
           })
         )
       }
-      onResizeStop={(event, direction, reference, delta, position) =>
+      onResizeStop={(event, direction, reference, delta, position) => {
         dispatch(
           updateBbox({
             requestID: properties.requestID,
@@ -44,16 +44,20 @@ function Bbox(properties) {
             index: properties.index,
             updatedBbox: properties.original
               ? {
-                  originalWidth: Number(reference.style.width.slice(0, -2)),
-                  originalHeight: Number(reference.style.height.slice(0, -2)),
+                  originalX: position.x,
+                  originalY: position.y,
+                  originalWidth: properties.dimension[2] + delta.width,
+                  originalHeight: properties.dimension[3] + delta.height,
                 }
               : {
-                  translatedWidth: Number(reference.style.width.slice(0, -2)),
-                  translatedHeight: Number(reference.style.height.slice(0, -2)),
+                  translatedX: position.x,
+                  translatedY: position.y,
+                  translatedWidth: properties.dimension[2] + delta.width,
+                  translatedHeight: properties.dimension[3] + delta.height,
                 },
           })
-        )
-      }
+        );
+      }}
       onClick={(event) => dispatch(selectBox(properties.index))}
       onMouseDown={(event) => event.stopPropagation()}
       bounds="parent"
