@@ -17,7 +17,7 @@ export async function createProject(imageSlice, title) {
   };
 
   const request_array = await backendInstance
-    .post("/upload/segmentation/project", data)
+    .post("/api/segmentation/project", data)
     .then((response) => response.data.request_array);
 
   const imageMap = {};
@@ -34,7 +34,7 @@ export async function createProject(imageSlice, title) {
       headers: { "Content-Type": originalFile.type },
     });
     await backendInstance
-      .post("/upload/segmentation/source", {
+      .post("/api/segmentation/source", {
         req_id,
       })
       .then((response) => response.data.cut_count)
@@ -53,7 +53,7 @@ export async function createProject(imageSlice, title) {
       await axios.put(s3_blank_url, blankFile, {
         headers: { "Content-Type": blankFile.type },
       });
-      await backendInstance.post("/upload/segmentation/blank", {
+      await backendInstance.post("/api/segmentation/blank", {
         req_id,
       });
     }
@@ -63,14 +63,12 @@ export async function createProject(imageSlice, title) {
 }
 
 export function getCutImageURL(request_id, cutIndex) {
-  return (
-    url + `/upload/segmentation/cut?req_id=${request_id}&cut_id=${cutIndex}`
-  );
+  return url + `/api/segmentation/cut?req_id=${request_id}&cut_id=${cutIndex}`;
 }
 
 export async function postSegmentationStart(request_id) {
   return await backendInstance
-    .post("/upload/segmentation/start", {
+    .post("/api/segmentation/start", {
       req_id: request_id,
     })
     .then((response) => response.data.success);
@@ -85,7 +83,7 @@ export async function getSegmentationResult(request_id, cutIndex) {
   };
 
   const result = await backendInstance
-    .get("/upload/segmentation/result", data)
+    .get("/api/segmentation/result", data)
     .then((response) => response.data.progress)
     .catch((error) => console.error(error));
 
@@ -95,7 +93,7 @@ export async function getSegmentationResult(request_id, cutIndex) {
 export function getSegmentationInpaintURL(request_id, cutID) {
   return (
     url +
-    `/upload/segmentation/result/inpaint?req_id=${request_id}&cut_id=${cutID}`
+    `/api/segmentation/result/inpaint?req_id=${request_id}&cut_id=${cutID}`
   );
 }
 
@@ -108,7 +106,7 @@ export async function getSegmentationMask(request_id, cutID) {
   };
 
   const result = await backendInstance
-    .get("/upload/segmentation/result/mask", data)
+    .get("/api/segmentation/result/mask", data)
     .then((response) => response.data.mask)
     .catch((error) => {});
 
@@ -125,7 +123,7 @@ export async function uploadMask(request_id, cutID, mask) {
   };
 
   const result = await backendInstance
-    .post("/upload/segmentation/mask", data)
+    .post("/api/segmentation/mask", data)
     .then((response) => response.data)
     .catch((error) => console.error(error));
 
@@ -141,7 +139,7 @@ export async function selectOCR(request_id, cutID) {
   };
 
   const result = await backendInstance
-    .get("/upload/OCR/select", data)
+    .get("/api/OCR/select", data)
     .then((response) => response.data.success)
     .catch((error) => console.error(error));
 
@@ -157,7 +155,7 @@ export async function getOCRResult(request_id, cutID) {
   };
 
   const result = await backendInstance
-    .get("/upload/OCR/result", data)
+    .get("/api/OCR/result", data)
     .then((response) => response.data.progress)
     .then((progress) => (progress === null ? 100 : progress))
     .catch((error) => console.error(error));
@@ -174,7 +172,7 @@ export async function getOCRResultBbox(request_id, cutID) {
   };
 
   const result = await backendInstance
-    .get("/upload/OCR/result/bbox", data)
+    .get("/api/OCR/result/bbox", data)
     .then((response) => response.data.bboxList)
     .catch((error) => console.error(error));
 

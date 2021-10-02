@@ -2,7 +2,7 @@ import { backendInstance } from "./backend";
 
 export async function getProfile() {
   const profile = await backendInstance
-    .get("/upload/profile")
+    .get("/api/profile")
     .then((response) => response.data);
 
   return profile;
@@ -15,7 +15,7 @@ export async function putProfile(newProfile) {
     },
   };
 
-  await backendInstance.put("/upload/profile", {}, data);
+  await backendInstance.put("/api/profile", {}, data);
 
   return getProfile();
 }
