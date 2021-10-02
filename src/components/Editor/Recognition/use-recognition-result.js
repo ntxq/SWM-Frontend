@@ -64,10 +64,11 @@ function useRecognitionResult(webtoonIndex, cutIndex) {
                   originalText: bbox.originalText,
                   translatedText: bbox.translatedText || bbox.originalText,
 
-                  //Temporary for Korean
-                  fontSize: Math.round(bbox.originalHeight * heightRatio * 0.8),
-                  fontWeight: "bold",
-                  fontFamily: "Nanum Gothic",
+                  fontColor: bbox.fontColor || "000000",
+                  fontSize: bbox.fontSize || 30,
+                  fontFamily: bbox.fontFamily || "Nanum Gothic",
+                  fontWeight: bbox.fontWeight || "bold",
+                  fontStyle: bbox.fontStyle || "normal",
                 },
               })
             )
