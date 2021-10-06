@@ -5,7 +5,7 @@ import {
   getSegmentationResult,
   getSegmentationMask,
   getSegmentationInpaintURL,
-} from "../../../adapters/backend";
+} from "../../../adapters/segmentation";
 import {
   updateCut,
   updateProgress,

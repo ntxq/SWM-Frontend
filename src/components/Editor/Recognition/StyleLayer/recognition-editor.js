@@ -9,7 +9,10 @@ import useImageCapture from "./use-image-capture";
 
 function RecognitionEditor(properties) {
   const recognition = useSelector((state) => state.recognition);
-  const downloadImage = useImageCapture();
+  const downloadImage = useImageCapture(
+    properties.requestID,
+    properties.cutIndex + 1
+  );
 
   return (
     <Card

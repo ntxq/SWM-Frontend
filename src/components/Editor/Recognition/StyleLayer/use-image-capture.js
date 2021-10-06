@@ -1,7 +1,8 @@
 import { useCallback } from "react";
 import html2canvas from "html2canvas";
+import { postImageResult } from "../../../../adapters/recognition";
 
-function useImageCapture() {
+function useImageCapture(requestID, cutID) {
   const downloadText = useCallback(async () => {
     const translateDiv = document.querySelector(".recognition_style");
     const translatedImage = document.querySelectorAll(".unselectable")[1];
@@ -26,12 +27,12 @@ function useImageCapture() {
           bbox.style.height =
             Number.parseInt(bbox.style.height) * heightRatio + "px";
 
-          const trnaslateX =
+          const translateX =
             bbox.computedStyleMap().get("transform")[0].x.value * widthRatio;
           const translateY =
             bbox.computedStyleMap().get("transform")[0].y.value * heightRatio;
 
-          bbox.style.transform = `translate(${trnaslateX}px, ${translateY}px)`;
+          bbox.style.transform = `translate(${translateX}px, ${translateY}px)`;
 
           bbox.children[0].style.fontSize =
             Number.parseInt(bbox.children[0].style.fontSize) * heightRatio +
@@ -40,11 +41,13 @@ function useImageCapture() {
       },
     });
 
-    const a = document.createElement("a");
-    a.href = canvas.toDataURL("image/png");
-    a.download = "image.png";
-    a.click();
-  }, []);
+    // const a = document.createElement("a");
+    // a.href = canvas.toDataURL("image/png");
+    // a.download = "image.png";
+    // a.click();
+
+    postImageResult(requestID, cutID, canvas.toDataURL("image/png"));
+  }, [requestID, cutID]);
 
   return downloadText;
 }

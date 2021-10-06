@@ -3,7 +3,7 @@ import {
   selectOCR,
   getOCRResult,
   getOCRResultBbox,
-} from "../../../adapters/backend";
+} from "../../../adapters/recognition";
 import { useDispatch, useSelector } from "react-redux";
 import {
   updateCut,
@@ -64,7 +64,7 @@ function useRecognitionResult(webtoonIndex, cutIndex) {
                   originalText: bbox.originalText,
                   translatedText: bbox.translatedText || bbox.originalText,
 
-                  fontColor: bbox.fontColor || "000000",
+                  fontColor: bbox.fontColor || "#000000",
                   fontSize: bbox.fontSize || 30,
                   fontFamily: bbox.fontFamily || "Nanum Gothic",
                   fontWeight: bbox.fontWeight || "bold",

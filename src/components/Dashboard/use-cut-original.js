@@ -5,7 +5,7 @@ import { initializeBbox } from "../../contexts/recognition-slice";
 import {
   getCutImageURL,
   getSegmentationInpaintURL,
-} from "../../adapters/backend";
+} from "../../adapters/segmentation";
 
 function useCutOriginal(webtoonIndex) {
   const webtoon = useSelector((state) => state.webtoons.images?.[webtoonIndex]);
