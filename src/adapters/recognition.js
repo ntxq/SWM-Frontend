@@ -1,10 +1,10 @@
 import { backendInstance } from "./backend";
 
-export async function selectOCR(request_id, cutID) {
+export async function selectOCR(request_id, cut_id) {
   const data = {
     params: {
       req_id: request_id,
-      cut_id: cutID,
+      cut_id: cut_id,
     },
   };
 
@@ -16,11 +16,11 @@ export async function selectOCR(request_id, cutID) {
   return result;
 }
 
-export async function getOCRResult(request_id, cutID) {
+export async function getOCRResult(request_id, cut_id) {
   const data = {
     params: {
       req_id: request_id,
-      cut_id: cutID,
+      cut_id: cut_id,
     },
   };
 
@@ -33,11 +33,11 @@ export async function getOCRResult(request_id, cutID) {
   return result;
 }
 
-export async function getOCRResultBbox(request_id, cutID) {
+export async function getOCRResultBbox(request_id, cut_id) {
   const data = {
     params: {
       req_id: request_id,
-      cut_id: cutID,
+      cut_id: cut_id,
     },
   };
 
@@ -49,10 +49,44 @@ export async function getOCRResultBbox(request_id, cutID) {
   return result;
 }
 
-export async function postImageResult(request_id, cutID, image) {
+export async function postOCRTranslate(request_id, cut_id, translate_id) {
   const data = {
     req_id: request_id,
-    cut_id: cutID,
+    cut_id: cut_id,
+    translate_id: translate_id,
+  };
+
+  const result = await backendInstance
+    .post("/api/OCR/translate", data)
+    .then((response) => response.data.translated);
+
+  return result;
+}
+
+export async function postOCRText(
+  request_id,
+  cut_id,
+  bboxList,
+  translatedBoxList
+) {
+  const data = {
+    req_id: request_id,
+    cut_id: cut_id,
+    bboxList: bboxList,
+    translatedBoxList: translatedBoxList,
+  };
+
+  const result = await backendInstance
+    .post("/api/OCR/text", data)
+    .then((response) => response.data.success);
+
+  return result;
+}
+
+export async function postImageResult(request_id, cut_id, image) {
+  const data = {
+    req_id: request_id,
+    cut_id: cut_id,
     final_image: image,
   };
 

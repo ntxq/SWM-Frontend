@@ -180,14 +180,14 @@ export const recognitionSlice = createSlice({
 });
 
 export const {
-  initializeBbox,
+  initializeBoxList,
   createBbox,
   createTranslateBox,
-  deleteBox,
+  deleteBbox,
   deleteTranslateBox,
   updateBbox,
   updateTranslateBox,
-  selectBox,
+  selectBbox,
   selectTranslateBox,
   setImageProperty,
 } = recognitionSlice.actions;
