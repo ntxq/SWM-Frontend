@@ -2,7 +2,11 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   bboxList: {},
-  activeBox: undefined,
+  activeBbox: undefined,
+
+  translateBoxList: {},
+  activeTranslateBox: undefined,
+
   imgProperty: {
     requestID: "",
     cutIndex: "",
@@ -15,24 +19,31 @@ const initialState = {
 };
 
 const defaultBbox = {
-  bbox_id: "",
+  bbox_id: -1,
 
-  originalX: 0,
-  originalY: 0,
-  originalWidth: 0,
-  originalHeight: 0,
+  x: 0,
+  y: 0,
+  width: 0,
+  height: 0,
 
-  translatedX: 0,
-  translatedY: 0,
-  translatedWidth: 0,
-  translatedHeight: 0,
+  text: "",
+  translateBoxID: -1,
+  translateBoxIndex: 0,
+};
 
-  originalText: "",
-  translatedText: "TRANSLATED",
+const defaultTranslateBox = {
+  translate_id: -1,
+
+  x: 0,
+  y: 0,
+  width: 0,
+  height: 0,
+
+  text: "",
   fontColor: "#000000",
-  fontSize: 15,
-  fontFamily: "Open Sans",
-  fontWeight: "normal",
+  fontSize: 30,
+  fontFamily: "Nanum Gothic",
+  fontWeight: "bold",
   fontStyle: "normal",
 };
 
@@ -40,79 +51,127 @@ export const recognitionSlice = createSlice({
   name: "recognition",
   initialState,
   reducers: {
-    initializeBbox: (state, action) => {
-      if (!Array.isArray(state.bboxList[action.payload.requestID]))
-        state.bboxList[action.payload.requestID] = Array.from({
-          length: action.payload.cutCount,
-        }).fill([]);
+    initializeBoxList: (state, action) => {
+      const { requestID, cutCount } = action.payload;
+
+      if (!Array.isArray(state.bboxList[requestID]))
+        state.bboxList[requestID] = Array.from({
+          length: cutCount,
+        });
+
+      if (!Array.isArray(state.translateBoxList[requestID]))
+        state.translateBoxList[requestID] = Array.from({
+          length: cutCount,
+        });
     },
 
     createBbox: (state, action) => {
-      state.bboxList[action.payload.requestID][action.payload.cutIndex] = [
-        ...state.bboxList[action.payload.requestID][action.payload.cutIndex],
+      const { requestID, cutIndex, bbox } = action.payload;
+
+      state.bboxList[requestID][cutIndex] = [
+        ...state.bboxList[requestID][cutIndex],
         {
           ...defaultBbox,
-          ...action.payload.bbox,
+          ...bbox,
+
+          bbox_id: state.bboxList[requestID][cutIndex].length,
         },
       ];
     },
 
-    deleteBox: (state, action) => {
-      if (action.payload.target === undefined) {
-        state.bboxList[action.payload.requestID][action.payload.cutIndex] = [];
-        state.activeBox = undefined;
+    createTranslateBox: (state, action) => {
+      const { requestID, cutIndex, translateBox } = action.payload;
+
+      state.translateBoxList[requestID][cutIndex] = [
+        ...state.translateBoxList[requestID][cutIndex],
+        {
+          ...defaultTranslateBox,
+          ...translateBox,
+
+          translate_id: state.translateBoxList[requestID][cutIndex].length,
+        },
+      ];
+    },
+
+    deleteBbox: (state, action) => {
+      const { target, requestID, cutIndex } = action.payload;
+
+      if (target === undefined) {
+        state.bboxList[requestID][cutIndex] = [];
+        state.activeBbox = undefined;
       } else {
-        state.bboxList[action.payload.requestID][action.payload.cutIndex] =
-          state.bboxList[action.payload.requestID][
-            action.payload.cutIndex
-          ].filter((_, index) => index !== action.payload.target);
-        state.activeBox = undefined;
+        state.bboxList[requestID][cutIndex] = state.bboxList[requestID][
+          cutIndex
+        ].filter((_, index) => index !== target);
+        state.activeBbox = undefined;
+      }
+    },
+
+    deleteTranslateBox: (state, action) => {
+      const { target, requestID, cutIndex } = action.payload;
+
+      if (target === undefined) {
+        state.translateBoxList[requestID][cutIndex] = [];
+        state.activeTranslateBox = undefined;
+      } else {
+        state.translateBoxList[requestID][cutIndex] = state.translateBoxList[
+          requestID
+        ][cutIndex].filter((_, index) => index !== target);
+        state.activeTranslateBox = undefined;
       }
     },
 
     updateBbox: (state, action) => {
-      state.bboxList[action.payload.requestID][action.payload.cutIndex][
-        action.payload.index
-      ] = {
-        ...state.bboxList[action.payload.requestID][action.payload.cutIndex][
-          action.payload.index
-        ],
-        ...action.payload.updatedBbox,
+      const { requestID, cutIndex, index, updatedBbox } = action.payload;
+
+      state.bboxList[requestID][cutIndex][index] = {
+        ...state.boxList[requestID][cutIndex][index],
+        ...updatedBbox,
       };
     },
 
-    selectBox: (state, action) => {
+    updateTranslateBox: (state, action) => {
+      const { requestID, cutIndex, index, updatedTranslateBox } =
+        action.payload;
+
+      state.translateBoxList[requestID][cutIndex][index] = {
+        ...state.translateBoxList[requestID][cutIndex][index],
+        ...updatedTranslateBox,
+      };
+    },
+
+    selectBbox: (state, action) => {
       state.activeBox = action.payload;
     },
 
+    selectTranslateBox: (state, action) => {
+      state.activeTranslateBox = action.payload;
+    },
+
     setImageProperty: (state, action) => {
-      const widthRatio =
-        action.payload.clientWidth / state.imgProperty.clientWidth;
-      const heightRatio =
-        action.payload.clientHeight / state.imgProperty.clientHeight;
+      const { requestID, cutIndex, clientHeight, clientWidth } = action.payload;
+
+      const widthRatio = clientWidth / state.imgProperty.clientWidth;
+      const heightRatio = clientHeight / state.imgProperty.clientHeight;
+
+      const adjustBoxList = (boxList) => {
+        boxList.map((box) => ({
+          ...box,
+
+          x: box.x * widthRatio,
+          y: box.y * heightRatio,
+          width: box.width * widthRatio,
+          height: box.height * heightRatio,
+          fontSize: box.fontSize * widthRatio,
+        }));
+      };
 
       if (
-        state.imgProperty.requestID === action.payload.requestID &&
-        state.imgProperty.cutIndex === action.payload.cutIndex
+        state.imgProperty.requestID === requestID &&
+        state.imgProperty.cutIndex === cutIndex
       ) {
-        state.bboxList[action.payload.requestID][action.payload.cutIndex] =
-          state.bboxList[action.payload.requestID][action.payload.cutIndex].map(
-            (Bbox) => ({
-              ...Bbox,
-
-              originalX: Math.round(Bbox.originalX * widthRatio),
-              originalY: Math.round(Bbox.originalY * heightRatio),
-              originalWidth: Math.round(Bbox.originalWidth * widthRatio),
-              originalHeight: Math.round(Bbox.originalHeight * heightRatio),
-
-              translatedX: Math.round(Bbox.translatedX * widthRatio),
-              translatedY: Math.round(Bbox.translatedY * heightRatio),
-              translatedWidth: Math.round(Bbox.translatedWidth * widthRatio),
-              translatedHeight: Math.round(Bbox.translatedHeight * heightRatio),
-
-              fontSize: Math.round(Bbox.fontSize * widthRatio),
-            })
-          );
+        adjustBoxList(state.bboxList[requestID][cutIndex]);
+        adjustBoxList(state.translateBoxList[requestID][cutIndex]);
       }
 
       state.imgProperty = action.payload;
@@ -123,9 +182,13 @@ export const recognitionSlice = createSlice({
 export const {
   initializeBbox,
   createBbox,
+  createTranslateBox,
   deleteBox,
+  deleteTranslateBox,
   updateBbox,
+  updateTranslateBox,
   selectBox,
+  selectTranslateBox,
   setImageProperty,
 } = recognitionSlice.actions;
 
