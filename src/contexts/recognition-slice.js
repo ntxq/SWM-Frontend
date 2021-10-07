@@ -4,7 +4,8 @@ const initialState = {
   bboxList: {},
   activeBox: undefined,
   imgProperty: {
-    id: "",
+    requestID: "",
+    cutIndex: "",
 
     clientHeight: undefined,
     clientWidth: undefined,
@@ -39,38 +40,43 @@ export const recognitionSlice = createSlice({
   name: "recognition",
   initialState,
   reducers: {
+    initializeBbox: (state, action) => {
+      if (!Array.isArray(state.bboxList[action.payload.requestID]))
+        state.bboxList[action.payload.requestID] = Array.from({
+          length: action.payload.cutCount,
+        }).fill([]);
+    },
+
     createBbox: (state, action) => {
-      state.bboxList[action.payload.id] = state.bboxList[action.payload.id]
-        ? [
-            ...state.bboxList[action.payload.id],
-            {
-              ...defaultBbox,
-              ...action.payload.bbox,
-            },
-          ]
-        : [
-            {
-              ...defaultBbox,
-              ...action.payload.bbox,
-            },
-          ];
+      state.bboxList[action.payload.requestID][action.payload.cutIndex] = [
+        ...state.bboxList[action.payload.requestID][action.payload.cutIndex],
+        {
+          ...defaultBbox,
+          ...action.payload.bbox,
+        },
+      ];
     },
 
     deleteBox: (state, action) => {
       if (action.payload.target === undefined) {
-        state.bboxList[action.payload.id] = [];
+        state.bboxList[action.payload.requestID][action.payload.cutIndex] = [];
         state.activeBox = undefined;
       } else {
-        state.bboxList[action.payload.id] = state.bboxList[
-          action.payload.id
-        ].filter((value, index) => index !== action.payload.target);
+        state.bboxList[action.payload.requestID][action.payload.cutIndex] =
+          state.bboxList[action.payload.requestID][
+            action.payload.cutIndex
+          ].filter((_, index) => index !== action.payload.target);
         state.activeBox = undefined;
       }
     },
 
     updateBbox: (state, action) => {
-      state.bboxList[action.payload.id][action.payload.index] = {
-        ...state.bboxList[action.payload.id][action.payload.index],
+      state.bboxList[action.payload.requestID][action.payload.cutIndex][
+        action.payload.index
+      ] = {
+        ...state.bboxList[action.payload.requestID][action.payload.cutIndex][
+          action.payload.index
+        ],
         ...action.payload.updatedBbox,
       };
     },
@@ -85,24 +91,28 @@ export const recognitionSlice = createSlice({
       const heightRatio =
         action.payload.clientHeight / state.imgProperty.clientHeight;
 
-      if (state.bboxList[action.payload.id]) {
-        state.bboxList[action.payload.id] = state.bboxList[
-          action.payload.id
-        ].map((Bbox) => ({
-          ...Bbox,
+      if (
+        state.imgProperty.requestID === action.payload.requestID &&
+        state.imgProperty.cutIndex === action.payload.cutIndex
+      ) {
+        state.bboxList[action.payload.requestID][action.payload.cutIndex] =
+          state.bboxList[action.payload.requestID][action.payload.cutIndex].map(
+            (Bbox) => ({
+              ...Bbox,
 
-          originalX: Math.round(Bbox.originalX * widthRatio),
-          originalY: Math.round(Bbox.originalY * heightRatio),
-          originalWidth: Math.round(Bbox.originalWidth * widthRatio),
-          originalHeight: Math.round(Bbox.originalHeight * heightRatio),
+              originalX: Math.round(Bbox.originalX * widthRatio),
+              originalY: Math.round(Bbox.originalY * heightRatio),
+              originalWidth: Math.round(Bbox.originalWidth * widthRatio),
+              originalHeight: Math.round(Bbox.originalHeight * heightRatio),
 
-          translatedX: Math.round(Bbox.translatedX * widthRatio),
-          translatedY: Math.round(Bbox.translatedY * heightRatio),
-          translatedWidth: Math.round(Bbox.translatedWidth * widthRatio),
-          translatedHeight: Math.round(Bbox.translatedHeight * heightRatio),
+              translatedX: Math.round(Bbox.translatedX * widthRatio),
+              translatedY: Math.round(Bbox.translatedY * heightRatio),
+              translatedWidth: Math.round(Bbox.translatedWidth * widthRatio),
+              translatedHeight: Math.round(Bbox.translatedHeight * heightRatio),
 
-          fontSize: Math.round(Bbox.fontSize * widthRatio),
-        }));
+              fontSize: Math.round(Bbox.fontSize * widthRatio),
+            })
+          );
       }
 
       state.imgProperty = action.payload;
@@ -111,6 +121,7 @@ export const recognitionSlice = createSlice({
 });
 
 export const {
+  initializeBbox,
   createBbox,
   deleteBox,
   updateBbox,

@@ -14,6 +14,7 @@
 
 .bbox {
   border: 3px solid;
+  overflow: hidden;
 }
 
 .bbox_text {
@@ -21,9 +22,11 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  white-space: pre;
+  white-space: normal;
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
+
+  width: 100%;
 }
 
 .editor_panel {
@@ -35,8 +38,10 @@
   height: auto;
 }
 
-.editor_header {
+/* Bad style... */
+#root .editor_page .header {
   z-index: 1;
+  padding: 0 50px;
 }
 
 .preview_sider {
@@ -83,10 +88,56 @@
   top: 5vh;
 }
 
-.loading_tip {
-  color: #1890ff !important;
-}
-
 .recognition_col {
   padding-left: 0 !important;
+}
+
+span.ant-tree-node-content-wrapper.ant-tree-node-content-wrapper-normal.ant-tree-node-selected.draggable {
+  background-color: transparent;
+}
+
+span.ant-tree-node-content-wrapper.ant-tree-node-content-wrapper-normal.draggable:hover {
+  background-color: transparent;
+}
+
+.ant-progress-inner {
+  width: 15vw !important;
+  height: auto !important;
+}
+
+.ant-progress-inner .ant-progress-text {
+  color: white !important;
+}
+
+.progress_cancel {
+  left: 50%;
+  transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+}
+
+.table_item {
+  padding: 10px !important;
+}
+
+.bbox_sketch {
+  position: absolute;
+  top: 0;
+
+  color: #ffa940;
+  border: 3px solid;
+  visibility: hidden;
+
+  transform-origin: left;
+}
+
+.bbox_download {
+  border: none;
+}
+
+.table_divider {
+  margin: 10px 0 !important;
+}
+
+.table_panel {
+  overflow-y: scroll;
 }

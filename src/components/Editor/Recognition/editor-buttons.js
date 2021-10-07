@@ -5,11 +5,8 @@ import { DeleteOutlined } from "@ant-design/icons";
 import { useDispatch } from "react-redux";
 import { deleteBox } from "../../../contexts/recognition-slice";
 
-import useUploadEdit from "./use-upload-edit";
-
 function EditorButtons(properties) {
   const dispatch = useDispatch();
-  const uploadEdit = useUploadEdit(properties.index);
 
   return (
     <Space>
@@ -20,7 +17,8 @@ function EditorButtons(properties) {
           onClick={() =>
             dispatch(
               deleteBox({
-                id: properties.index,
+                requestID: properties.requestID,
+                cutIndex: properties.cutIndex,
                 target: properties.activeBox,
               })
             )
@@ -32,10 +30,17 @@ function EditorButtons(properties) {
           type="primary"
           icon={<DeleteOutlined />}
           danger
-          onClick={() => dispatch(deleteBox({ id: properties.index }))}
+          onClick={() =>
+            dispatch(
+              deleteBox({
+                requestID: properties.requestID,
+                cutIndex: properties.cutIndex,
+              })
+            )
+          }
         />
       </Tooltip>
-      <Button type="primary" onClick={uploadEdit}>
+      <Button type="primary" onClick={properties.submit}>
         Submit All
       </Button>
     </Space>

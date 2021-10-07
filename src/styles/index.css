@@ -1,3 +1,58 @@
 body {
-  background: #f0f0f0 !important;
+  background: #f0f2f5;
+}
+
+.content {
+  width: 1080px;
+  margin-left: calc(50% - 540px);
+}
+
+.ant-layout .header {
+  padding: 0 calc(50% - 540px);
+}
+
+.header .menu_login {
+  margin-left: auto;
+  padding: 0 10px !important;
+  cursor: default;
+}
+
+.header .ant-menu .menu_login:hover {
+  background-color: unset;
+}
+
+.header .menu_login .menu_login_button {
+  color: #fff;
+  background-color: #595959;
+  border: none;
+}
+
+.header .menu_avatar {
+  margin-left: auto;
+  padding: 0 10px !important;
+}
+
+.header .menu_avatar .user_avatar {
+  vertical-align: middle;
+}
+
+.header .menu_avatar .anticon-arrow-down {
+  vertical-align: middle;
+  margin-right: 0;
+}
+
+.ant-menu-submenu .ant-menu .ant-menu-item .ant-typography {
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.ant-menu-submenu .ant-menu .ant-menu-item .ant-typography {
+  color: rgba(255, 255, 255, 0.65);
+}
+
+li span .ant-typography {
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.footer {
+  text-align: center;
 }

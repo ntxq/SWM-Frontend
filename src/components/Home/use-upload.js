@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { mapIds } from "../../contexts/webtoon-drop-slice";
-import { uploadOriginals, uploadBlank } from "../../adapters/backend";
+import { createProject } from "../../adapters/backend";
 
 function useUpload() {
   const webtoons = useSelector((state) => state.webtoons);
@@ -9,12 +9,8 @@ function useUpload() {
   const history = useHistory();
 
   return function () {
-    uploadOriginals(webtoons.images, webtoons.form.title)
-      .then((request_ids) => {
-        dispatch(mapIds(request_ids));
-        return request_ids;
-      })
-      .then((request_ids) => uploadBlank(webtoons.images, request_ids))
+    createProject(webtoons.images, webtoons.form.title)
+      .then((imageMap) => dispatch(mapIds(imageMap)))
       .then(() => history.push("/dashboard"));
   };
 }

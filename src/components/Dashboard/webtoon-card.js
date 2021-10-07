@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Typography } from "antd";
+import { Card, Skeleton, Typography } from "antd";
 import { useHistory } from "react-router";
 
 import CropWebtoon from "./crop-webtoon";
@@ -10,10 +10,19 @@ function WebtoonCard(properties) {
   return (
     <Card
       hoverable
-      cover={<CropWebtoon url={properties.url} />}
+      cover={
+        properties.url ? (
+          <CropWebtoon url={properties.url} />
+        ) : (
+          <Skeleton.Image />
+        )
+      }
       onClick={() => {
-        if (properties.id)
-          history.push(`/editor/${properties.index}/segmentation`);
+        if (properties.webtoonIndex !== undefined && properties.url)
+          history.push(
+            `/editor/${properties.webtoonIndex}/${properties.index}/segmentation`
+          );
+        else if (properties.url) history.push(`/dashboard/${properties.index}`);
       }}
       className="preview_card"
     >

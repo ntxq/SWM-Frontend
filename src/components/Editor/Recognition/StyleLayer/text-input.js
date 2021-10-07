@@ -2,7 +2,7 @@ import React from "react";
 import { Typography, Input, Divider } from "antd";
 
 import { useDispatch } from "react-redux";
-import { updateBbox } from "../../../contexts/recognition-slice";
+import { updateBbox } from "../../../../contexts/recognition-slice";
 
 function TextInput(properties) {
   const dispatch = useDispatch();
@@ -16,7 +16,8 @@ function TextInput(properties) {
           properties.activeBox !== undefined &&
           dispatch(
             updateBbox({
-              id: properties.index,
+              requestID: properties.requestID,
+              cutIndex: properties.cutIndex,
               index: properties.activeBox,
               updatedBbox: properties.original
                 ? {

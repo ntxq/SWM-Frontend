@@ -1,0 +1,41 @@
+.preference .content .ant-card {
+  margin-top: 3vh;
+}
+
+.preference .content .preference_save button:first-child {
+  margin-right: 10px;
+}
+
+.preference .content .ant-card .preference_avatar {
+  margin-left: calc(50% - 75px);
+}
+
+.preference .content .ant-card .ant-space-item {
+  padding-right: 25px;
+}
+
+.preference .content .ant-card .ant-space {
+  width: 100%;
+}
+
+.preference .content .ant-card .preference_description span {
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.preference .content .ant-card .avatar_buttons {
+  padding-left: 25px;
+}
+
+.preference .content .ant-card .avatar_buttons .avatar_divider {
+  margin: 12px;
+}
+
+.preference .content .ant-card .preference_block {
+    margin-bottom: 15px;
+}
+
+.preference .content .ant-card .preference_block .preference_input {
+    max-width: 300px;
+    margin-right: auto;
+}

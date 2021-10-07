@@ -10,11 +10,25 @@ const initialState = {
 };
 
 const defaultImage = {
+  id: "",
+  filename: "",
   original: "",
   inpaint: "",
-  mask: [],
-  filename: "",
+
+  cut: [],
+  cutCount: 0,
+};
+
+const defaultCut = {
   id: "",
+  filename: "",
+  original: "",
+  inpaint: "",
+
+  mask: [],
+  progress: 0,
+
+  cutID: "",
 };
 
 export const webtoonDropSlice = createSlice({
@@ -36,6 +50,18 @@ export const webtoonDropSlice = createSlice({
         ...action.payload.webtoon,
       };
     },
+    updateCut: (state, action) => {
+      state.images[action.payload.index].cut[action.payload.cutIndex] = {
+        ...state.images[action.payload.index].cut[action.payload.cutIndex],
+        ...action.payload.webtoon,
+      };
+    },
+    updateProgress: (state, action) => {
+      if (action.payload.progress)
+        state.images[action.payload.index].cut[
+          action.payload.cutIndex
+        ].progress = action.payload.progress;
+    },
     singleDelete: (state, action) => {
       state.images = state.images.filter(
         (item, index) => index !== action.payload
@@ -54,16 +80,36 @@ export const webtoonDropSlice = createSlice({
     },
     mapIds: (state, action) => {
       state.images = state.images.map((image) => {
-        if (action.payload && action.payload.hasOwnProperty(image.filename))
-          image.id = action.payload[image.filename];
+        if (action.payload && action.payload.hasOwnProperty(image.filename)) {
+          image.id = action.payload[image.filename].req_id;
+          image.cutCount = action.payload[image.filename].cut_count;
 
+          image.cut = Array.from(
+            {
+              length: image.cutCount,
+            },
+            (_, index) => ({
+              ...defaultCut,
+              id: image.id,
+              cutID: index + 1,
+              filename: image.filename + ` (Cut ${index + 1})`,
+            })
+          );
+        }
         return image;
       });
     },
   },
 });
 
-export const { uploadWebtoon, updateWebtoon, singleDelete, setForm, mapIds } =
-  webtoonDropSlice.actions;
+export const {
+  uploadWebtoon,
+  updateWebtoon,
+  updateCut,
+  updateProgress,
+  singleDelete,
+  setForm,
+  mapIds,
+} = webtoonDropSlice.actions;
 
 export default webtoonDropSlice.reducer;

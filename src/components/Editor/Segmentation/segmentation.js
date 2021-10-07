@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { Button } from "antd";
 
@@ -8,7 +8,7 @@ import LabelStudio from "label-studio";
 import "label-studio/build/static/css/main.css";
 
 import { useDispatch } from "react-redux";
-import { updateWebtoon } from "../../../contexts/webtoon-drop-slice";
+import { updateCut } from "../../../contexts/webtoon-drop-slice";
 
 import useSegmentationResult from "./use-segmentation-result";
 import useMaskUpload from "./use-mask-upload";
@@ -24,9 +24,14 @@ function Segmentation(properties) {
   const [isModalVisible, setIsModalVisible] = useState(true);
 
   const [getSegmentationResult, setCancelResult] = useSegmentationResult(
-    properties.index
+    properties.webtoonIndex,
+    properties.cutIndex
   );
-  const [postMaskChange, setCancelUpload] = useMaskUpload(properties.index);
+
+  const [postMaskChange, setCancelChange] = useMaskUpload(
+    properties.webtoonIndex,
+    properties.cutIndex
+  );
 
   useEffect(() => {
     if (properties.webtoon.inpaint) {
@@ -34,6 +39,14 @@ function Segmentation(properties) {
       setTimeout(() => window.dispatchEvent(new Event("resize")), 1000);
     } else getSegmentationResult();
   }, [getSegmentationResult, properties.webtoon.inpaint]);
+
+  useLayoutEffect(() => {
+    const dispatchResize = () =>
+      setTimeout(() => window.dispatchEvent(new Event("resize")), 1000);
+
+    window.addEventListener("focus", dispatchResize);
+    return () => window.removeEventListener("focus", dispatchResize);
+  }, []);
 
   useEffect(() => {
     if (rootReference.current) {
@@ -45,18 +58,14 @@ function Segmentation(properties) {
               <Label value="Text" background="red" />
               <Label value="AI" background="blue" />
             </BrushLabels>
-            <Image name="img" value="${
-              properties.webtoon.original
-            }" zoomControl="true" />
+            <Image name="img" value="$original" zoomControl="true" />
           </View>
 
           <View style="flex: 50%; margin-left: 1em">
             <BrushLabels name="tag2" toName="inpaint">
               <Label value="Inpaint" background="green" />
             </BrushLabels>
-            <Image name="inpaint" value="${
-              properties.webtoon.inpaint || properties.webtoon.original
-            }" zoomControl="true" />
+            <Image name="inpaint" value="$inpaint" zoomControl="true" />
           </View>
         </View>
               `,
@@ -69,6 +78,10 @@ function Segmentation(properties) {
             },
           ],
           predictions: [],
+          data: {
+            original: properties.webtoon.original,
+            inpaint: properties.webtoon.inpaint || properties.webtoon.original,
+          },
         },
         onLabelStudioLoad: function (ls) {
           const c = ls.annotationStore.addAnnotation({
@@ -78,9 +91,11 @@ function Segmentation(properties) {
         },
         onSubmitAnnotation: function (ls, annotation) {
           setIsModalVisible(true);
+
           dispatch(
-            updateWebtoon({
-              index: properties.index,
+            updateCut({
+              index: properties.webtoonIndex,
+              cutIndex: properties.cutIndex,
               webtoon: {
                 mask: annotation.serializeAnnotation(),
               },
@@ -90,9 +105,11 @@ function Segmentation(properties) {
         },
         onUpdateAnnotation: function (ls, annotation) {
           setIsModalVisible(true);
+
           dispatch(
-            updateWebtoon({
-              index: properties.index,
+            updateCut({
+              index: properties.webtoonIndex,
+              cutIndex: properties.cutIndex,
               webtoon: {
                 mask: annotation.serializeAnnotation(),
               },
@@ -102,20 +119,28 @@ function Segmentation(properties) {
         },
       });
     }
-  }, [properties.webtoon, properties.index, postMaskChange, dispatch]);
+  }, [
+    properties.webtoon.original,
+    properties.webtoon.inpaint,
+    properties.webtoon.mask,
+    properties.webtoonIndex,
+    properties.cutIndex,
+    postMaskChange,
+    dispatch,
+  ]);
 
   return (
     <>
       <ModalLoading
-        loading={isModalVisible}
+        visible={isModalVisible}
         cancel={() => {
           properties.webtoon.inpaint
-            ? setCancelUpload(true)
+            ? setCancelChange(true)
             : setCancelResult(true);
 
           setIsModalVisible(false);
         }}
-        tip="Loading Segmentation..."
+        progress={properties.webtoon.progress}
       />
 
       <EditorProgress current={0} />
@@ -123,7 +148,9 @@ function Segmentation(properties) {
       <Button
         type="primary"
         onClick={() => {
-          history.push(`/editor/${properties.index}/recognition`);
+          history.push(
+            `/editor/${properties.webtoonIndex}/${properties.cutIndex}/recognition`
+          );
           window.scrollTo(0, 0);
         }}
       >

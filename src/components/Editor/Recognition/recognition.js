@@ -1,39 +1,53 @@
 import React, { useEffect, useState } from "react";
 import { Col, Row } from "antd";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { selectBox } from "../../../contexts/recognition-slice";
 
 import ModalLoading from "../../Common/modal-loading";
-import RecognitionImage from "./recognition-image";
-import BboxLayer from "./bbox-layer";
-import RecognitionEditor from "./recognition-editor";
-
-import useRecognitionResult from "./use-recognition-result";
 import EditorProgress from "../editor-progress";
 
+import RecognitionImage from "./recognition-image";
+import BboxLayer from "./bbox-layer";
+import RecognitionStyle from "./StyleLayer/recognition-style";
+import RecognitionTable from "./TableLayer/recognition-table";
+
+import useRecognitionResult from "./use-recognition-result";
+
 function Recognition(properties) {
+  const dispatch = useDispatch();
   const [isModalVisible, setIsModalVisible] = useState(true);
-  const bboxList = useSelector(
-    (state) => state.recognition.bboxList[properties.webtoon.id]
+  const [isTableVisible, setIsTableVisible] = useState(true);
+  const bboxListLength = useSelector(
+    (state) =>
+      state.recognition.bboxList[properties.webtoon.id][properties.cutIndex]
+        .length
   );
 
   const [getOCRResult, cancelResult] = useRecognitionResult(
-    properties.webtoon.id
+    properties.webtoonIndex,
+    properties.cutIndex
   );
 
   useEffect(() => {
-    if (Array.isArray(bboxList)) setIsModalVisible(false);
-    else getOCRResult();
-  }, [getOCRResult, bboxList]);
+    if (bboxListLength > 0 && isModalVisible) setIsModalVisible(false);
+    else if (bboxListLength === 0 && isModalVisible) getOCRResult();
+  }, [getOCRResult, bboxListLength, isModalVisible]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(selectBox());
+    };
+  }, [dispatch]);
 
   return (
     <>
       <ModalLoading
-        loading={isModalVisible}
+        visible={isModalVisible}
         cancel={() => {
           cancelResult(true);
           setIsModalVisible(false);
         }}
-        tip="Loading Recognition..."
+        progress={properties.webtoon.progress}
       />
 
       <EditorProgress current={1} />
@@ -41,20 +55,28 @@ function Recognition(properties) {
         <Col span={8} className="recognition_col">
           <RecognitionImage
             src={properties.webtoon.original}
-            index={properties.webtoon.id}
+            requestID={properties.webtoon.id}
+            cutIndex={properties.cutIndex}
           />
-          <BboxLayer original={true} index={properties.webtoon.id} />
+          <BboxLayer
+            original={true}
+            requestID={properties.webtoon.id}
+            cutIndex={properties.cutIndex}
+          />
         </Col>
-        <Col span={8} className="recognition_col">
-          <RecognitionImage
+        {isTableVisible ? (
+          <RecognitionTable
+            requestID={properties.webtoon.id}
+            cutIndex={properties.cutIndex}
+            submit={() => setIsTableVisible(false)}
+          />
+        ) : (
+          <RecognitionStyle
             src={properties.webtoon.inpaint}
-            index={properties.webtoon.id}
+            requestID={properties.webtoon.id}
+            cutIndex={properties.cutIndex}
           />
-          <BboxLayer original={false} index={properties.webtoon.id} />
-        </Col>
-        <Col span={8} className="editor_col">
-          <RecognitionEditor index={properties.webtoon.id} />
-        </Col>
+        )}
       </Row>
     </>
   );

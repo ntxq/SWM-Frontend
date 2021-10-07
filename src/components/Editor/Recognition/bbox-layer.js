@@ -5,14 +5,18 @@ import { useSelector } from "react-redux";
 import Bbox from "./bbox";
 
 function BboxLayer(properties) {
-  const bboxList = useSelector((state) => state.recognition.bboxList);
+  const bboxList = useSelector(
+    (state) =>
+      state.recognition.bboxList[properties.requestID][properties.cutIndex]
+  );
   const activeBox = useSelector((state) => state.recognition.activeBox);
 
   return (
     <>
-      {bboxList[properties.index] && bboxList[properties.index].map((box, index) => (
+      {bboxList.map((box, index) => (
         <Bbox
-          id={properties.index}
+          requestID={properties.requestID}
+          cutIndex={properties.cutIndex}
           index={index}
           dimension={
             properties.original
