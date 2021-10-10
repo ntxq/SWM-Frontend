@@ -46,7 +46,10 @@ function useImageCapture(requestID, cutID) {
     // a.download = "image.png";
     // a.click();
 
-    postImageResult(requestID, cutID, canvas.toDataURL("image/png"));
+    canvas.toBlob((blob) => {
+      const file = new File([blob], "image.png");
+      postImageResult(requestID, cutID, file);
+    });
   }, [requestID, cutID]);
 
   return downloadText;

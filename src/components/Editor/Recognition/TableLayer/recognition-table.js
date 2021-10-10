@@ -1,21 +1,22 @@
 import React, { useLayoutEffect } from "react";
-import { Card, List, Input, Col, Divider, Tooltip } from "antd";
-import { useSelector, useDispatch } from "react-redux";
-import { selectBox, updateBbox } from "../../../../contexts/recognition-slice";
+import { useDispatch } from "react-redux";
+import { Card, List, Input, Col, Tooltip } from "antd";
 import { MdTranslate, MdGTranslate } from "react-icons/md";
 
 import EditorButtons from "../editor-buttons";
 
-function RecognitionTable(properties) {
-  const activeBox = useSelector((state) => state.recognition.activeBox);
-  const bboxList = useSelector(
-    (state) =>
-      state.recognition.bboxList[properties.requestID][properties.cutIndex]
-  );
+function RecognitionTable({
+  requestID,
+  cutIndex,
+  submit,
+  boxList,
+  activeBox,
+  select,
+  update,
+}) {
   const dispatch = useDispatch();
 
   const imageHeight = document.querySelector(".unselectable")?.clientHeight;
-
   useLayoutEffect(() => {
     const table = document.querySelector(".table_panel");
 
@@ -29,27 +30,25 @@ function RecognitionTable(properties) {
         extra={
           <EditorButtons
             activeBox={activeBox}
-            requestID={properties.requestID}
-            cutIndex={properties.cutIndex}
-            submit={properties.submit}
+            requestID={requestID}
+            cutIndex={cutIndex}
+            submit={submit}
           />
         }
         className="table_panel"
       >
         <List
           itemLayout="vertical"
-          dataSource={bboxList}
+          dataSource={boxList}
           renderItem={(item, index) => (
             <List.Item
-              onClick={() => dispatch(selectBox(index))}
+              onClick={() => dispatch(select(index))}
               style={index === activeBox ? { backgroundColor: "#f5f5f5" } : {}}
               className="table_item"
             >
               <List.Item.Meta
                 title={"Bbox " + index}
-                description={`x:${Math.floor(item.originalX)} y:${Math.floor(
-                  item.originalY
-                )}`}
+                description={`x:${Math.floor(item.x)} y:${Math.floor(item.y)}`}
               />
               <Input
                 prefix={
@@ -58,37 +57,15 @@ function RecognitionTable(properties) {
                   </Tooltip>
                 }
                 bordered={false}
-                defaultValue={item.originalText}
+                defaultValue={item.text}
                 onBlur={(event) =>
                   dispatch(
-                    updateBbox({
-                      requestID: properties.requestID,
-                      cutIndex: properties.cutIndex,
+                    update({
+                      requestID: requestID,
+                      cutIndex: cutIndex,
                       index: index,
-                      updatedBbox: {
-                        originalText: event.target.value,
-                      },
-                    })
-                  )
-                }
-              />
-              <Divider dashed className="table_divider" />
-              <Input
-                prefix={
-                  <Tooltip title="Translated Text">
-                    <MdGTranslate />
-                  </Tooltip>
-                }
-                bordered={false}
-                defaultValue={item.translatedText}
-                onBlur={(event) =>
-                  dispatch(
-                    updateBbox({
-                      requestID: properties.requestID,
-                      cutIndex: properties.cutIndex,
-                      index: index,
-                      updatedBbox: {
-                        translatedText: event.target.value,
+                      updatedBox: {
+                        text: event.target.value,
                       },
                     })
                   )

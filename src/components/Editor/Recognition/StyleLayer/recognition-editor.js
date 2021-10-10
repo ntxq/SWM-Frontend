@@ -30,55 +30,50 @@ function RecognitionEditor(properties) {
       <TextInput
         requestID={properties.requestID}
         cutIndex={properties.cutIndex}
-        title={"Original Text"}
-        activeBox={recognition.activeBox}
-        text={
-          recognition.bboxList?.[properties.requestID]?.[properties.cutIndex]?.[
-            recognition.activeBox
-          ]?.originalText
+        title={"Bbox Text"}
+        activeBox={
+          recognition.currentContext === "bbox"
+            ? recognition.activeBbox
+            : recognition.activeTranslateBox
         }
-        original={true}
-      />
-      <TextInput
-        requestID={properties.requestID}
-        cutIndex={properties.cutIndex}
-        title={"Translated Text"}
-        activeBox={recognition.activeBox}
         text={
-          recognition.bboxList?.[properties.requestID]?.[properties.cutIndex]?.[
-            recognition.activeBox
-          ]?.translatedText
+          recognition.currentContext === "bbox"
+            ? recognition.bboxList?.[properties.requestID]?.[
+                properties.cutIndex
+              ]?.[recognition.activeBbox]?.text
+            : recognition.translateBoxList?.[properties.requestID]?.[
+                properties.cutIndex
+              ]?.[recognition.activeTranslateBox]?.text
         }
-        original={false}
       />
       <StyleEditor
         requestID={properties.requestID}
         cutIndex={properties.cutIndex}
-        activeBox={recognition.activeBox}
+        activeBox={recognition.activeTranslateBox}
         fontSize={
-          recognition.bboxList?.[properties.requestID]?.[properties.cutIndex]?.[
-            recognition.activeBox
-          ]?.fontSize
+          recognition.translateBoxList?.[properties.requestID]?.[
+            properties.cutIndex
+          ]?.[recognition.activeTranslateBox]?.fontSize
         }
         fontColor={
-          recognition.bboxList?.[properties.requestID]?.[properties.cutIndex]?.[
-            recognition.activeBox
-          ]?.fontColor
+          recognition.translateBoxList?.[properties.requestID]?.[
+            properties.cutIndex
+          ]?.[recognition.activeTranslateBox]?.fontColor
         }
         fontFamily={
-          recognition.bboxList?.[properties.requestID]?.[properties.cutIndex]?.[
-            recognition.activeBox
-          ]?.fontFamily
+          recognition.translateBoxList?.[properties.requestID]?.[
+            properties.cutIndex
+          ]?.[recognition.activeTranslateBox]?.fontFamily
         }
         fontWeight={
-          recognition.bboxList?.[properties.requestID]?.[properties.cutIndex]?.[
-            recognition.activeBox
-          ]?.fontWeight
+          recognition.translateBoxList?.[properties.requestID]?.[
+            properties.cutIndex
+          ]?.[recognition.activeTranslateBox]?.fontWeight
         }
         fontStyle={
-          recognition.bboxList?.[properties.requestID]?.[properties.cutIndex]?.[
-            recognition.activeBox
-          ]?.fontStyle
+          recognition.translateBoxList?.[properties.requestID]?.[
+            properties.cutIndex
+          ]?.[recognition.activeTranslateBox]?.fontStyle
         }
       />
     </Card>

@@ -3,7 +3,12 @@ import { Rnd } from "react-rnd";
 import { Typography } from "antd";
 
 import { useDispatch } from "react-redux";
-import { updateBbox, selectBox } from "../../../contexts/recognition-slice";
+import {
+  updateBbox,
+  selectBbox,
+  updateTranslateBox,
+  selectTranslateBox,
+} from "../../../contexts/recognition-slice";
 
 function Bbox(properties) {
   const dispatch = useDispatch();
@@ -20,45 +25,61 @@ function Bbox(properties) {
       }}
       onDragStop={(event, data) =>
         dispatch(
-          updateBbox({
-            requestID: properties.requestID,
-            cutIndex: properties.cutIndex,
-            index: properties.index,
-            updatedBbox: properties.original
-              ? {
-                  originalX: data.x,
-                  originalY: data.y,
-                }
-              : {
-                  translatedX: data.x,
-                  translatedY: data.y,
+          properties.original
+            ? updateBbox({
+                requestID: properties.requestID,
+                cutIndex: properties.cutIndex,
+                index: properties.index,
+                updatedBbox: {
+                  x: data.x,
+                  y: data.y,
                 },
-          })
+              })
+            : updateTranslateBox({
+                requestID: properties.requestID,
+                cutIndex: properties.cutIndex,
+                index: properties.index,
+                updatedBbox: {
+                  x: data.x,
+                  y: data.y,
+                },
+              })
         )
       }
       onResizeStop={(event, direction, reference, delta, position) => {
         dispatch(
-          updateBbox({
-            requestID: properties.requestID,
-            cutIndex: properties.cutIndex,
-            index: properties.index,
-            updatedBbox: properties.original
-              ? {
-                  originalX: position.x,
-                  originalY: position.y,
-                  originalWidth: properties.dimension[2] + delta.width,
-                  originalHeight: properties.dimension[3] + delta.height,
-                }
-              : {
-                  translatedX: position.x,
-                  translatedY: position.y,
-                  translatedWidth: properties.dimension[2] + delta.width,
-                  translatedHeight: properties.dimension[3] + delta.height,
+          properties.original
+            ? updateBbox({
+                requestID: properties.requestID,
+                cutIndex: properties.cutIndex,
+                index: properties.index,
+                updatedBbox: {
+                  x: position.x,
+                  y: position.y,
+                  width: properties.dimension[2] + delta.width,
+                  height: properties.dimension[3] + delta.height,
                 },
-          })
+              })
+            : updateTranslateBox({
+                requestID: properties.requestID,
+                cutIndex: properties.cutIndex,
+                index: properties.index,
+                updatedBbox: {
+                  x: position.x,
+                  y: position.y,
+                  width: properties.dimension[2] + delta.width,
+                  height: properties.dimension[3] + delta.height,
+                },
+              })
         );
       }}
-      onClick={(event) => dispatch(selectBox(properties.index))}
+      onClick={(event) =>
+        dispatch(
+          properties.original
+            ? selectBbox(properties.index)
+            : selectTranslateBox(properties.index)
+        )
+      }
       onMouseDown={(event) => event.stopPropagation()}
       bounds="parent"
       style={{ borderColor: properties.active ? "red" : "#ffa940" }}

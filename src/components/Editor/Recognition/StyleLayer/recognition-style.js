@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Col } from "antd";
+import { Col, Row } from "antd";
 
 import RecognitionImage from "../recognition-image";
 import BboxLayer from "../bbox-layer";
@@ -28,7 +28,20 @@ function RecognitionStyle(properties) {
   }, [properties.src]);
 
   return (
-    <>
+    <Row gutter={24}>
+      <Col span={8} className="recognition_col recognition_style">
+        <RecognitionImage
+          src={properties.src}
+          requestID={properties.requestID}
+          cutIndex={properties.cutIndex}
+        />
+        <BboxLayer
+          original={true}
+          requestID={properties.requestID}
+          cutIndex={properties.cutIndex}
+        />
+      </Col>
+
       <Col span={8} className="recognition_col recognition_style">
         <RecognitionImage
           src={imageSource}
@@ -47,7 +60,7 @@ function RecognitionStyle(properties) {
           cutIndex={properties.cutIndex}
         />
       </Col>
-    </>
+    </Row>
   );
 }
 

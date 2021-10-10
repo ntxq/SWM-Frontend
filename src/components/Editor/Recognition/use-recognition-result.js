@@ -37,6 +37,7 @@ function useRecognitionResult(webtoonIndex, cutIndex) {
         if (progress === 100) {
           clearInterval(intervalID);
           const bboxList = await getOCRResultBbox(image.id, cutIndex + 1);
+          console.log(bboxList);
 
           const clientImage = document.querySelector(".unselectable");
           const widthRatio = clientImage.clientWidth / clientImage.naturalWidth;
@@ -49,26 +50,14 @@ function useRecognitionResult(webtoonIndex, cutIndex) {
                 requestID: image.id,
                 cutIndex: cutIndex,
                 bbox: {
-                  bbox_id: bbox.bbox_id,
+                  x: bbox.x * widthRatio,
+                  y: bbox.y * heightRatio,
+                  width: bbox.width * widthRatio,
+                  height: bbox.height * heightRatio,
 
-                  originalX: bbox.originalX * widthRatio,
-                  originalY: bbox.originalY * heightRatio,
-                  originalWidth: bbox.originalWidth * widthRatio,
-                  originalHeight: bbox.originalHeight * heightRatio,
-
-                  translatedX: bbox.originalX * widthRatio,
-                  translatedY: bbox.originalY * heightRatio,
-                  translatedWidth: bbox.originalWidth * widthRatio,
-                  translatedHeight: bbox.originalHeight * heightRatio,
-
-                  originalText: bbox.originalText,
-                  translatedText: bbox.translatedText || bbox.originalText,
-
-                  fontColor: bbox.fontColor || "#000000",
-                  fontSize: bbox.fontSize || 30,
-                  fontFamily: bbox.fontFamily || "Nanum Gothic",
-                  fontWeight: bbox.fontWeight || "bold",
-                  fontStyle: bbox.fontStyle || "normal",
+                  text: bbox.text,
+                  group_id: bbox.group_id,
+                  group_index: bbox.group_index,
                 },
               })
             )

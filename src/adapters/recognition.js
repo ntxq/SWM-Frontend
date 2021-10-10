@@ -58,7 +58,7 @@ export async function postOCRTranslate(request_id, cut_id, translate_id) {
 
   const result = await backendInstance
     .post("/api/OCR/translate", data)
-    .then((response) => response.data.translated);
+    .then((response) => response.data.translated[0]);
 
   return result;
 }
@@ -67,13 +67,13 @@ export async function postOCRText(
   request_id,
   cut_id,
   bboxList,
-  translatedBoxList
+  translatedBoxList = []
 ) {
   const data = {
     req_id: request_id,
     cut_id: cut_id,
-    bboxList: bboxList,
-    translatedBoxList: translatedBoxList,
+    bboxList: JSON.stringify(bboxList),
+    translateBoxList: JSON.stringify(translatedBoxList),
   };
 
   const result = await backendInstance
@@ -84,14 +84,18 @@ export async function postOCRText(
 }
 
 export async function postImageResult(request_id, cut_id, image) {
-  const data = {
-    req_id: request_id,
-    cut_id: cut_id,
-    final_image: image,
-  };
+  const data = new FormData();
+
+  data.append("req_id", request_id);
+  data.append("cut_id", cut_id);
+  data.append("final_image", image);
 
   const result = await backendInstance
-    .post("/api/OCR/image", data)
+    .post("/api/OCR/image", data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    })
     .then((response) => response.data.success);
 
   return result;
