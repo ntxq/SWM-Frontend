@@ -17,7 +17,11 @@ function MenuAvatar(properties) {
   }, []);
 
   return kakaoCookie ? (
-    <Menu.SubMenu className="menu_avatar" key="avatar" title={<UserAvatar />}>
+    <Menu.SubMenu
+      className="menu_avatar"
+      key="avatar"
+      title={<UserAvatar src={profile.avatar} />}
+    >
       <Menu.Item key="username">
         <Link to="/profile">
           <b>{profile.username}</b>

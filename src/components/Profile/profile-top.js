@@ -15,7 +15,7 @@ function ProfileTop(properties) {
       <Avatar
         className="profile_avatar"
         size={100}
-        icon={profile.avatar || <UserOutlined />}
+        src={profile.avatar || <UserOutlined />}
       />
 
       <div className="profile_text">
