@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   bboxList: {},
   activeBbox: undefined,
+  nextGroupID: 0,
 
   translateBoxList: {},
   activeTranslateBox: undefined,
@@ -16,6 +17,9 @@ const initialState = {
     clientWidth: undefined,
     naturalHeight: undefined,
     naturalWidth: undefined,
+
+    currentWidthRatio: 1,
+    currentHeightRatio: 1,
   },
 };
 
@@ -76,8 +80,12 @@ export const recognitionSlice = createSlice({
           ...bbox,
 
           bbox_id: state.bboxList[requestID][cutIndex].length,
+          group_id: bbox.group_id || state.nextGroupID,
         },
       ];
+
+      if (bbox.group_id) state.nextGroupID = bbox.group_id + 1;
+      else state.nextGroupID += 1;
     },
 
     createTranslateBox: (state, action) => {
@@ -158,7 +166,7 @@ export const recognitionSlice = createSlice({
       const widthRatio = clientWidth / state.imgProperty.clientWidth;
       const heightRatio = clientHeight / state.imgProperty.clientHeight;
 
-      const adjustBoxList = (boxList) => {
+      const adjustBoxList = (boxList) =>
         boxList.map((box) => ({
           ...box,
 
@@ -168,17 +176,24 @@ export const recognitionSlice = createSlice({
           height: box.height * heightRatio,
           fontSize: box.fontSize * widthRatio,
         }));
-      };
 
       if (
         state.imgProperty.requestID === requestID &&
         state.imgProperty.cutIndex === cutIndex
       ) {
-        adjustBoxList(state.bboxList[requestID][cutIndex]);
-        adjustBoxList(state.translateBoxList[requestID][cutIndex]);
+        state.bboxList[requestID][cutIndex] = adjustBoxList(
+          state.bboxList[requestID][cutIndex]
+        );
+        state.translateBoxList[requestID][cutIndex] = adjustBoxList(
+          state.translateBoxList[requestID][cutIndex]
+        );
       }
 
-      state.imgProperty = action.payload;
+      state.imgProperty = {
+        ...action.payload,
+        currentWidthRatio: widthRatio || 1,
+        currentHeightRatio: heightRatio || 1,
+      };
     },
   },
 });

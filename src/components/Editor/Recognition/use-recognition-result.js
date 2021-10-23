@@ -37,7 +37,6 @@ function useRecognitionResult(webtoonIndex, cutIndex) {
         if (progress === 100) {
           clearInterval(intervalID);
           const bboxList = await getOCRResultBbox(image.id, cutIndex + 1);
-          console.log(bboxList);
 
           const clientImage = document.querySelector(".unselectable");
           const widthRatio = clientImage.clientWidth / clientImage.naturalWidth;
