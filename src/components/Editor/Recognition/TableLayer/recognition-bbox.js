@@ -9,7 +9,12 @@ function RecognitionBox({ src, requestID, cutIndex, submit, stage }) {
   return (
     <Row gutter={24}>
       <Col span={8} className="recognition_col">
-        <RecognitionImage src={src} requestID={requestID} cutIndex={cutIndex} />
+        <RecognitionImage
+          src={src}
+          requestID={requestID}
+          cutIndex={cutIndex}
+          stage={stage}
+        />
         <BboxLayer
           original={stage === "bbox"}
           requestID={requestID}

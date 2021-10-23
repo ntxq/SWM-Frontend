@@ -14,7 +14,8 @@ function RecognitionImage(properties) {
     imageDiv,
     bboxSketch,
     properties.requestID,
-    properties.cutIndex
+    properties.cutIndex,
+    properties.stage
   );
 
   useLayoutEffect(() => {
