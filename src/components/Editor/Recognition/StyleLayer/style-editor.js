@@ -32,7 +32,7 @@ function StyleEditor(properties) {
                   requestID: properties.requestID,
                   cutIndex: properties.cutIndex,
                   index: properties.activeBox,
-                  updatedBbox: { fontColor: color.hex },
+                  updatedBox: { fontColor: color.hex },
                 })
               )
             }
@@ -50,7 +50,7 @@ function StyleEditor(properties) {
                     requestID: properties.requestID,
                     cutIndex: properties.cutIndex,
                     index: properties.activeBox,
-                    updatedBbox: { fontFamily: nextFont.family },
+                    updatedBox: { fontFamily: nextFont.family },
                   })
                 )
               }
@@ -68,7 +68,7 @@ function StyleEditor(properties) {
                         requestID: properties.requestID,
                         cutIndex: properties.cutIndex,
                         index: properties.activeBox,
-                        updatedBbox: { fontSize: value },
+                        updatedBox: { fontSize: value },
                       })
                     )
                   }
@@ -85,7 +85,7 @@ function StyleEditor(properties) {
                         requestID: properties.requestID,
                         cutIndex: properties.cutIndex,
                         index: properties.activeBox,
-                        updatedBbox: {
+                        updatedBox: {
                           fontWeight:
                             properties.fontWeight === "normal"
                               ? "bold"
@@ -107,7 +107,7 @@ function StyleEditor(properties) {
                         requestID: properties.requestID,
                         cutIndex: properties.cutIndex,
                         index: properties.activeBox,
-                        updatedBbox: {
+                        updatedBox: {
                           fontStyle:
                             properties.fontStyle === "normal"
                               ? "italic"

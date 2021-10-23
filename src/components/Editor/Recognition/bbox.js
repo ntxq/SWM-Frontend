@@ -30,7 +30,7 @@ function Bbox(properties) {
                 requestID: properties.requestID,
                 cutIndex: properties.cutIndex,
                 index: properties.index,
-                updatedBbox: {
+                updatedBox: {
                   x: data.x,
                   y: data.y,
                 },
@@ -39,7 +39,7 @@ function Bbox(properties) {
                 requestID: properties.requestID,
                 cutIndex: properties.cutIndex,
                 index: properties.index,
-                updatedBbox: {
+                updatedBox: {
                   x: data.x,
                   y: data.y,
                 },
@@ -53,7 +53,7 @@ function Bbox(properties) {
                 requestID: properties.requestID,
                 cutIndex: properties.cutIndex,
                 index: properties.index,
-                updatedBbox: {
+                updatedBox: {
                   x: position.x,
                   y: position.y,
                   width: properties.dimension[2] + delta.width,
@@ -64,7 +64,7 @@ function Bbox(properties) {
                 requestID: properties.requestID,
                 cutIndex: properties.cutIndex,
                 index: properties.index,
-                updatedBbox: {
+                updatedBox: {
                   x: position.x,
                   y: position.y,
                   width: properties.dimension[2] + delta.width,

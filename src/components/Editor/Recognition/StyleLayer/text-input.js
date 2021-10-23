@@ -23,7 +23,7 @@ function TextInput(properties) {
                   requestID: properties.requestID,
                   cutIndex: properties.cutIndex,
                   index: properties.activeBox,
-                  updatedBbox: {
+                  updatedBox: {
                     text: event.target.value,
                   },
                 })
@@ -31,7 +31,7 @@ function TextInput(properties) {
                   requestID: properties.requestID,
                   cutIndex: properties.cutIndex,
                   index: properties.activeBox,
-                  updatedBbox: {
+                  updatedBox: {
                     text: event.target.value,
                   },
                 })
