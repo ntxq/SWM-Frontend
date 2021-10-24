@@ -4,7 +4,10 @@ import {
   postOCRText,
   postOCRTranslate,
 } from "../../../../adapters/recognition";
-import { createTranslateBox } from "../../../../contexts/recognition-slice";
+import {
+  createTranslateBox,
+  deleteTranslateBox,
+} from "../../../../contexts/recognition-slice";
 import useOriginalList from "./use-original-list";
 
 function useTranslate(requestID, cutIndex, bboxList) {
@@ -23,6 +26,7 @@ function useTranslate(requestID, cutIndex, bboxList) {
         translateIDs.push(bbox.group_id);
     }
 
+    dispatch(deleteTranslateBox({ requestID, cutIndex }));
     for (const id of translateIDs) {
       const translatedBox = await postOCRTranslate(requestID, cutIndex + 1, id);
       dispatch(

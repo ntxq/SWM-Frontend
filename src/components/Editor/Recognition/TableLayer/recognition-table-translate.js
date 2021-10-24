@@ -6,6 +6,7 @@ import {
   selectTranslateBox,
   updateTranslateBox,
 } from "../../../../contexts/recognition-slice";
+import { postOCRText } from "../../../../adapters/recognition";
 
 function RecognitionTableTranslate(properties) {
   const activeBox = useSelector(
@@ -22,7 +23,15 @@ function RecognitionTableTranslate(properties) {
     <RecognitionTable
       requestID={properties.requestID}
       cutIndex={properties.cutIndex}
-      submit={properties.submit}
+      submit={() => {
+        postOCRText(properties.requestID, properties.cutIndex + 1, [], boxList);
+        properties.submit();
+      }}
+      backward={() => {
+        postOCRText(properties.requestID, properties.cutIndex + 1, [], boxList);
+        properties.backward();
+      }}
+      contex="translate"
       boxList={boxList}
       activeBox={activeBox}
       select={(index) => selectTranslateBox(index)}

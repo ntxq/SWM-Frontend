@@ -33,6 +33,7 @@ function RecognitionTableBbox(properties) {
         getTranslate();
         properties.submit();
       }}
+      context="bbox"
       boxList={bboxList}
       activeBox={activeBbox}
       select={(index) => selectBbox(index)}

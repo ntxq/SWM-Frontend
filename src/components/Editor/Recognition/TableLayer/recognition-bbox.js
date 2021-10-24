@@ -32,6 +32,7 @@ function RecognitionBox({ src, requestID, cutIndex, submit, stage }) {
           requestID={requestID}
           cutIndex={cutIndex}
           submit={() => submit("style")}
+          backward={() => submit("bbox")}
         />
       )}
     </Row>
