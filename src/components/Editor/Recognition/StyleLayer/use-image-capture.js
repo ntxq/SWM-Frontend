@@ -4,7 +4,7 @@ import { postImageResult } from "../../../../adapters/recognition";
 
 function useImageCapture(requestID, cutID) {
   const downloadText = useCallback(async () => {
-    const translateDiv = document.querySelector(".recognition_style");
+    const translateDiv = document.querySelectorAll(".recognition_style")[1];
     const translatedImage = document.querySelectorAll(".unselectable")[1];
     const naturalHeight = translatedImage.naturalHeight;
     const naturalWidth = translatedImage.naturalWidth;
@@ -33,6 +33,7 @@ function useImageCapture(requestID, cutID) {
             bbox.computedStyleMap().get("transform")[0].y.value * heightRatio;
 
           bbox.style.transform = `translate(${translateX}px, ${translateY}px)`;
+          bbox.style.overflow = "visible";
 
           bbox.children[0].style.fontSize =
             Number.parseInt(bbox.children[0].style.fontSize) * heightRatio +
@@ -47,7 +48,7 @@ function useImageCapture(requestID, cutID) {
     // a.click();
 
     canvas.toBlob((blob) => {
-      const file = new File([blob], "image.png");
+      const file = new File([blob], "image.png", { type: "image/png" });
       postImageResult(requestID, cutID, file);
     });
   }, [requestID, cutID]);

@@ -91,11 +91,7 @@ export async function postImageResult(request_id, cut_id, image) {
   data.append("final_image", image);
 
   const result = await backendInstance
-    .post("/api/OCR/image", data, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    })
+    .post("/api/OCR/image", data)
     .then((response) => response.data.success);
 
   return result;
