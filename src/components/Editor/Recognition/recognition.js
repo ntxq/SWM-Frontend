@@ -51,6 +51,7 @@ function Recognition(properties) {
       {recognitionStage === "style" && (
         <RecognitionStyle
           src={properties.webtoon.original}
+          webtoonIndex={properties.webtoonIndex}
           requestID={properties.webtoon.id}
           cutIndex={properties.cutIndex}
         />

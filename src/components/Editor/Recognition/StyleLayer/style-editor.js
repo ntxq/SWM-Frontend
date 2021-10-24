@@ -12,11 +12,10 @@ import { BoldOutlined, ItalicOutlined } from "@ant-design/icons";
 import { CompactPicker } from "react-color";
 import FontPicker from "font-picker-react";
 
-import { useDispatch } from "react-redux";
-import { updateBbox } from "../../../../contexts/recognition-slice";
+import useUpdateBox from "./use-update-box";
 
 function StyleEditor(properties) {
-  const dispatch = useDispatch();
+  const updateBox = useUpdateBox();
 
   return (
     <>
@@ -27,14 +26,12 @@ function StyleEditor(properties) {
             color={properties.fontColor}
             onChange={(color) =>
               properties.activeBox !== undefined &&
-              dispatch(
-                updateBbox({
-                  requestID: properties.requestID,
-                  cutIndex: properties.cutIndex,
-                  index: properties.activeBox,
-                  updatedBox: { fontColor: color.hex },
-                })
-              )
+              updateBox({
+                requestID: properties.requestID,
+                cutIndex: properties.cutIndex,
+                index: properties.activeBox,
+                updatedBox: { fontColor: color.hex },
+              })
             }
           />
         </Col>
@@ -45,14 +42,12 @@ function StyleEditor(properties) {
               activeFontFamily={properties.fontFamily}
               onChange={(nextFont) =>
                 properties.activeBox !== undefined &&
-                dispatch(
-                  updateBbox({
-                    requestID: properties.requestID,
-                    cutIndex: properties.cutIndex,
-                    index: properties.activeBox,
-                    updatedBox: { fontFamily: nextFont.family },
-                  })
-                )
+                updateBox({
+                  requestID: properties.requestID,
+                  cutIndex: properties.cutIndex,
+                  index: properties.activeBox,
+                  updatedBox: { fontFamily: nextFont.family },
+                })
               }
               scripts={["latin", "korean"]}
             />
@@ -63,14 +58,12 @@ function StyleEditor(properties) {
                   value={properties.fontSize}
                   onChange={(value) =>
                     properties.activeBox !== undefined &&
-                    dispatch(
-                      updateBbox({
-                        requestID: properties.requestID,
-                        cutIndex: properties.cutIndex,
-                        index: properties.activeBox,
-                        updatedBox: { fontSize: value },
-                      })
-                    )
+                    updateBox({
+                      requestID: properties.requestID,
+                      cutIndex: properties.cutIndex,
+                      index: properties.activeBox,
+                      updatedBox: { fontSize: value },
+                    })
                   }
                 />
               </Space>
@@ -80,19 +73,17 @@ function StyleEditor(properties) {
                   type="text"
                   onClick={() =>
                     properties.activeBox !== undefined &&
-                    dispatch(
-                      updateBbox({
-                        requestID: properties.requestID,
-                        cutIndex: properties.cutIndex,
-                        index: properties.activeBox,
-                        updatedBox: {
-                          fontWeight:
-                            properties.fontWeight === "normal"
-                              ? "bold"
-                              : "normal",
-                        },
-                      })
-                    )
+                    updateBox({
+                      requestID: properties.requestID,
+                      cutIndex: properties.cutIndex,
+                      index: properties.activeBox,
+                      updatedBox: {
+                        fontWeight:
+                          properties.fontWeight === "normal"
+                            ? "bold"
+                            : "normal",
+                      },
+                    })
                   }
                 />
               </Tooltip>
@@ -102,19 +93,17 @@ function StyleEditor(properties) {
                   type="text"
                   onClick={() =>
                     properties.activeBox !== undefined &&
-                    dispatch(
-                      updateBbox({
-                        requestID: properties.requestID,
-                        cutIndex: properties.cutIndex,
-                        index: properties.activeBox,
-                        updatedBox: {
-                          fontStyle:
-                            properties.fontStyle === "normal"
-                              ? "italic"
-                              : "normal",
-                        },
-                      })
-                    )
+                    updateBox({
+                      requestID: properties.requestID,
+                      cutIndex: properties.cutIndex,
+                      index: properties.activeBox,
+                      updatedBox: {
+                        fontStyle:
+                          properties.fontStyle === "normal"
+                            ? "italic"
+                            : "normal",
+                      },
+                    })
                   }
                 />
               </Tooltip>

@@ -1,15 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { Col, Row } from "antd";
+import { useSelector } from "react-redux";
 
 import RecognitionImage from "../recognition-image";
 import BboxLayer from "../bbox-layer";
 import RecognitionEditor from "./recognition-editor";
 
 function RecognitionStyle(properties) {
+  const inpaintSource = useSelector(
+    (state) =>
+      state.webtoons.images[properties.webtoonIndex].cut[properties.cutIndex]
+        .inpaint
+  );
   const [imageSource, setImageSource] = useState();
 
   useEffect(() => {
-    fetch(properties.src)
+    fetch(inpaintSource)
       .then((response) => response.blob())
       .then((blob) => URL.createObjectURL(blob))
       .then((url) =>
@@ -25,7 +31,7 @@ function RecognitionStyle(properties) {
         return "";
       });
     };
-  }, [properties.src]);
+  }, [inpaintSource]);
 
   return (
     <Row gutter={24}>
