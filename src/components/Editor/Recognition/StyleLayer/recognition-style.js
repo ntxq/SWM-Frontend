@@ -58,6 +58,7 @@ function RecognitionStyle(properties) {
           original={false}
           requestID={properties.requestID}
           cutIndex={properties.cutIndex}
+          display={true}
         />
       </Col>
       <Col span={8}>

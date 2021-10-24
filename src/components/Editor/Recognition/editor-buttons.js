@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback } from "react";
 import { Button, Space, Tooltip } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
 
@@ -16,7 +16,7 @@ function EditorButtons(properties) {
       properties.context === "bbox"
         ? deleteBbox({
             requestID: properties.requestID,
-            bboxID: properties.cutIndex,
+            cutIndex: properties.cutIndex,
             target: properties.activeBox,
           })
         : deleteTranslateBox({
@@ -49,9 +49,11 @@ function EditorButtons(properties) {
           onClick={() => dispatch(deleteAction())}
         />
       </Tooltip>
-      <Button type="primary" onClick={properties.backward}>
-        Previous
-      </Button>
+      {properties.backward && (
+        <Button type="primary" onClick={properties.backward}>
+          Previous
+        </Button>
+      )}
       <Button type="primary" onClick={properties.submit}>
         Next
       </Button>

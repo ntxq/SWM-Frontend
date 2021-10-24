@@ -28,7 +28,7 @@ function BboxLayer(properties) {
           index={index}
           dimension={[box.x, box.y, box.width, box.height]}
           original={properties.original}
-          text={box.text}
+          text={properties.display && box.text}
           color={box.fontColor}
           size={box.fontSize}
           font={box.fontFamily}

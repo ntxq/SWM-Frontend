@@ -104,6 +104,7 @@ export const recognitionSlice = createSlice({
 
     deleteBbox: (state, action) => {
       const { target, requestID, cutIndex } = action.payload;
+      console.log(target, requestID, cutIndex);
 
       if (target === undefined) {
         state.bboxList[requestID][cutIndex] = [];

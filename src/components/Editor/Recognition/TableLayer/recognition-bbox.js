@@ -19,6 +19,7 @@ function RecognitionBox({ src, requestID, cutIndex, submit, stage }) {
           original={stage === "bbox"}
           requestID={requestID}
           cutIndex={cutIndex}
+          display={false}
         />
       </Col>
       {stage === "bbox" ? (
