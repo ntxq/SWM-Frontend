@@ -1,26 +1,27 @@
 import { useCallback } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   postOCRText,
   postOCRTranslate,
 } from "../../../../adapters/recognition";
 import { createTranslateBox } from "../../../../contexts/recognition-slice";
+import useOriginalList from "./use-original-list";
 
 function useTranslate(requestID, cutIndex, bboxList) {
   const dispatch = useDispatch();
+  const originalSelector = useOriginalList(requestID, cutIndex);
+  const originalList = useSelector(originalSelector);
+
+  const imgProperty = useSelector((state) => state.recognition.imgProperty);
 
   const getTranslate = useCallback(async () => {
-    // await postOCRText(requestID, cutIndex + 1, bboxList);
+    await postOCRText(requestID, cutIndex + 1, originalList);
 
     const translateIDs = [];
     for (const bbox of bboxList) {
       if (!translateIDs.includes(bbox.group_id))
         translateIDs.push(bbox.group_id);
     }
-
-    const clientImage = document.querySelector(".unselectable");
-    const widthRatio = clientImage.clientWidth / clientImage.naturalWidth;
-    const heightRatio = clientImage.clientHeight / clientImage.naturalHeight;
 
     for (const id of translateIDs) {
       const translatedBox = await postOCRTranslate(requestID, cutIndex + 1, id);
@@ -31,19 +32,19 @@ function useTranslate(requestID, cutIndex, bboxList) {
           translatedBox: {
             translate_id: translatedBox.id,
 
-            x: translatedBox.x * widthRatio,
-            y: translatedBox.y * heightRatio,
-            width: translatedBox.width * widthRatio,
-            height: translatedBox.height * heightRatio,
+            x: translatedBox.x / imgProperty.currentWidthRatio,
+            y: translatedBox.y / imgProperty.currentHeightRatio,
+            width: translatedBox.width / imgProperty.currentWidthRatio,
+            height: translatedBox.height / imgProperty.currentHeightRatio,
 
             text: translatedBox.text,
-            // fontSize: translatedBox.fontSize,
-            // fontColor: translatedBox.fontColor,
+            fontSize: translatedBox.fontSize / imgProperty.currentWidthRatio,
+            fontColor: translatedBox.fontColor,
           },
         })
       );
     }
-  }, [dispatch, requestID, cutIndex, bboxList]);
+  }, [dispatch, requestID, cutIndex, bboxList, originalList, imgProperty]);
 
   return getTranslate;
 }

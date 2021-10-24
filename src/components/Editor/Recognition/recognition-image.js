@@ -27,8 +27,6 @@ function RecognitionImage(properties) {
           cutIndex: properties.cutIndex,
           clientHeight: image.clientHeight,
           clientWidth: image.clientWidth,
-          naturalHeight: image.naturalHeight,
-          naturalWidth: image.naturalWidth,
         })
       );
     }

@@ -107,9 +107,9 @@ export const recognitionSlice = createSlice({
 
       if (target === undefined) {
         state.bboxList[requestID][cutIndex] = [];
-        state.translateBoxList[requestID][cutIndex] = {};
         state.activeBbox = undefined;
         state.activeTranslateBox = undefined;
+        state.nextGroupID = 0;
       } else {
         state.bboxList[requestID][cutIndex] = state.bboxList[requestID][
           cutIndex
@@ -161,7 +161,14 @@ export const recognitionSlice = createSlice({
     },
 
     setImageProperty: (state, action) => {
-      const { requestID, cutIndex, clientHeight, clientWidth } = action.payload;
+      const {
+        requestID,
+        cutIndex,
+        clientHeight,
+        clientWidth,
+        naturalHeight,
+        naturalWidth,
+      } = action.payload;
 
       const widthRatio = clientWidth / state.imgProperty.clientWidth;
       const heightRatio = clientHeight / state.imgProperty.clientHeight;
@@ -191,8 +198,8 @@ export const recognitionSlice = createSlice({
 
       state.imgProperty = {
         ...action.payload,
-        currentWidthRatio: widthRatio || 1,
-        currentHeightRatio: heightRatio || 1,
+        currentWidthRatio: naturalWidth / clientWidth || widthRatio,
+        currentHeightRatio: naturalHeight / clientHeight || heightRatio,
       };
     },
   },
