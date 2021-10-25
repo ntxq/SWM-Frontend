@@ -66,10 +66,11 @@ export function getCutImageURL(request_id, cutIndex) {
   return url + `/api/segmentation/cut?req_id=${request_id}&cut_id=${cutIndex}`;
 }
 
-export async function postSegmentationStart(request_id) {
+export async function postSegmentationStart(request_id, cutIndex) {
   return await backendInstance
     .post("/api/segmentation/start", {
       req_id: request_id,
+      cut_id: cutIndex,
     })
     .then((response) => response.data.success);
 }
