@@ -1,15 +1,21 @@
 import React, { useEffect, useState } from "react";
-import { Col } from "antd";
+import { Col, Row } from "antd";
+import { useSelector } from "react-redux";
 
 import RecognitionImage from "../recognition-image";
 import BboxLayer from "../bbox-layer";
 import RecognitionEditor from "./recognition-editor";
 
 function RecognitionStyle(properties) {
+  const inpaintSource = useSelector(
+    (state) =>
+      state.webtoons.images[properties.webtoonIndex].cut[properties.cutIndex]
+        .inpaint
+  );
   const [imageSource, setImageSource] = useState();
 
   useEffect(() => {
-    fetch(properties.src)
+    fetch(inpaintSource)
       .then((response) => response.blob())
       .then((blob) => URL.createObjectURL(blob))
       .then((url) =>
@@ -25,10 +31,23 @@ function RecognitionStyle(properties) {
         return "";
       });
     };
-  }, [properties.src]);
+  }, [inpaintSource]);
 
   return (
-    <>
+    <Row gutter={24}>
+      <Col span={8} className="recognition_col recognition_style">
+        <RecognitionImage
+          src={properties.src}
+          requestID={properties.requestID}
+          cutIndex={properties.cutIndex}
+        />
+        <BboxLayer
+          original={true}
+          requestID={properties.requestID}
+          cutIndex={properties.cutIndex}
+        />
+      </Col>
+
       <Col span={8} className="recognition_col recognition_style">
         <RecognitionImage
           src={imageSource}
@@ -39,6 +58,7 @@ function RecognitionStyle(properties) {
           original={false}
           requestID={properties.requestID}
           cutIndex={properties.cutIndex}
+          display={true}
         />
       </Col>
       <Col span={8}>
@@ -47,7 +67,7 @@ function RecognitionStyle(properties) {
           cutIndex={properties.cutIndex}
         />
       </Col>
-    </>
+    </Row>
   );
 }
 

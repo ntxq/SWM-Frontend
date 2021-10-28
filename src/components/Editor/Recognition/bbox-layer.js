@@ -5,36 +5,30 @@ import { useSelector } from "react-redux";
 import Bbox from "./bbox";
 
 function BboxLayer(properties) {
-  const bboxList = useSelector(
-    (state) =>
-      state.recognition.bboxList[properties.requestID][properties.cutIndex]
+  const boxList = useSelector((state) =>
+    properties.original
+      ? state.recognition.bboxList[properties.requestID][properties.cutIndex]
+      : state.recognition.translateBoxList[properties.requestID][
+          properties.cutIndex
+        ]
   );
-  const activeBox = useSelector((state) => state.recognition.activeBox);
+
+  const activeBox = useSelector((state) =>
+    properties.original
+      ? state.recognition.activeBbox
+      : state.recognition.activeTranslateBox
+  );
 
   return (
     <>
-      {bboxList.map((box, index) => (
+      {boxList.map((box, index) => (
         <Bbox
           requestID={properties.requestID}
           cutIndex={properties.cutIndex}
           index={index}
-          dimension={
-            properties.original
-              ? [
-                  box.originalX,
-                  box.originalY,
-                  box.originalWidth,
-                  box.originalHeight,
-                ]
-              : [
-                  box.translatedX,
-                  box.translatedY,
-                  box.translatedWidth,
-                  box.translatedHeight,
-                ]
-          }
+          dimension={[box.x, box.y, box.width, box.height]}
           original={properties.original}
-          text={properties.original ? box.originalText : box.translatedText}
+          text={properties.display && box.text}
           color={box.fontColor}
           size={box.fontSize}
           font={box.fontFamily}
