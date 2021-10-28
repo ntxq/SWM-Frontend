@@ -32,7 +32,7 @@ function RecognitionTableTranslate(properties) {
         properties.backward();
       }}
       contex="translate"
-      boxList={boxList}
+      boxList={boxList.map((box, index) => ({ ...box, index }))}
       activeBox={activeBox}
       select={(index) => selectTranslateBox(index)}
       update={(newBox) => updateTranslateBox(newBox)}

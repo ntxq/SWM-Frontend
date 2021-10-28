@@ -34,7 +34,14 @@ function RecognitionTableBbox(properties) {
         properties.submit();
       }}
       context="bbox"
-      boxList={bboxList}
+      boxList={bboxList
+        .map((bbox, index) => ({ ...bbox, index }))
+        .sort(
+          (a, b) =>
+            a.group_id - b.group_id ||
+            a.group_index - b.group_index ||
+            a.bbox_id - b.bbox_id
+        )}
       activeBox={activeBbox}
       select={(index) => selectBbox(index)}
       update={(newBox) => updateBbox(newBox)}
