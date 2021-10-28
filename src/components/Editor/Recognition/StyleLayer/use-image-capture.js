@@ -1,8 +1,11 @@
 import { useCallback } from "react";
 import html2canvas from "html2canvas";
+import { useHistory } from "react-router";
 import { postImageResult } from "../../../../adapters/recognition";
 
 function useImageCapture(requestID, cutID) {
+  const history = useHistory();
+
   const downloadText = useCallback(async () => {
     const translateDiv = document.querySelectorAll(".recognition_style")[1];
     const translatedImage = document.querySelectorAll(".unselectable")[1];
@@ -35,6 +38,8 @@ function useImageCapture(requestID, cutID) {
           bbox.style.transform = `translate(${translateX}px, ${translateY}px)`;
           bbox.style.overflow = "visible";
 
+          bbox.style.border = "none";
+
           bbox.children[0].style.fontSize =
             Number.parseInt(bbox.children[0].style.fontSize) * heightRatio +
             "px";
@@ -51,7 +56,9 @@ function useImageCapture(requestID, cutID) {
       const file = new File([blob], "image.png", { type: "image/png" });
       postImageResult(requestID, cutID, file);
     });
-  }, [requestID, cutID]);
+
+    history.push("/dashboard?success=true");
+  }, [requestID, cutID, history]);
 
   return downloadText;
 }

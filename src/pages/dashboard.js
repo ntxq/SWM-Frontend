@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Template from "./template";
-import { Tabs } from "antd";
+import { message, Tabs } from "antd";
 import { PictureFilled, BookFilled, DownloadOutlined } from "@ant-design/icons";
 import { useSelector } from "react-redux";
+import { useLocation } from "react-router";
 
 import Webtoons from "../components/Dashboard/webtoons";
 import "../styles/Dashboard.css";
@@ -10,6 +11,12 @@ import DashboardTitle from "../components/Dashboard/dashboard-title";
 
 function DashBoard(properties) {
   const webtoons = useSelector((state) => state.webtoons);
+  const location = useLocation();
+
+  useEffect(() => {
+    if (new URLSearchParams(location.search).get("success"))
+      message.success("Webtoon image saved successfully.", 5)();
+  }, [location.search]);
 
   return (
     <Template
