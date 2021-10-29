@@ -22,7 +22,7 @@ function useSegmentationResult(webtoonIndex, cutIndex) {
   const [currentID, setCurrentID] = useState();
 
   const getResult = useCallback(async () => {
-    await postSegmentationStart(imageID);
+    await postSegmentationStart(imageID, cutIndex + 1);
 
     const intervalID = setInterval(async () => {
       const progress = await getSegmentationResult(imageID, cutIndex + 1);
