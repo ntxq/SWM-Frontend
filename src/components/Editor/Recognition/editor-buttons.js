@@ -17,19 +17,14 @@ function EditorButtons(properties) {
         ? deleteBbox({
             requestID: properties.requestID,
             cutIndex: properties.cutIndex,
-            target: properties.activeBox,
+            target,
           })
         : deleteTranslateBox({
             requestID: properties.requestID,
             cutIndex: properties.cutIndex,
-            target: properties.activeBox,
+            target,
           }),
-    [
-      properties.context,
-      properties.requestID,
-      properties.cutIndex,
-      properties.activeBox,
-    ]
+    [properties.context, properties.requestID, properties.cutIndex]
   );
 
   return (

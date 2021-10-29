@@ -19,6 +19,12 @@ function BboxLayer(properties) {
       : state.recognition.activeTranslateBox
   );
 
+  const matchedContext = useSelector((state) =>
+    properties.original
+      ? state.recognition.currentContext === "bbox"
+      : state.recognition.currentContext === "translate"
+  );
+
   return (
     <>
       {boxList.map((box, index) => (
@@ -34,7 +40,7 @@ function BboxLayer(properties) {
           font={box.fontFamily}
           weight={box.fontWeight}
           italic={box.fontStyle}
-          active={activeBox === index}
+          active={activeBox === index && matchedContext}
           key={index}
         />
       ))}

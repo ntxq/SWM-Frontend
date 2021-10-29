@@ -23,7 +23,7 @@ function StyleEditor(properties) {
       <Row gutter={[0, "3vh"]}>
         <Col span={24} xxl={13}>
           <CompactPicker
-            color={properties.fontColor}
+            color={properties.fontColor || "#000000"}
             onChange={(color) =>
               properties.activeBox !== undefined &&
               updateBox({
@@ -39,7 +39,7 @@ function StyleEditor(properties) {
           <Space direction="vertical">
             <FontPicker
               apiKey="AIzaSyA3CAm6MkBaH8hrrD9SFGxfDxyPqxo4geI"
-              activeFontFamily={properties.fontFamily}
+              activeFontFamily={properties.fontFamily || "Nanum Gothic"}
               onChange={(nextFont) =>
                 properties.activeBox !== undefined &&
                 updateBox({
@@ -55,7 +55,7 @@ function StyleEditor(properties) {
               <Space>
                 <Typography.Text>Font Size:</Typography.Text>
                 <InputNumber
-                  value={properties.fontSize}
+                  value={properties.fontSize || 20}
                   onChange={(value) =>
                     properties.activeBox !== undefined &&
                     updateBox({

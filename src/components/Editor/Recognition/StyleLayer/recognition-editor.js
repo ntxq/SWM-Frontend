@@ -19,9 +19,14 @@ function RecognitionEditor(properties) {
       title="Style Editor"
       extra={
         <EditorButtons
-          activeBox={recognition.activeBox}
+          activeBox={
+            recognition.currentContext === "bbox"
+              ? recognition.activeBbox
+              : recognition.activeTranslateBox
+          }
           requestID={properties.requestID}
           cutIndex={properties.cutIndex}
+          context={recognition.currentContext}
           submit={downloadImage}
         />
       }
