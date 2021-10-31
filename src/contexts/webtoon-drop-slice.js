@@ -27,6 +27,7 @@ const defaultCut = {
 
   mask: [],
   progress: 0,
+  complete: false,
 
   cutID: "",
 };
@@ -61,6 +62,16 @@ export const webtoonDropSlice = createSlice({
         state.images[action.payload.index].cut[
           action.payload.cutIndex
         ].progress = action.payload.progress;
+    },
+    completeCut: (state, action) => {
+      const { requestID, cutIndex } = action.payload;
+
+      const webtoonIndex = state.images.findIndex(
+        (image) => image.id === requestID
+      );
+
+      if (webtoonIndex !== -1)
+        state.images[webtoonIndex].cut[cutIndex].complete = true;
     },
     singleDelete: (state, action) => {
       state.images = state.images.filter(
@@ -107,6 +118,7 @@ export const {
   updateWebtoon,
   updateCut,
   updateProgress,
+  completeCut,
   singleDelete,
   setForm,
   mapIds,
