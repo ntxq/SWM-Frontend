@@ -1,6 +1,6 @@
 import { backendInstance } from "./backend";
 
-export async function getProjects(page) {
+export async function getProjects(page = 0) {
   const data = {
     params: {
       page,

@@ -1,21 +1,19 @@
-import React, { useState, useEffect } from "react";
-import { getProjects } from "../../../adapters/history";
+import React from "react";
+import { Row } from "antd";
+
+import DownloadCard from "./download-card";
+import useDownloadImage from "./use-download-image";
 
 function Download(properties) {
-  const [uploadedID, setUploadedID] = useState([]);
+  const downloadImages = useDownloadImage();
 
-  useEffect(() => {
-    getProjects(0).then((projects) => {
-      console.log(projects);
-
-      for (const project of projects)
-        for (const request of project.requests)
-          if (request.progress === "complete")
-            setUploadedID((state) => [...state, request.id]);
-    });
-  }, []);
-
-  return "Download";
+  return (
+    <Row>
+      {downloadImages.map((url, index) => (
+        <DownloadCard key={index} source={url} />
+      ))}
+    </Row>
+  );
 }
 
 export default Download;
