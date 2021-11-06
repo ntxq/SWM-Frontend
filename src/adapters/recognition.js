@@ -96,3 +96,15 @@ export async function postImageResult(request_id, cut_id, image) {
 
   return result;
 }
+
+export async function postImageComplete(request_id) {
+  const data = {
+    req_id: request_id,
+  };
+
+  const result = await backendInstance
+    .post("/api/OCR/complete", data)
+    .then((response) => response.data.success);
+
+  return result;
+}

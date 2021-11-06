@@ -38,7 +38,7 @@ function Login(properties) {
                 <KakaoLogin />
                 <Button
                   type="primary"
-                  htmlType="submit"
+                  // htmlType="submit"
                   className="login_form_button"
                   icon={<ToolOutlined className="login_symbol" />}
                 >
