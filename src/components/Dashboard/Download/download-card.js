@@ -1,24 +1,18 @@
 import React from "react";
-import { Card, Col, Skeleton, Typography } from "antd";
+import { Col, Image } from "antd";
+import { saveAs } from "file-saver";
 
-import CropWebtoon from "../Webtoons/crop-webtoon";
-
-function DownloadCard({ key, source }) {
+function DownloadCard({ source, index }) {
   return (
-    <Col xs={24} sm={12} md={8} lg={6} key={key} className="preview_card">
-      <Card
-        hoverable
-        key={key}
-        cover={source ? <CropWebtoon url={source} /> : <Skeleton.Image />}
-      >
-        <Card.Meta
-          title={
-            <Typography.Text className="title" ellipsis={true}>
-              {key}
-            </Typography.Text>
-          }
-        />
-      </Card>
+    <Col xs={24} sm={12} md={8} lg={6} className="download_container">
+      <Image
+        src={source}
+        preview={false}
+        onClick={() => {
+          saveAs(source, `${index + 1}.png`);
+        }}
+        className="download_image"
+      />
     </Col>
   );
 }

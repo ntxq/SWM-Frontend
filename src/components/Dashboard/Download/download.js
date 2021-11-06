@@ -10,7 +10,7 @@ function Download(properties) {
   return (
     <Row>
       {downloadImages.map((url, index) => (
-        <DownloadCard key={index} source={url} />
+        <DownloadCard key={index} source={url} index={index} />
       ))}
     </Row>
   );

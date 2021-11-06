@@ -8,6 +8,8 @@ function useDownloadImage() {
     const projectIDs = await getProjects();
 
     const completeIds = [];
+    setDownloadImages([]);
+
     for (const project of projectIDs)
       for (const request of project.requests)
         if (request.progress === "complete") completeIds.push(request.id);
