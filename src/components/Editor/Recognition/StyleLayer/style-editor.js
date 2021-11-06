@@ -55,7 +55,7 @@ function StyleEditor(properties) {
               <Space>
                 <Typography.Text>Font Size:</Typography.Text>
                 <InputNumber
-                  value={properties.fontSize || 20}
+                  value={Number.round(properties.fontSize) || 20}
                   onChange={(value) =>
                     properties.activeBox !== undefined &&
                     updateBox({
