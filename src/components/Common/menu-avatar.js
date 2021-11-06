@@ -27,9 +27,6 @@ function MenuAvatar(properties) {
           <b>{profile.username}</b>
         </Link>
       </Menu.Item>
-      <Menu.Item key="change_plan">
-        <Link to="/plans">Upgrade plan</Link>
-      </Menu.Item>
       <Menu.Item key="preference">
         <Link to="/preference">Edit profile</Link>
       </Menu.Item>
