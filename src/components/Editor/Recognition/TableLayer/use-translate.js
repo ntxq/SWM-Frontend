@@ -42,8 +42,8 @@ function useTranslate(requestID, cutIndex, bboxList) {
             height: translatedBox.height / imgProperty.currentHeightRatio,
 
             text: translatedBox.text,
-            // fontSize: translatedBox.fontSize / imgProperty.currentWidthRatio,
-            fontSize: 20,
+            fontSize: translatedBox.fontSize / imgProperty.currentWidthRatio,
+            // fontSize: 20,
             fontColor: translatedBox.fontColor,
           },
         })
