@@ -25,7 +25,9 @@ function CreateProject(properties) {
         <Form.Item name="new" initialValue="new">
           <Radio.Group>
             <Radio value="new">Start a new project</Radio>
-            <Radio value="exist">Add images to an existing project</Radio>
+            <Radio value="exist" disabled>
+              Add images to an existing project
+            </Radio>
           </Radio.Group>
         </Form.Item>
         <Form.Item
