@@ -10,13 +10,13 @@ import {
 } from "antd";
 import { BoldOutlined, ItalicOutlined } from "@ant-design/icons";
 import { CompactPicker } from "react-color";
+import { CgFormatText } from "react-icons/cg";
 import FontPicker from "font-picker-react";
 
-import { useDispatch } from "react-redux";
-import { updateBbox } from "../../../../contexts/recognition-slice";
+import useUpdateBox from "./use-update-box";
 
 function StyleEditor(properties) {
-  const dispatch = useDispatch();
+  const updateBox = useUpdateBox();
 
   return (
     <>
@@ -24,17 +24,15 @@ function StyleEditor(properties) {
       <Row gutter={[0, "3vh"]}>
         <Col span={24} xxl={13}>
           <CompactPicker
-            color={properties.fontColor}
+            color={properties.fontColor || "#000000"}
             onChange={(color) =>
               properties.activeBox !== undefined &&
-              dispatch(
-                updateBbox({
-                  requestID: properties.requestID,
-                  cutIndex: properties.cutIndex,
-                  index: properties.activeBox,
-                  updatedBbox: { fontColor: color.hex },
-                })
-              )
+              updateBox({
+                requestID: properties.requestID,
+                cutIndex: properties.cutIndex,
+                index: properties.activeBox,
+                updatedBox: { fontColor: color.hex },
+              })
             }
           />
         </Col>
@@ -42,17 +40,15 @@ function StyleEditor(properties) {
           <Space direction="vertical">
             <FontPicker
               apiKey="AIzaSyA3CAm6MkBaH8hrrD9SFGxfDxyPqxo4geI"
-              activeFontFamily={properties.fontFamily}
+              activeFontFamily={properties.fontFamily || "Nanum Gothic"}
               onChange={(nextFont) =>
                 properties.activeBox !== undefined &&
-                dispatch(
-                  updateBbox({
-                    requestID: properties.requestID,
-                    cutIndex: properties.cutIndex,
-                    index: properties.activeBox,
-                    updatedBbox: { fontFamily: nextFont.family },
-                  })
-                )
+                updateBox({
+                  requestID: properties.requestID,
+                  cutIndex: properties.cutIndex,
+                  index: properties.activeBox,
+                  updatedBox: { fontFamily: nextFont.family },
+                })
               }
               scripts={["latin", "korean"]}
             />
@@ -60,17 +56,15 @@ function StyleEditor(properties) {
               <Space>
                 <Typography.Text>Font Size:</Typography.Text>
                 <InputNumber
-                  value={properties.fontSize}
+                  value={Math.round(properties.fontSize) || 20}
                   onChange={(value) =>
                     properties.activeBox !== undefined &&
-                    dispatch(
-                      updateBbox({
-                        requestID: properties.requestID,
-                        cutIndex: properties.cutIndex,
-                        index: properties.activeBox,
-                        updatedBbox: { fontSize: value },
-                      })
-                    )
+                    updateBox({
+                      requestID: properties.requestID,
+                      cutIndex: properties.cutIndex,
+                      index: properties.activeBox,
+                      updatedBox: { fontSize: value },
+                    })
                   }
                 />
               </Space>
@@ -80,19 +74,17 @@ function StyleEditor(properties) {
                   type="text"
                   onClick={() =>
                     properties.activeBox !== undefined &&
-                    dispatch(
-                      updateBbox({
-                        requestID: properties.requestID,
-                        cutIndex: properties.cutIndex,
-                        index: properties.activeBox,
-                        updatedBbox: {
-                          fontWeight:
-                            properties.fontWeight === "normal"
-                              ? "bold"
-                              : "normal",
-                        },
-                      })
-                    )
+                    updateBox({
+                      requestID: properties.requestID,
+                      cutIndex: properties.cutIndex,
+                      index: properties.activeBox,
+                      updatedBox: {
+                        fontWeight:
+                          properties.fontWeight === "normal"
+                            ? "bold"
+                            : "normal",
+                      },
+                    })
                   }
                 />
               </Tooltip>
@@ -102,21 +94,36 @@ function StyleEditor(properties) {
                   type="text"
                   onClick={() =>
                     properties.activeBox !== undefined &&
-                    dispatch(
-                      updateBbox({
-                        requestID: properties.requestID,
-                        cutIndex: properties.cutIndex,
-                        index: properties.activeBox,
-                        updatedBbox: {
-                          fontStyle:
-                            properties.fontStyle === "normal"
-                              ? "italic"
-                              : "normal",
-                        },
-                      })
-                    )
+                    updateBox({
+                      requestID: properties.requestID,
+                      cutIndex: properties.cutIndex,
+                      index: properties.activeBox,
+                      updatedBox: {
+                        fontStyle:
+                          properties.fontStyle === "normal"
+                            ? "italic"
+                            : "normal",
+                      },
+                    })
                   }
                 />
+              </Tooltip>
+              <Tooltip title="stroke">
+                <Button
+                  icon={<CgFormatText />}
+                  type="text"
+                  onClick={() =>
+                    properties.activeBox !== undefined &&
+                    updateBox({
+                      requestID: properties.requestID,
+                      cutIndex: properties.cutIndex,
+                      index: properties.activeBox,
+                      updatedBox: {
+                        fontStroke: !properties.fontStroke,
+                      },
+                    })
+                  }
+                ></Button>
               </Tooltip>
             </Space>
           </Space>

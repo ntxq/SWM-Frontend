@@ -27,7 +27,7 @@ function Editor(properties) {
       className="editor_page"
     >
       <Layout>
-        <PreviewSider />
+        {/* <PreviewSider /> */}
         <Layout.Content className="content_editor">
           <Switch>
             <Route path={`${url}/segmentation`}>

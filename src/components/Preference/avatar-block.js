@@ -29,7 +29,7 @@ function AvatarBlock(properties) {
         <Avatar
           className="preference_avatar"
           size={150}
-          icon={profile.avatar || <UserOutlined />}
+          src={profile.avatar || <UserOutlined />}
         />
       </Col>
       <Col span={11} className="avatar_buttons">

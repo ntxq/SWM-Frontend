@@ -1,8 +1,17 @@
 import { useCallback, useLayoutEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { createBbox } from "../../../contexts/recognition-slice";
+import {
+  createBbox,
+  createTranslateBox,
+} from "../../../contexts/recognition-slice";
 
-function useCreateBbox(divReference, sketchReference, requestID, cutIndex) {
+function useCreateBbox(
+  divReference,
+  sketchReference,
+  requestID,
+  cutIndex,
+  stage
+) {
   const [startPoint, setStartPoint] = useState([undefined, undefined]);
   const dispatch = useDispatch();
 
@@ -89,30 +98,45 @@ function useCreateBbox(divReference, sketchReference, requestID, cutIndex) {
           0
         );
 
-        dispatch(
-          createBbox({
-            requestID: requestID,
-            cutIndex: cutIndex,
-            bbox: {
-              originalX: Math.min(startPoint[0], offsetX),
-              originalY: Math.min(startPoint[1], offsetY),
-              originalWidth: Math.abs(offsetX - startPoint[0]),
-              originalHeight: Math.abs(offsetY - startPoint[1]),
+        const boxFormat =
+          stage === "bbox"
+            ? createBbox({
+                requestID,
+                cutIndex,
+                bbox: {
+                  x: Math.min(startPoint[0], offsetX),
+                  y: Math.min(startPoint[1], offsetY),
+                  width: Math.abs(offsetX - startPoint[0]),
+                  height: Math.abs(offsetY - startPoint[1]),
+                  // group_id: undefined,
+                  // groud_index: undefined,
+                },
+              })
+            : createTranslateBox({
+                requestID,
+                cutIndex,
+                translateBox: {
+                  x: Math.min(startPoint[0], offsetX),
+                  y: Math.min(startPoint[1], offsetY),
+                  width: Math.abs(offsetX - startPoint[0]),
+                  height: Math.abs(offsetY - startPoint[1]),
+                },
+              });
 
-              translatedX: Math.min(startPoint[0], offsetX),
-              translatedY: Math.min(startPoint[1], offsetY),
-              translatedWidth: Math.abs(offsetX - startPoint[0]),
-              translatedHeight: Math.abs(offsetY - startPoint[1]),
-            },
-          })
-        );
-
+        dispatch(boxFormat);
         setStartPoint([undefined, undefined]);
-
         sketchReference.current.style.visibility = "hidden";
       }
     },
-    [divReference, sketchReference, startPoint, requestID, cutIndex, dispatch]
+    [
+      divReference,
+      sketchReference,
+      startPoint,
+      requestID,
+      cutIndex,
+      dispatch,
+      stage,
+    ]
   );
 
   useLayoutEffect(() => {

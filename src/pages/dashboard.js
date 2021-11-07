@@ -1,15 +1,39 @@
-import React from "react";
-import Template from "./template";
-import { Tabs } from "antd";
-import { PictureFilled, BookFilled, DownloadOutlined } from "@ant-design/icons";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
+import { useLocation } from "react-router";
+import { message, Tabs } from "antd";
+import { PictureFilled, DownloadOutlined } from "@ant-design/icons";
 
-import Webtoons from "../components/Dashboard/webtoons";
+import Template from "./template";
+import Webtoons from "../components/Dashboard/Webtoons/webtoons";
+import DashboardTitle from "../components/Dashboard/Webtoons/dashboard-title";
+import Download from "../components/Dashboard/Download/download";
+import { postImageComplete } from "../adapters/recognition";
 import "../styles/Dashboard.css";
-import DashboardTitle from "../components/Dashboard/dashboard-title";
 
 function DashBoard(properties) {
   const webtoons = useSelector((state) => state.webtoons);
+  const location = useLocation();
+
+  useEffect(() => {
+    if (new URLSearchParams(location.search).get("success")) {
+      message.success("Webtoon image saved successfully.", 5)();
+
+      const requestID = Number(
+        new URLSearchParams(location.search).get("requestID")
+      );
+      const webtoonIndex = webtoons.images.findIndex(
+        (webtoon) => webtoon.id === requestID
+      );
+
+      if (
+        webtoonIndex !== -1 &&
+        webtoons.images[webtoonIndex].cut.every((cut) => cut.complete)
+      ) {
+        postImageComplete(requestID);
+      }
+    }
+  }, [location.search, webtoons.images]);
 
   return (
     <Template
@@ -38,24 +62,13 @@ function DashBoard(properties) {
         <Tabs.TabPane
           tab={
             <>
-              <BookFilled />
-              User Dictionary
-            </>
-          }
-          key="2"
-        >
-          Dictionary
-        </Tabs.TabPane>
-        <Tabs.TabPane
-          tab={
-            <>
               <DownloadOutlined />
               Download
             </>
           }
-          key="3"
+          key="2"
         >
-          Download
+          <Download />
         </Tabs.TabPane>
       </Tabs>
     </Template>

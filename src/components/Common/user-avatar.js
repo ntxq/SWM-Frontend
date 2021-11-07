@@ -5,7 +5,11 @@ import { UserOutlined, ArrowDownOutlined } from "@ant-design/icons";
 function UserAvatar(properties) {
   return (
     <Space>
-      <Avatar className="user_avatar" size="large" icon={<UserOutlined />} />
+      <Avatar
+        className="user_avatar"
+        size="large"
+        src={properties.src || <UserOutlined />}
+      />
       <ArrowDownOutlined />
     </Space>
   );

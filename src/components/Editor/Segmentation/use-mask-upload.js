@@ -1,6 +1,9 @@
 import { useCallback, useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { uploadMask, getSegmentationResult } from "../../../adapters/backend";
+import {
+  uploadMask,
+  getSegmentationResult,
+} from "../../../adapters/segmentation";
 import {
   updateProgress,
   updateCut,

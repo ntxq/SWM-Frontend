@@ -38,6 +38,14 @@
   background-color: black;
 }
 
+.login .login_form_button:active {
+  background-color: black;
+}
+
+.login .login_form_button:focus {
+  background-color: black;
+}
+
 .login .login_form_kakao {
   width: 100%;
   background-color: #fee500;

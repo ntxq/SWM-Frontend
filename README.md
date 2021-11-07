@@ -27,6 +27,12 @@
 2. 미리보기 이미지 언어 설정
 3. 번역할 웹툰 선택
 
+### 다운로드
+![Download Page](docs/Download.png)
+
+1. 현재 프로젝트 / 완료한 이미지 탭 전환
+2. 작업 완료된 이미지 (클릭시 다운로드)
+
 ### Segmentation 페이지
 ![Segmentation Page](docs/Segmentation.jpg)
 
@@ -39,14 +45,35 @@
 7. 수정한 마스크 업로드
 8. 마스크 작업 완료
 
-### Recognition 페이지
-![Recognition Page](docs/Recognition.jpg)
+### Recognition Word 페이지
+![Recognition Page Word](docs/RecognitionWord.png)
 
-1. 업로드한 웹툰 리스트
-2. 인식된 텍스트 바운딩박스
-3. 삽입된 텍스트 바운딩박스
-4. 텍스트 에디터
+1. 인식된 단어 바운딩박스
+2. 인식된 단어 목록
+3. 선택한 단어 삭제
+4. 전체 단어 삭제
+5. 저장 후 문장 수정 단계로 이동
+6. 선택한 단어 그룹 내 순서 변경
+7. 선택한 단어 그룹 변경
 
+### Recognition Sentence 페이지
+![Recognition Page Word](docs/RecognitionSentence.png)
+
+1. 인식된 문장 목록
+2. 선택한 문장 삭제
+3. 전체 문장 삭제
+4. 단어 수정 단계로 이동
+5. 서식 수정 단계로 이동
+
+### Recognition Style 페이지
+![Recognition Page Word](docs/RecognitionStyle.png)
+
+1. 삽입된 번역된 문장 바운딩박스
+2. 번역된 텍스트 텍스트 에디터
+3. 번역된 텍스트 스타일 에디터
+4. 선택한 텍스트 삭제
+5. 전체 텍스트 삭제
+6. 이미지 번역 완료 후 저장
 
 ## 레포지토리 구조
 
