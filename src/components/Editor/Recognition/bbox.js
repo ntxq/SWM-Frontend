@@ -86,13 +86,24 @@ function Bbox(properties) {
       className="bbox"
     >
       <Typography.Text
-        style={{
-          color: properties.color,
-          fontSize: properties.size,
-          fontFamily: properties.font,
-          fontWeight: properties.weight,
-          fontStyle: properties.italic,
-        }}
+        style={
+          properties.stroke
+            ? {
+                color: "white",
+                fontSize: properties.size,
+                fontFamily: properties.font,
+                fontWeight: properties.weight,
+                fontStyle: properties.italic,
+                WebkitTextStroke: `0.5px ${properties.color}`,
+              }
+            : {
+                color: properties.color,
+                fontSize: properties.size,
+                fontFamily: properties.font,
+                fontWeight: properties.weight,
+                fontStyle: properties.italic,
+              }
+        }
         className="bbox_text"
       >
         {properties.original || properties.text}

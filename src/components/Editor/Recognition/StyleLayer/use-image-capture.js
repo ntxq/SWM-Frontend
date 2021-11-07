@@ -1,10 +1,13 @@
 import { useCallback } from "react";
 import html2canvas from "html2canvas";
 import { useHistory } from "react-router";
+import { useDispatch } from "react-redux";
 import { postImageResult } from "../../../../adapters/recognition";
+import { completeCut } from "../../../../contexts/webtoon-drop-slice";
 
 function useImageCapture(requestID, cutID) {
   const history = useHistory();
+  const dispatch = useDispatch();
 
   const downloadText = useCallback(async () => {
     const translateDiv = document.querySelectorAll(".recognition_style")[1];
@@ -57,8 +60,15 @@ function useImageCapture(requestID, cutID) {
       postImageResult(requestID, cutID, file);
     });
 
-    history.push("/dashboard?success=true");
-  }, [requestID, cutID, history]);
+    dispatch(
+      completeCut({
+        requestID,
+        cutIndex: cutID - 1,
+      })
+    );
+
+    history.push(`/dashboard?success=true&requestID=${requestID}`);
+  }, [requestID, cutID, history, dispatch]);
 
   return downloadText;
 }

@@ -22,7 +22,7 @@ function Template(properties) {
       )}
       <Footer className={properties.footerClass}>
         <Divider />
-        전지적 독자시점 ©2021
+        컨버툰 ©2021
       </Footer>
     </Layout>
   );

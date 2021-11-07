@@ -40,6 +40,7 @@ function BboxLayer(properties) {
           font={box.fontFamily}
           weight={box.fontWeight}
           italic={box.fontStyle}
+          stroke={box.fontStroke}
           active={activeBox === index && matchedContext}
           key={index}
         />

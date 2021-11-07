@@ -1,11 +1,11 @@
 import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { updateCut } from "../../contexts/webtoon-drop-slice";
-import { initializeBoxList } from "../../contexts/recognition-slice";
+import { updateCut } from "../../../contexts/webtoon-drop-slice";
+import { initializeBoxList } from "../../../contexts/recognition-slice";
 import {
   getCutImageURL,
   getSegmentationInpaintURL,
-} from "../../adapters/segmentation";
+} from "../../../adapters/segmentation";
 
 function useCutOriginal(webtoonIndex) {
   const webtoon = useSelector((state) => state.webtoons.images?.[webtoonIndex]);

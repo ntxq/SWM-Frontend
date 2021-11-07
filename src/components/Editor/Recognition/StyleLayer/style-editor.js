@@ -10,6 +10,7 @@ import {
 } from "antd";
 import { BoldOutlined, ItalicOutlined } from "@ant-design/icons";
 import { CompactPicker } from "react-color";
+import { CgFormatText } from "react-icons/cg";
 import FontPicker from "font-picker-react";
 
 import useUpdateBox from "./use-update-box";
@@ -55,7 +56,7 @@ function StyleEditor(properties) {
               <Space>
                 <Typography.Text>Font Size:</Typography.Text>
                 <InputNumber
-                  value={properties.fontSize || 20}
+                  value={Math.round(properties.fontSize) || 20}
                   onChange={(value) =>
                     properties.activeBox !== undefined &&
                     updateBox({
@@ -106,6 +107,23 @@ function StyleEditor(properties) {
                     })
                   }
                 />
+              </Tooltip>
+              <Tooltip title="stroke">
+                <Button
+                  icon={<CgFormatText />}
+                  type="text"
+                  onClick={() =>
+                    properties.activeBox !== undefined &&
+                    updateBox({
+                      requestID: properties.requestID,
+                      cutIndex: properties.cutIndex,
+                      index: properties.activeBox,
+                      updatedBox: {
+                        fontStroke: !properties.fontStroke,
+                      },
+                    })
+                  }
+                ></Button>
               </Tooltip>
             </Space>
           </Space>
