@@ -118,7 +118,7 @@ function StyleEditor(properties) {
                       requestID: properties.requestID,
                       cutIndex: properties.cutIndex,
                       index: properties.activeBox,
-                      updateBox: {
+                      updatedBox: {
                         fontStroke: !properties.fontStroke,
                       },
                     })
