@@ -57,7 +57,9 @@ function useImageCapture(requestID, cutID) {
 
     canvas.toBlob((blob) => {
       const file = new File([blob], "image.png", { type: "image/png" });
-      postImageResult(requestID, cutID, file);
+      postImageResult(requestID, cutID, file).then(() =>
+        history.push(`/dashboard?success=true&requestID=${requestID}`)
+      );
     });
 
     dispatch(
@@ -67,7 +69,7 @@ function useImageCapture(requestID, cutID) {
       })
     );
 
-    history.push(`/dashboard?success=true&requestID=${requestID}`);
+    // history.push(`/dashboard?success=true&requestID=${requestID}`);
   }, [requestID, cutID, history, dispatch]);
 
   return downloadText;
