@@ -50,6 +50,7 @@ const defaultTranslateBox = {
   fontFamily: "Nanum Gothic",
   fontWeight: "bold",
   fontStyle: "normal",
+  fontStroke: false,
 };
 
 export const recognitionSlice = createSlice({
