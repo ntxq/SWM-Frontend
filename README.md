@@ -6,7 +6,7 @@
 
 ## 데모영상
 
-[![IMAGE ALT TEXT](http://img.youtube.com/vi/bw9r-lrnhK8/0.jpg)](https://youtu.be/bw9r-lrnhK8 "SWM Demo")
+[![IMAGE ALT TEXT](http://img.youtube.com/vi/0Kf6xBlDjZM/0.jpg)](https://youtu.be/0Kf6xBlDjZM "SWM Demo")
 
 ## 웹페이지 구조
 
