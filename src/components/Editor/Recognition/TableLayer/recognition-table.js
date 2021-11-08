@@ -48,10 +48,7 @@ function RecognitionTable({
           rowKey={(box) => box.bbox_id || box.translate_id}
           renderItem={(item) => (
             <List.Item
-              onClick={() => {
-                console.log("clicked");
-                dispatch(select(item.index));
-              }}
+              onClick={() => dispatch(select(item.index))}
               style={
                 item.index === activeBox ? { backgroundColor: "#f5f5f5" } : {}
               }
